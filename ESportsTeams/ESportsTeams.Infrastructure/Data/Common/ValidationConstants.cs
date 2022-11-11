@@ -13,8 +13,14 @@ namespace ESportsTeams.Infrastructure.Data.Common
             public const int PasswordMinLength = 4;
             public const int PasswordMaxLength = 50;
 
+            public const int LastNameMinLength = 2;
             public const int LastNameMaxLength = 40;
+
+            public const int FirstNameMinLength = 2;
             public const int FirstNameMaxLength = 40;
+
+            public const int UserNameMinLength = 4;
+            public const int UserNameMaxLength = 15;
         }
 
         public class TeamConstraints
