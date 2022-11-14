@@ -20,10 +20,10 @@ namespace ESportsTeams.Infrastructure.Data.Entity
         public AppUser AppUser { get; set; } = null!;
 
         [Required]
-        public int TournamentId { get; set; }
+        public int? TournamentId { get; set; }
 
         [ForeignKey(nameof(TournamentId))]
-        public Tournament Tournament { get; set; } = null!;
+        public Tournament? Tournament { get; set; } = null!;
 
 
         public DateTime CreatedDate { get; set; } = DateTime.Now;

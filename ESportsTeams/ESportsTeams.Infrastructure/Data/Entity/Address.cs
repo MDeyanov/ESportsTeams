@@ -18,7 +18,6 @@ namespace ESportsTeams.Infrastructure.Data.Entity
 
         public int ZipCode { get; set; }
 
-        //public List<Team> Teams { get; set; } = new List<Team>();
-        //public List<Tournament> Tournaments { get; set; } = new List<Tournament>();
+       
     }
 }

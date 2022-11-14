@@ -3,6 +3,7 @@ using ESportsTeams.Infrastructure.Data.Entity;
 using Microsoft.EntityFrameworkCore;
 using static ESportsTeams.Infrastructure.Data.Common.ValidationConstants.UserConstraints;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,12 +12,13 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
-
 builder.Services.AddDefaultIdentity<AppUser>(options =>
 {
+    
     options.SignIn.RequireConfirmedAccount = false;
     options.Password.RequiredLength = PasswordMinLength;
 })
+    .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
 
@@ -45,4 +47,11 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}");
 app.MapRazorPages();
 
+
+//Test seed of users and roles
+//await Seed.SeedUsersAndRolesAsync(app);
+
+//Test seed of Tournaments,Events,Addresses and Teams
+//Seed.SeedData(app);
 app.Run();
+

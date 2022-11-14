@@ -6,16 +6,12 @@ using System.Threading.Tasks;
 
 namespace ESportsTeams.Infrastructure.Data.Enums
 {
-    public enum BlogCategory
+    public enum Category
     {
         Dota2,
         CSGO,
-        Overwatch,
-        LeagueOfLegends,
-        Hearthstone,
-        StarCraft2,
         PUBG,
-        Tekken,
-        MortalKombat,
+        LeagueOfLegends,
+        VALORANT
     }
 }
