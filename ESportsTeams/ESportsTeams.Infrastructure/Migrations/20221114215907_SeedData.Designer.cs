@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ESportsTeams.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20221109230141_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20221114215907_SeedData")]
+    partial class SeedData
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -61,9 +61,6 @@ namespace ESportsTeams.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<int?>("AddressId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("AppUserId")
                         .HasColumnType("int");
 
                     b.Property<string>("ConcurrencyStamp")
@@ -130,8 +127,6 @@ namespace ESportsTeams.Infrastructure.Migrations
 
                     b.HasIndex("AddressId");
 
-                    b.HasIndex("AppUserId");
-
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");
 
@@ -188,7 +183,8 @@ namespace ESportsTeams.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("TournamentId")
+                    b.Property<int?>("TournamentId")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -211,9 +207,6 @@ namespace ESportsTeams.Infrastructure.Migrations
                     b.Property<int?>("AddressId")
                         .HasColumnType("int");
 
-                    b.Property<string>("AppUserId")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasMaxLength(500)
@@ -227,12 +220,18 @@ namespace ESportsTeams.Infrastructure.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<string>("OwnerId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<int>("TournamentWin")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("AddressId");
+
+                    b.HasIndex("OwnerId");
 
                     b.ToTable("Teams");
                 });
@@ -455,12 +454,8 @@ namespace ESportsTeams.Infrastructure.Migrations
                         .WithMany()
                         .HasForeignKey("AddressId");
 
-                    b.HasOne("ESportsTeams.Infrastructure.Data.Entity.Team", null)
-                        .WithMany("AppUsers")
-                        .HasForeignKey("AppUserId");
-
                     b.HasOne("ESportsTeams.Infrastructure.Data.Entity.Team", "Team")
-                        .WithMany()
+                        .WithMany("AppUsers")
                         .HasForeignKey("TeamId");
 
                     b.Navigation("Address");
@@ -493,7 +488,15 @@ namespace ESportsTeams.Infrastructure.Migrations
                         .WithMany()
                         .HasForeignKey("AddressId");
 
+                    b.HasOne("ESportsTeams.Infrastructure.Data.Entity.AppUser", "Owner")
+                        .WithMany("OwnedTeams")
+                        .HasForeignKey("OwnerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Address");
+
+                    b.Navigation("Owner");
                 });
 
             modelBuilder.Entity("ESportsTeams.Infrastructure.Data.Entity.TeamTournament", b =>
@@ -585,6 +588,8 @@ namespace ESportsTeams.Infrastructure.Migrations
 
             modelBuilder.Entity("ESportsTeams.Infrastructure.Data.Entity.AppUser", b =>
                 {
+                    b.Navigation("OwnedTeams");
+
                     b.Navigation("Reviews");
                 });
 

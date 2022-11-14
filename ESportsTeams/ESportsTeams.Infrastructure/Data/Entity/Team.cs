@@ -18,20 +18,22 @@ namespace ESportsTeams.Infrastructure.Data.Entity
         public string Description { get; set; } = null!;
 
         public string? Image { get; set; }
-        //[ForeignKey("Address")]
+         
         public int? AddressId { get; set; }
 
         [ForeignKey(nameof(AddressId))]
         public Address? Address { get; set; }
-        //
-        //[ForeignKey("AppUser")]
-        public string? AppUserId { get; set; }
-
-        [ForeignKey(nameof(AppUserId))]
+                  
         public IList<AppUser>? AppUsers { get; set; } = new List<AppUser>();
         public int TournamentWin { get; set; } = 0;
 
-        
+        // adding a captain of a team
+
+        [Required]
+        public string OwnerId { get; set; } = null!;
+
+        [ForeignKey(nameof(OwnerId))]
+        public AppUser Owner { get; set; } = null!;
 
         public List<TeamTournament> TeamTournaments { get; set; } = new List<TeamTournament>();
 

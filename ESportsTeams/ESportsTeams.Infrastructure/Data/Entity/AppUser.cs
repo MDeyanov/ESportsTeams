@@ -16,20 +16,21 @@ namespace ESportsTeams.Infrastructure.Data.Entity
         [StringLength(LastNameMaxLength)]
         public string LastName { get; set; } = null!;
 
-        public string? ProfileImageUrl { get; set; }
-        //
+        public string? ProfileImageUrl { get; set; }      
 
         public int? AddressId { get; set; }
 
         [ForeignKey(nameof(AddressId))]
         public Address? Address { get; set; }
 
-
         public int? TeamId { get; set; }
 
         [ForeignKey(nameof(TeamId))]
         public Team? Team { get; set; }
 
+
+
         public IList<Review>? Reviews { get; set; } = new List<Review>();
+        public IList<Team>? OwnedTeams { get; set; } = new List<Team>();
     }
 }
