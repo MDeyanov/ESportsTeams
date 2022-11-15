@@ -68,14 +68,14 @@ namespace ESportsTeams.Areas.Identity.Pages.Account
             public string Email { get; set; }
 
             [Required]
-            [Display(Name = "FirstName")]
+            [Display(Name = "First Name")]
             [StringLength(FirstNameMaxLength, 
                 ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", 
                 MinimumLength = FirstNameMinLength)]
             public string FirstName { get; set; }
 
             [Required]
-            [Display(Name = "LastName")]
+            [Display(Name = "Last Name")]
             [StringLength(LastNameMaxLength,
                 ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.",
                 MinimumLength = LastNameMinLength)]
@@ -107,14 +107,17 @@ namespace ESportsTeams.Areas.Identity.Pages.Account
         {
 
             returnUrl ??= Url.Content("~/");
-            ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+            ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();           
+          
             if (ModelState.IsValid)
             {
                 var user = new AppUser 
-                { UserName = Input.Username, 
+                { 
+                    UserName = Input.Username, 
                     Email = Input.Email, 
                     FirstName = Input.FirstName, 
-                    LastName = Input.LastName};
+                    LastName = Input.LastName
+                };
                 
                 var result = await _userManager.CreateAsync(user, Input.Password);
 

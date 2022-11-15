@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using static ESportsTeams.Infrastructure.Data.Common.ValidationConstants.TeamConstraints;
+using ESportsTeams.Infrastructure.Data.Enums;
 
 namespace ESportsTeams.Infrastructure.Data.Entity
 {
@@ -16,6 +17,9 @@ namespace ESportsTeams.Infrastructure.Data.Entity
         [Required]
         [StringLength(DescriptionMaxLength)]
         public string Description { get; set; } = null!;
+
+        [Required]
+        public Category Category { get; set; }
 
         public string? Image { get; set; }
          
