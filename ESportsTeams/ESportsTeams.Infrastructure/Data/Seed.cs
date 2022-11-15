@@ -173,6 +173,7 @@ namespace ESportsTeams.Infrastructure.Data
                             Name = "NaPeshoTeama",
                             Description = "Dota2 team for 5v5",
                             Image = "https://upload.wikimedia.org/wikipedia/en/f/f1/Team_Liquid_logo.svg",
+                            Category = Category.Dota2,
                             Address = new Address()
                             {
                               Street = "zora 1",

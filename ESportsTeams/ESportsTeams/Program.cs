@@ -4,6 +4,9 @@ using Microsoft.EntityFrameworkCore;
 using static ESportsTeams.Infrastructure.Data.Common.ValidationConstants.UserConstraints;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using ESportsTeams.Core.Interfaces;
+using ESportsTeams.Core.Services;
+using ESportsTeams.Core.Helpers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,15 +15,19 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+builder.Services.Configure<CloudinarySettings>(builder.Configuration.GetSection("CloudinarySettings"));
 builder.Services.AddDefaultIdentity<AppUser>(options =>
 {
-    
+    options.User.RequireUniqueEmail= true;
     options.SignIn.RequireConfirmedAccount = false;
     options.Password.RequiredLength = PasswordMinLength;
 })
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddScoped<IPhotoService, PhotoService>();
+builder.Services.AddScoped<ITeamService, TeamService>();
 
 var app = builder.Build();
 
