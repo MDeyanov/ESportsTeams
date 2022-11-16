@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using static ESportsTeams.Infrastructure.Data.Common.ValidationConstants.TeamConstraints;
 using ESportsTeams.Infrastructure.Data.Enums;
+using System.Text.RegularExpressions;
 
 namespace ESportsTeams.Infrastructure.Data.Entity
 {
@@ -40,6 +41,8 @@ namespace ESportsTeams.Infrastructure.Data.Entity
         public AppUser Owner { get; set; } = null!;
 
         public List<TeamTournament> TeamTournaments { get; set; } = new List<TeamTournament>();
+
+        public int AvarageMMR { get; set; }
 
     }
 }

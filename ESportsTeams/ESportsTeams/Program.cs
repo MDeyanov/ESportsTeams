@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using ESportsTeams.Core.Interfaces;
 using ESportsTeams.Core.Services;
 using ESportsTeams.Core.Helpers;
+using ESportsTeams.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,8 +27,7 @@ builder.Services.AddDefaultIdentity<AppUser>(options =>
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddScoped<IPhotoService, PhotoService>();
-builder.Services.AddScoped<ITeamService, TeamService>();
+builder.Services.AddApplicationServices();
 
 var app = builder.Build();
 

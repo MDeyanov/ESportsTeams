@@ -28,9 +28,16 @@ namespace ESportsTeams.Infrastructure.Data.Entity
         [ForeignKey(nameof(TeamId))]
         public Team? Team { get; set; }
 
-
-
+        // when register must make a field
+        // Games Match Making Rating
+        public int? Dota2MMR { get; set; }
+        public int? CSGOMMR { get; set; }
+        public int? PUBGMMR { get; set; }
+        public int? LeagueOfLegendsMMR { get; set; }
+        public int? VALORANTMMR { get; set; }
+        
         public IList<Review>? Reviews { get; set; } = new List<Review>();
         public IList<Team>? OwnedTeams { get; set; } = new List<Team>();
+        public IList<Request>? Requests { get; set; } = new List<Request>();
     }
 }

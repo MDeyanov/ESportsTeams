@@ -11,7 +11,7 @@
 }
 
 .link-primary {
-  color: #0d6efd;
+    color: #0d6efd;
 }
 .link-primary:hover, .link-primary:focus {
   color: #0a58ca;

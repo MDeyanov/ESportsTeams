@@ -1,0 +1,108 @@
+﻿@using ESportsTeams.Core.Models.ViewModels.TeamViewModels;
+@using ESportsTeams.Infrastructure.Data.Enums;
+@model IndexTeamViewModel
+
+@{
+    bool isAuthenticated = User.Identity?.IsAuthenticated == true;
+
+    int resultStart = ((Model.Page - 1) * Model.PageSize) + 1;
+    int resultEnd = Math.Min(resultStart + Model.PageSize - 1, Model.TotalTeams);
+
+    bool isValidPage = resultStart <= Model.TotalTeams;
+
+    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+}
+
+
+<section class="space-sm flush-with-above">
+    <div class="container">
+        <div class="row">
+            <div class="col text-center">
+                <p>Team Categories</p>
+                <div class="mb-3">
+                    <a type="button" class="btn btn-secondary mb-1" asp-action="Index" asp-route-page="1" asp-route-category="-1">All</a>
+                    @foreach (var category in Html.GetEnumSelectList<Category>())
+                    {
+                        <a type="button" class="btn btn-secondary mb-1" asp-action="Index" asp-route-page="1" asp-route-category="@category.Value">@category.Text</a>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                @if (isValidPage)
+                {
+                    <a type="button" class="btn btn-sm btn-outline-primary @prevDisabled"
+                   asp-action="Index" asp-route-page="@(Model.Page - 1)" asp-route-category="@Model.Category">
+                        Prev
+                    </a>
+                    <a type="button" class="btn btn-sm btn-outline-primary @nextDisabled"
+                   asp-action="Index" asp-route-page="@(Model.Page + 1)" asp-route-category="@Model.Category">
+                        Next
+                    </a>
+                    <span class="text-muted text-small">Results @resultStart - @resultEnd of @Model.TotalTeams</span>
+                }
+            </div>
+        </div>
+        <ul class="row feature-list feature-list-sm">
+            @foreach (var team in Model.Teams)
+            {
+                <li class="col-12 col-md-6 col-lg-4">
+                    <div class="card">
+                        <a type="button" asp-controller="Club" asp-action="DetailClub" asp-route-runningClub="@team.Name" asp-route-id="@team.Id">
+                            @if (@team.Image != null)
+                            {
+                                <img class="card-img-top" src="@team.Image" alt="Card image cap">
+                            }
+                            else
+                            {
+                                <img class="card-img-top" src="/img/rungroopclub.png" alt="Card image cap">
+                            }
+
+                        </a>
+                        <div class="card-body">
+                            <h4 class="card-title">@team.Name</h4>
+                            <p class="card-text">@team.Description</p>
+                            <p class="card-text">@team.Address.City, @team.Address.Country</p>
+                        </div>
+                        <div class="card-footer card-footer-borderless d-flex justify-content-between">
+                            <div>
+                                <small>@team.Category</small>
+                            </div>
+                            @if (isAuthenticated && User.IsInRole("admin"))
+                            {
+                                <div>
+                                    <a type="button" class="btn btn-sm btn-outline-info" asp-controller="Team" asp-action="Edit" asp-route-id="@team.Id">
+                                        Edit
+                                    </a>
+                                    <a type="button" class="btn btn-sm btn-outline-danger" asp-controller="Team" asp-action="Delete" asp-route-id="@team.Id">
+                                        Delete
+                                    </a>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </li>
+            }
+        </ul>
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                @if (isValidPage)
+                {
+                    <a type="button" class="btn btn-sm btn-outline-primary @prevDisabled"
+                   asp-action="Index" asp-route-page="@(Model.Page - 1)" asp-route-category="@Model.Category">
+                        Prev
+                    </a>
+                    <a type="button" class="btn btn-sm btn-outline-primary @nextDisabled"
+                   asp-action="Index" asp-route-page="@(Model.Page + 1)" asp-route-category="@Model.Category">
+                        Next
+                    </a>
+                    <span class="text-muted text-small">Results @resultStart - @resultEnd of @Model.TotalTeams</span>
+                }
+            </div>
+        </div>
+    </div>
+</section>
