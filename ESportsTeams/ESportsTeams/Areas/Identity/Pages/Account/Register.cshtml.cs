@@ -80,7 +80,23 @@ namespace ESportsTeams.Areas.Identity.Pages.Account
                 ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.",
                 MinimumLength = LastNameMinLength)]
             public string LastName { get; set; }
-          
+
+            [Display(Name = "Your Dota2 MMR")]
+            public int? Dota2MMR { get; set; }
+
+            [Display(Name = "Your CSGO MMR")]
+            public int? CSGOMMR { get; set; }
+
+            [Display(Name = "Your PUBG MMR")]
+            public int? PUBGMMR { get; set; }
+
+            [Display(Name = "Your LeagueOfLegends MMR")]
+            public int? LeagueOfLegendsMMR { get; set; }
+
+            [Display(Name = "Your VALORANT MMR")]
+            public int? VALORANTMMR { get; set; }
+
+
             [Required]
             [StringLength(PasswordMaxLength, 
                 ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", 

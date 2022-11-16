@@ -24,6 +24,18 @@ namespace ESportsTeams.Infrastructure.Data
                  .HasForeignKey(t => t.OwnerId)
                  .OnDelete(DeleteBehavior.Cascade);
 
+            //builder.Entity<Team>()
+            //    .HasMany(t=>t.Requests)
+            //    .WithOne(t=>t.Team)
+            //    .HasForeignKey(t=>t.TeamId)
+            //    .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<AppUser>()
+               .HasMany(t => t.Requests)
+               .WithOne(t => t.AppUser)
+               .HasForeignKey(t => t.AppUserId)
+               .OnDelete(DeleteBehavior.Cascade);
+
             base.OnModelCreating(builder);
         }
 
