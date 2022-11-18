@@ -39,5 +39,7 @@ namespace ESportsTeams.Infrastructure.Data.Entity
         public IList<Review>? Reviews { get; set; } = new List<Review>();
         public IList<Team>? OwnedTeams { get; set; } = new List<Team>();
         public IList<Request>? Requests { get; set; } = new List<Request>();
+
+        public bool IsBanned { get; set; } = false;
     }
 }

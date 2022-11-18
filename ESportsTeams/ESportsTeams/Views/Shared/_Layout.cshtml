@@ -74,8 +74,8 @@
                                     </a>
                                     <div class="dropdown-menu" aria-labelledby="pagesDropdown">
                                         @*to make user controller and action*@
-                                        <a class="dropdown-item" asp-controller="User" asp-action="Detail" asp-route-id="@currentUser.Id">
-                                            <span class="h6 mb-0">View Profile</span>
+                                        <a class="dropdown-item" asp-controller="Team" asp-action="OwnedTeams" asp-route-id="@currentUser.Id">
+                                            <span class="h6 mb-0">View My Teams</span>
                                         </a>
 
                                         <a class="dropdown-item" asp-controller="User" asp-action="EditProfile">
