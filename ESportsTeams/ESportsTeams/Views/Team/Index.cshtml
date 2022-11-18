@@ -15,10 +15,11 @@
 }
 
 
+
 <section class="space-sm flush-with-above">
     <div class="container">
         <div class="row">
-            <div class="col text-center">
+            <div class="col">
                 <p>Team Categories</p>
                 <div class="mb-3">
                     <a type="button" class="btn btn-secondary mb-1" asp-action="Index" asp-route-page="1" asp-route-category="-1">All</a>
@@ -52,7 +53,7 @@
             {
                 <li class="col-12 col-md-6 col-lg-4">
                     <div class="card">
-                        <a type="button" asp-controller="Team" asp-action="DetailTeam" asp-route-esportsTeam="@team.Name" asp-route-id="@team.Id">
+                        <a type="button" asp-controller="Team" asp-action="Details" asp-route-id="@team.Id">
                             @if (@team.Image != null)
                             {
                                 <img class="card-img-top" src="@team.Image" alt="Card image cap">
@@ -78,7 +79,7 @@
                                     <a type="button" class="btn btn-sm btn-outline-info" asp-controller="Team" asp-action="Edit" asp-route-id="@team.Id">
                                         Edit
                                     </a>
-                                    <a type="button" class="btn btn-sm btn-outline-danger" asp-controller="Team" asp-action="Delete" asp-route-id="@team.Id">
+                                    <a type="button" class="btn btn-sm btn-outline-danger"  asp-controller="Team" asp-action="Delete" asp-route-id="@team.Id">
                                         Delete
                                     </a>
                                 </div>
@@ -106,3 +107,4 @@
         </div>
     </div>
 </section>
+

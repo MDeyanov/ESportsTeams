@@ -119,15 +119,76 @@ namespace ESportsTeams.Core.Services
                 .CountAsync(t => t.Category == category);
         }
 
-        //GET TEAM BY ID
-        public async Task<Team?> GetByIdAsync(int id)
-        {
-           return await _context.Teams
-                .Include(x=>x.Owner)
-                .Include(x=>x.Address)
-                .FirstOrDefaultAsync(x=>x.Id==id);
 
-             
+        public async Task<DetailsTeamViewModel?> GetTeamDetailsByIdAsync(int id)
+        {
+            var result = await _context.Teams
+                .Include(x => x.Owner)
+                .Include(x => x.Address)
+                .FirstOrDefaultAsync(x => x.Id == id);
+           
+            var finalResult = new DetailsTeamViewModel()
+            {
+                Name = result.Name,
+                Description = result.Description,
+                Category = result.Category,
+                Image = result.Image,
+                AddressId = result.AddressId,
+                Address = result.Address,
+                TournamentWin = result.TournamentWin,
+                OwnerId = result.OwnerId,
+                Owner = result.Owner,
+                TeamTournaments = result.TeamTournaments,
+                AvarageMMR = result.AvarageMMR,
+            };
+
+            return finalResult;
+        }
+
+        public async Task<Team?> GetIdAsync(int id)
+        {
+            var result = await _context.Teams
+                .Include(x => x.Address)
+                .FirstOrDefaultAsync(x => x.Id == id);
+
+            return result;
+        }
+
+        public async Task EditTeamAsync(EditTeamViewModel model)
+        {
+            
+
+            var teamToChange = await _context.Teams
+                .Include(x=>x.Address)
+                .FirstOrDefaultAsync(x=>x.Id == model.Id);
+          
+            var photoResult = await _photoService.AddPhotoAsync(model.Image);
+         
+            if (!string.IsNullOrEmpty(teamToChange.Image))
+            {
+                _ = _photoService.DeletePhotoAsync(teamToChange.Image);
+            }
+            teamToChange.Name = model.Name;
+            teamToChange.Description = model.Description;
+            teamToChange.Image = photoResult.Url.ToString();
+            teamToChange.Category = model.Category;
+            teamToChange.AddressId = model.AddressId;
+            teamToChange.Address = model.Address;
+
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task<bool> DeleteTeamAsync(int id)
+        {
+            var team = await _context.Teams.FirstOrDefaultAsync(x=>x.Id==id);
+            if (!string.IsNullOrEmpty(team.Image))
+            {
+                _ = _photoService.DeletePhotoAsync(team.Image);
+            }
+            _context.Teams.Remove(team);
+
+            await _context.SaveChangesAsync();
+            return true;
         }
     }
 }
