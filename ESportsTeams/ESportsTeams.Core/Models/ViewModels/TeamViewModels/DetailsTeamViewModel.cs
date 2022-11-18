@@ -12,9 +12,8 @@ namespace ESportsTeams.Core.Models.ViewModels.TeamViewModels
 {
     public class DetailsTeamViewModel
     {
-        [Key]
-        public int Id { get; set; }
 
+        [Required]
         public string Name { get; set; } = null!;
 
         public string Description { get; set; } = null!;
@@ -23,15 +22,15 @@ namespace ESportsTeams.Core.Models.ViewModels.TeamViewModels
 
         public string? Image { get; set; }
 
-
+        public int AddressId { get; set; }
         public Address Address { get; set; } = null!;
 
-        public IList<AppUser>? AppUsers { get; set; } = new List<AppUser>();
         public int TournamentWin { get; set; } = 0;
 
         // adding a captain of a team
 
-
+        [Required]
+        public string OwnerId { get; set; } = null!;
         public AppUser Owner { get; set; } = null!;
 
         public List<TeamTournament> TeamTournaments { get; set; } = new List<TeamTournament>();

@@ -1,6 +1,7 @@
 ﻿using ESportsTeams.Core.Interfaces;
 using ESportsTeams.Core.Models.BindingModels.Team;
 using ESportsTeams.Core.Models.ViewModels.TeamViewModels;
+using ESportsTeams.Core.Services;
 using ESportsTeams.Infrastructure.Data.Entity;
 using ESportsTeams.Infrastructure.Data.Enums;
 using Microsoft.AspNetCore.Identity;
@@ -12,12 +13,17 @@ namespace ESportsTeams.Controllers
     public class TeamController : Controller
     {
         private readonly ITeamService _teamService;
+        private readonly IPhotoService _photoService;
         private readonly UserManager<AppUser> _userManager;
 
-        public TeamController(UserManager<AppUser> userManager, ITeamService teamService)
+        public TeamController(
+            UserManager<AppUser> userManager,
+            ITeamService teamService,
+            IPhotoService photoService)
         {
             _userManager = userManager;
-           _teamService = teamService;
+            _teamService = teamService;
+            _photoService = photoService;
         }
 
         [HttpGet]
@@ -65,14 +71,14 @@ namespace ESportsTeams.Controllers
 
             var teams = category switch
             {
-                -1 => await _teamService.GetSliceOfUserOwnedAsync(dbUserId, (page - 1) * pageSize, pageSize),             
-                _ => await _teamService.GetOwnedTeams(dbUserId,(Category)category, (page - 1) * pageSize, pageSize),
+                -1 => await _teamService.GetSliceOfUserOwnedAsync(dbUserId, (page - 1) * pageSize, pageSize),
+                _ => await _teamService.GetOwnedTeams(dbUserId, (Category)category, (page - 1) * pageSize, pageSize),
             };
 
             var count = category switch
             {
                 -1 => await _teamService.GetOwnedTeamCountAsync(dbUserId),
-                _ => await _teamService.GetCountByCategoryOfUserOwnedAsync(dbUserId,(Category)category),
+                _ => await _teamService.GetCountByCategoryOfUserOwnedAsync(dbUserId, (Category)category),
             };
 
             var teamViewModel = new IndexTeamViewModel
@@ -90,14 +96,14 @@ namespace ESportsTeams.Controllers
         [HttpGet]
         public IActionResult Add()
         {
-           
+
             return View();
         }
 
         [HttpPost]
         public async Task<IActionResult> Add(AddTeamViewModel model)
         {
-           
+
             if (!ModelState.IsValid)
             {
                 return View(model);
@@ -115,18 +121,72 @@ namespace ESportsTeams.Controllers
                 ModelState.AddModelError("", "Something went wrong!");
 
                 return View(model);
-            }           
+            }
         }
 
         [HttpGet]
-        [Route("Team/{esportsTeam}/{id}")]
-        public async Task<IActionResult> DetailsTeam(int id)
+        public async Task<IActionResult> Details(int id)
         {
-            var team = await _teamService.GetByIdAsync(id);
+            var team = await _teamService.GetTeamDetailsByIdAsync(id);
 
             return team == null ? NotFound() : View(team);
         }
+
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(int id)
+        {
+            var team = await _teamService.GetIdAsync(id);
+            if (team == null)
+            {
+                return View("Error");
+            }
+            var teamViewModel = new EditTeamViewModel()
+            {
+                Name = team.Name,
+                Description = team.Description,
+                Address = team.Address,
+                URL = team.Image,
+                Category = team.Category,
+            };
+
+            return View(teamViewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(EditTeamViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                ModelState.AddModelError("", "Failed to edit Team");
+                return View("Edit", model);
+            }
+
+            await _teamService.EditTeamAsync(model);
+            return RedirectToAction("Index", "Home");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var teamDetails = await _teamService.GetIdAsync(id);
+            if (teamDetails == null) return View("Error");
+            return View(teamDetails);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        public async Task<IActionResult> DeleteTeam(int id)
+        {
+            var teamDelete = await _teamService.DeleteTeamAsync(id);
+
+            if (teamDelete == null)
+            {
+                return View("Error");
+            }
+
+            return RedirectToAction("Index");
+        }
     }
 
-    
+
 }
