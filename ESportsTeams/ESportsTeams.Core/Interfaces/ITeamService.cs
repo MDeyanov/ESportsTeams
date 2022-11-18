@@ -1,4 +1,5 @@
 ﻿using ESportsTeams.Core.Models.BindingModels.Team;
+using ESportsTeams.Core.Models.ViewModels.TeamViewModels;
 using ESportsTeams.Infrastructure.Data.Entity;
 using ESportsTeams.Infrastructure.Data.Enums;
 using System;
@@ -13,9 +14,14 @@ namespace ESportsTeams.Core.Interfaces
     {
         Task AddTeamAsync(AddTeamViewModel model,string userId);
         Task<IEnumerable<Team>> GetSliceAsync(int offset, int size);
+        Task<IEnumerable<Team>> GetSliceOfUserOwnedAsync(string userId, int offset, int size);
         Task<IEnumerable<Team>> GetTeamsByCategoryAndSliceAsync(Category category, int offset, int size);
+        Task<IEnumerable<Team>> GetOwnedTeams(string userId, Category category, int offset, int size);
         Task<IEnumerable<Team>> GetTeamByCountry(string country);
         Task<int> GetCountAsync();
-        Task<int> GetCountByCategoryAsync(Category category);
+        Task<int> GetOwnedTeamCountAsync(string userId);
+        Task<int> GetCountByCategoryAsync(Category category);     
+        Task<int> GetCountByCategoryOfUserOwnedAsync(string userId,Category category);
+        Task<Team?> GetByIdAsync(int id);
     }
 }

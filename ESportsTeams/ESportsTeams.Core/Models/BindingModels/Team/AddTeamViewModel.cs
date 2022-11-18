@@ -29,10 +29,6 @@ namespace ESportsTeams.Core.Models.BindingModels.Team
         public IFormFile Image { get; set; } = null!;
 
         [Required]
-        public Category Category { get; set; }
-
-        [Required]
-        public string OwnerId { get; set; } = null!;
-
+        public Category Category { get; set; }      
     }
 }

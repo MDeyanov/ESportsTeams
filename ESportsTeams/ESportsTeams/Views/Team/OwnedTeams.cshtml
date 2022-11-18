@@ -21,10 +21,10 @@
             <div class="col text-center">
                 <p>Team Categories</p>
                 <div class="mb-3">
-                    <a type="button" class="btn btn-secondary mb-1" asp-action="Index" asp-route-page="1" asp-route-category="-1">All</a>
+                    <a type="button" class="btn btn-secondary mb-1" asp-action="OwnedTeams" asp-route-page="1" asp-route-category="-1">All</a>
                     @foreach (var category in Html.GetEnumSelectList<Category>())
                     {
-                        <a type="button" class="btn btn-secondary mb-1" asp-action="Index" asp-route-page="1" asp-route-category="@category.Value">@category.Text</a>
+                        <a type="button" class="btn btn-secondary mb-1" asp-action="OwnedTeams" asp-route-page="1" asp-route-category="@category.Value">@category.Text</a>
                     }
                 </div>
             </div>
@@ -51,15 +51,15 @@
             @foreach (var team in Model.Teams)
             {
                 <li class="col-12 col-md-6 col-lg-4">
-                    <div class="card">
-                        <a type="button" asp-controller="Team" asp-action="DetailTeam" asp-route-esportsTeam="@team.Name" asp-route-id="@team.Id">
+                    <div class="card">                       
+                        <a type="button" asp-controller="Team" asp-action="DetailTeam"  asp-route-id="@team.Id">
                             @if (@team.Image != null)
                             {
                                 <img class="card-img-top" src="@team.Image" alt="Card image cap">
                             }
                             else
                             {
-                                <img class="card-img-top" src="" alt="Card image cap">
+                                <img class="card-img-top" src="" alt="">
                             }
 
                         </a>
@@ -71,8 +71,8 @@
                         <div class="card-footer card-footer-borderless d-flex justify-content-between">
                             <div>
                                 <small>@team.Category</small>
-                            </div>
-                            @if (isAuthenticated && User.IsInRole("admin"))
+                            </div>              
+                            @if (isAuthenticated)
                             {
                                 <div>
                                     <a type="button" class="btn btn-sm btn-outline-info" asp-controller="Team" asp-action="Edit" asp-route-id="@team.Id">
