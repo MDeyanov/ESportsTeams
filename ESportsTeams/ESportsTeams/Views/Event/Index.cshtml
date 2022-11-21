@@ -1,0 +1,29 @@
+﻿@using ESportsTeams.Core.Models.ViewModels.EventViewModels;
+@using ESportsTeams.Infrastructure.Data.Entity;
+
+@model IEnumerable<IndexEventViewModel>
+
+@{
+    ViewBag.Title = "All Events";
+}
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+
+<div class="text-center row">
+    @foreach (var eventView in Model)
+    {
+        <div class="card col-4" style="width: 20rem; ">
+            <img class="card-img-top" style="width: 18rem;"
+             src="@eventView.ImageUrl" alt="Book Image">
+            <div class="card-body">
+
+                <h5 class="card-title mt-1">@eventView.Title</h5>
+                <p class="mb-0">Rating: @eventView.Description</p>
+            </div>
+
+            <form class="input-group-sm" asp-controller="Tournaments" asp-action="Index" asp-route-tournamentId="@eventView.Id">
+                <input type="submit" value="Open @eventView.Title Tournaments" class="fs-6 btn btn-success mb-3 p-2" />
+            </form>
+        </div>
+    }
+</div>

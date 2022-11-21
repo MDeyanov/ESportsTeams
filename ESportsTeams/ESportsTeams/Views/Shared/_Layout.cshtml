@@ -41,22 +41,15 @@
                             </li>
                             @if (SignInManager.IsSignedIn(User))
                             {
-                                @*to change controller and action*@
                                 <li class="nav-item">
-                                    <a class="nav-link" asp-area="" asp-controller="Team" asp-action="Index">Find Tournamets</a>
+                                    <a class="nav-link" asp-area="" asp-controller="Team" asp-action="Index">Find Team</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="" asp-controller="Event" asp-action="Index">All Events</a>
                                 </li>
                             }
                             @*to change controller and action*@
-                            <li class="nav-item">
-                                <a class="nav-link" asp-area="" asp-controller="Team" asp-action="Index">Find Teams</a>
-                            </li>
-                            @*to change controller and action*@
-                            <li class="nav-item">
-                                <a class="nav-link" asp-area="" asp-controller="Team" asp-action="Index">Find Tournamets</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="/blog" class="nav-link">Blog</a>
-                            </li>
+                          
                         </ul>
                         @if (SignInManager.IsSignedIn(User))
                         {
@@ -78,8 +71,8 @@
                                             <span class="h6 mb-0">View My Teams</span>
                                         </a>
 
-                                        <a class="dropdown-item" asp-controller="User" asp-action="EditProfile">
-                                            <span class="h6 mb-0">Edit Profile</span>
+                                        <a class="dropdown-item" href="/Identity/Account/Manage">
+                                            <span class="h6 mb-0">Manage Profile</span>
                                         </a>
 
                                         <a class="dropdown-item" asp-area="" asp-controller="Team" asp-action="Add">
@@ -123,7 +116,7 @@
         </main>
     </div>
 
-    <footer class="bg-gray text-light footer-short">
+    <footer class="bg-gray text-light footer-short fixed-bottom">
         <div class="container">
             <div class="row">
                 <div class="col-12 col-md-3">
@@ -135,55 +128,59 @@
                     </p>
                 </div>
                 <!--end of col-->
-                <div class="col-12 col-md-9">
-                    @*<span class="h5">ESports Teams</span>*@
-                    <div class="row no-gutters">
-                        <div class="col-6 col-lg-3">
-                            <h6>Navigate</h6>
-                            <ul class="list-unstyled">
-                                <li>
-                                    <a asp-area="" asp-controller="Home"
+                @if ((SignInManager.IsSignedIn(User)))
+                {
+                    <div class="col-12 col-md-9">
+                        @*<span class="h5">ESports Teams</span>*@
+                        <div class="row no-gutters">
+                            <div class="col-6 col-lg-3">
+                                <h6>Navigate</h6>
+                                <ul class="list-unstyled">
+                                    <li>
+                                        <a asp-area="" asp-controller="Home"
                                        asp-action="Index">Home</a>
-                                </li>
-                                <li>
-                                    <a asp-area="" asp-controller="Teams"
+                                    </li>
+                                    <li>
+                                        <a asp-area="" asp-controller="Teams"
                                        asp-action="Index">Find Near You</a>
-                                </li>                                                            
-                            </ul>
-                        </div>
-                        <!--end of col-->
-                        <div class="col-6 col-lg-3">
-                            <h6>Team Directory</h6>
-                            <ul class="list-unstyled">
-                                <li>
-                                    <a asp-area="" asp-controller="Team"
+                                    </li>
+                                </ul>
+                            </div>
+                            <!--end of col-->
+                            <div class="col-6 col-lg-3">
+                                <h6>Team Directory</h6>
+                                <ul class="list-unstyled">
+                                    <li>
+                                        <a asp-area="" asp-controller="Team"
                                        asp-action=" ">Find Teams By Country</a>
-                                </li>
-                                <li>
-                                    <a asp-area="" asp-controller="Team"
+                                    </li>
+                                    <li>
+                                        <a asp-area="" asp-controller="Team"
                                        asp-action=" ">Find Teams By City</a>
-                                </li>
-                            </ul>
-                        </div>
-                       
-                        @*<div class="col-6 col-lg-3">
-                            <h6>Social</h6>
-                            <ul class="list-unstyled">
-                                <li>
-                                    <a href="">Youtube</a>
-                                </li>
-                                <li>
-                                    <a href="">Facebook</a>
-                                </li>
-                                <li>
-                                    <a href="">Twitter</a>
-                                </li>                             
-                            </ul>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            @*<div class="col-6 col-lg-3">
+                        <h6>Social</h6>
+                        <ul class="list-unstyled">
+                        <li>
+                        <a href="">Youtube</a>
+                        </li>
+                        <li>
+                        <a href="">Facebook</a>
+                        </li>
+                        <li>
+                        <a href="">Twitter</a>
+                        </li>
+                        </ul>
                         </div>*@
-                        <!--end of col-->
+                            <!--end of col-->
+                        </div>
+                        <!--end of row-->
                     </div>
-                    <!--end of row-->
-                </div>
+                }
+                
                 <!--end of col-->
             </div>
             <!--end of row-->
