@@ -4,12 +4,14 @@ using ESportsTeams.Core.Models.ViewModels.TeamViewModels;
 using ESportsTeams.Core.Services;
 using ESportsTeams.Infrastructure.Data.Entity;
 using ESportsTeams.Infrastructure.Data.Enums;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
 namespace ESportsTeams.Controllers
 {
+    [Authorize]
     public class TeamController : Controller
     {
         private readonly ITeamService _teamService;

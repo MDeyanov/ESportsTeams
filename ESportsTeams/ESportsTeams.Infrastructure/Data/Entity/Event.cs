@@ -13,6 +13,8 @@ namespace ESportsTeams.Infrastructure.Data.Entity
         [StringLength(EventTitleMaxLength)]
         public string Title { get; set; } = null!;
 
+        public string? Image { get; set; }
+
         [Required]
         [StringLength(EventDescriptionMaxLength)]
         public string Description { get; set; } = null!;

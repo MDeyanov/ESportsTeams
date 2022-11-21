@@ -47,6 +47,7 @@ namespace ESportsTeams.Infrastructure.Data
                             Event= new Event()
                             {
                                 Title = "Dota2",
+                                Image = "https://i.pinimg.com/564x/8a/8b/50/8a8b50da2bc4afa933718061fe291520.jpg",
                                 Description = "Dota 2 is a multiplayer online battle arena (MOBA)" +
                                 " video game in which two teams of five players compete to destroy" +
                                 " a large structure defended by the opposing team known as " +
@@ -74,6 +75,7 @@ namespace ESportsTeams.Infrastructure.Data
                             Event= new Event()
                             {
                                 Title = "CSGO",
+                                Image = "https://i.pinimg.com/564x/17/97/34/1797349b7a00466615057817632d870d.jpg",
                                 Description = "The game pits two teams, Terrorists and Counter-Terrorists," +
                                 " against each other in different objective-based game modes." +
                                 " The most common game modes involve the Terrorists planting a bomb" +
@@ -102,6 +104,7 @@ namespace ESportsTeams.Infrastructure.Data
                             Event= new Event()
                             {
                                 Title = "LeagueOfLegends",
+                                Image = "https://i.pinimg.com/564x/a2/ea/c1/a2eac1e1644fad2ab6253e7562ebba00.jpg",
                                 Description = "League of Legends is one of the world's most popular video games," +
                                 " developed by Riot Games." +
                                 " It features a team-based competitive game mode based on strategy and outplaying opponents." +
@@ -129,6 +132,7 @@ namespace ESportsTeams.Infrastructure.Data
                             Event= new Event()
                             {
                                 Title = "PUBG",
+                                Image = "https://i.pinimg.com/564x/34/28/7f/34287f4927e862d5d86b63d63df3409f.jpg",
                                 Description = "PUBG is a player versus player shooter game in which up to one hundred players fight in a battle royale," +
                                 " a type of large-scale last man standing deathmatch where players fight to remain the last alive." +
                                 " Players can choose to enter the match solo, duo, or with a small team of up to four people."
@@ -155,6 +159,7 @@ namespace ESportsTeams.Infrastructure.Data
                             Event = new Event()
                             {
                                 Title = "VALORANT",
+                                Image = "https://i.pinimg.com/564x/39/dd/4d/39dd4da08ecccc0159d79598365e995e.jpg",
                                 Description = "Valorant is a team-based first-person hero shooter set in the near future." +
                                 " Players play as one of a set of Agents," +
                                 " characters based on several countries and cultures around the world." +
