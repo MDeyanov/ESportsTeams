@@ -13,5 +13,7 @@ namespace ESportsTeams.Core.Interfaces
 
         Task<TournamentDetailsViewModel?> GetTournamentDetailsByIdAsync(int id);
 
+        Task AddTeamToTournamentAsync(string userId, int tournamentId);
+
     }
 }

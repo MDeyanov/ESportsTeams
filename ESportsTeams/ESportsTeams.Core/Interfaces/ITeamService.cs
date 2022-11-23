@@ -22,7 +22,7 @@ namespace ESportsTeams.Core.Interfaces
         Task<int> GetOwnedTeamCountAsync(string userId);
         Task<int> GetCountByCategoryAsync(Category category);     
         Task<int> GetCountByCategoryOfUserOwnedAsync(string userId,Category category);
-        Task<DetailsTeamViewModel?> GetTeamDetailsByIdAsync(int id);
+        Task<DetailsTeamViewModel?> GetTeamDetailsByIdAsync(int id, string loggedUserId);
         Task<Team?> GetTeamByIdAsync(int id);
         Task EditTeamAsync (EditTeamViewModel model);
         Task<bool> DeleteTeamAsync(int id);

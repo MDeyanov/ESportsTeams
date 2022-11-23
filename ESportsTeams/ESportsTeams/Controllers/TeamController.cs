@@ -86,7 +86,7 @@ namespace ESportsTeams.Controllers
                 _ => await _teamService.GetCountByCategoryOfUserOwnedAsync(dbUserId, (Category)category),
             };
 
-            var teamViewModel = new IndexTeamViewModel
+            var teamViewModel = new OwnTeamsViewModel
             {
                 Teams = teams,
                 Page = page,
@@ -132,7 +132,8 @@ namespace ESportsTeams.Controllers
         [HttpGet]
         public async Task<IActionResult> Details(int id)
         {
-            var team = await _teamService.GetTeamDetailsByIdAsync(id);
+            var loggedUserId = _userManager.GetUserId(this.User);
+            var team = await _teamService.GetTeamDetailsByIdAsync(id, loggedUserId);
 
             return team == null ? NotFound() : View(team);
         }

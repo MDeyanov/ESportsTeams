@@ -11,5 +11,6 @@ namespace ESportsTeams.Core.Interfaces
     public interface IUserService
     {
         Task<IEnumerable<Team>> GetUserOwnedTeamsAsync(string userId, Category category, int offset, int size);
+        Task<AppUser> FindUserByIdAsync(string userId);
     }
 }
