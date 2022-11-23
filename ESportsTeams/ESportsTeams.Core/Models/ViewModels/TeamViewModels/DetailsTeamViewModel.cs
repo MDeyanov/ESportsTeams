@@ -12,6 +12,10 @@ namespace ESportsTeams.Core.Models.ViewModels.TeamViewModels
 {
     public class DetailsTeamViewModel
     {
+        public int Id { get; set; }
+
+        [Required]
+        public string loggedUserId { get; set; } = null!;
 
         [Required]
         public string Name { get; set; } = null!;
@@ -27,7 +31,6 @@ namespace ESportsTeams.Core.Models.ViewModels.TeamViewModels
 
         public int TournamentWin { get; set; } = 0;
 
-        // adding a captain of a team
 
         [Required]
         public string OwnerId { get; set; } = null!;

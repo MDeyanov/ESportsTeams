@@ -8,19 +8,41 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 
 namespace ESportsTeams.Core.Services
 {
     public class TournamentService : ITournamentService
     {
         private readonly ApplicationDbContext _context;
-        private readonly IPhotoService _photoService;
         private readonly IUserService _userService;
-        public TournamentService(ApplicationDbContext context, IPhotoService photoService, IUserService userService)
+        public TournamentService(ApplicationDbContext context, IUserService userService)
         {
             _context = context;
-            _photoService = photoService;
             _userService = userService;
+        }
+
+        public async Task AddTeamToTournamentAsync(string userId, int tournamentId)
+        {
+            var user = await _userService.FindUserByIdAsync(userId);
+            var team = await _context.Teams.FirstOrDefaultAsync(x => x.OwnerId == user.Id);
+            var tournament = await _context.Tournaments.FirstOrDefaultAsync(x => x.Id == tournamentId);
+            if (tournament == null)
+            {
+                throw new ArgumentException("Tournament not found!");
+            }
+            if (team == null)
+            {
+                throw new ArgumentException("Team not found!");
+            }
+            tournament.TeamTournaments.Add(new TeamTournament()
+            {
+                TeamId= team.Id,
+                Team = team,
+                TournamentId= tournament.Id,
+                Tournament = tournament
+            });
+            await _context.SaveChangesAsync();
         }
 
         public async Task<IEnumerable<TournamentViewModel>> GetTournamentByEventIdAsync(int id)

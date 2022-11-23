@@ -1,5 +1,5 @@
-﻿@using ESportsTeams.Infrastructure.Data.Entity;
-@using ESportsTeams.Core.Models.ViewModels.TeamViewModels;
+﻿@using ESportsTeams.Core.Models.ViewModels.TeamViewModels;
+@using Microsoft.AspNetCore.Identity;
 @model DetailsTeamViewModel
 
 <div class="main-container">
@@ -36,6 +36,11 @@
                 <div>
                     <h1 class="mb-2">@Model.Name</h1>
                     <h2 class="lead mb-3">@Model.Address.City, @Model.Address.Country</h2>
+                    @if (Model.loggedUserId == Model.OwnerId)
+                    {
+                        <h3 class="breadcrumb-item active" aria-current="page">TEAM ID:@Model.Id</h3>
+
+                    }
                     <div>
                         <span class="badge badge-secondary mr-10">@Model.Category</span>
                     </div>

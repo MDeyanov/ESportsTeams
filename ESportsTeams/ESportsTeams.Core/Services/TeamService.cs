@@ -32,6 +32,11 @@ namespace ESportsTeams.Core.Services
         //Adding TEAMS
         public async Task AddTeamAsync(AddTeamViewModel model, string userId)
         {
+            var user = await _context.Users.FirstOrDefaultAsync(x => x.Id == userId);
+            if (user == null)
+            {
+                throw new ArgumentException("Invalid User!");
+            }
             var result = await _photoService.AddPhotoAsync(model.Image);
             var team = new Team()
             {
@@ -48,14 +53,17 @@ namespace ESportsTeams.Core.Services
                 }
             };
 
+            team.AppUsers.Add(user);
+
+            user.TeamId = team.Id;
             await _context.Teams.AddAsync(team);
             await _context.SaveChangesAsync();
         }
 
         //GETTING THE TEAMS USER OWNED
-        public async Task<IEnumerable<Team>> GetOwnedTeams (string userId, Category category, int offset, int size)
+        public async Task<IEnumerable<Team>> GetOwnedTeams(string userId, Category category, int offset, int size)
         {
-           return await _userService.GetUserOwnedTeamsAsync(userId, category, offset, size);
+            return await _userService.GetUserOwnedTeamsAsync(userId, category, offset, size);
         }
 
         //GETTING COUNT OF ALL TEAMS
@@ -70,7 +78,7 @@ namespace ESportsTeams.Core.Services
             return await _context.Teams.CountAsync(t => t.Category == category);
         }
 
-      
+
         //SLICE TEAM FOR PAGES
         public async Task<IEnumerable<Team>> GetSliceAsync(int offset, int size)
         {
@@ -98,7 +106,7 @@ namespace ESportsTeams.Core.Services
         public async Task<IEnumerable<Team>> GetSliceOfUserOwnedAsync(string userId, int offset, int size)
         {
             return await _context.Teams
-                .Where(t=>t.OwnerId== userId)
+                .Where(t => t.OwnerId == userId)
                 .Include(x => x.Address)
                 .Skip(offset)
                 .Take(size)
@@ -108,7 +116,7 @@ namespace ESportsTeams.Core.Services
         //GETTING THE COUNT OF OWNED TEAMS
         public async Task<int> GetOwnedTeamCountAsync(string userId)
         {
-            return await _context.Teams.Where(t=>t.OwnerId == userId).CountAsync();
+            return await _context.Teams.Where(t => t.OwnerId == userId).CountAsync();
         }
 
         //GETTING THE COUNT BY CATEGORY OF USER THAT OWN THEM
@@ -120,7 +128,7 @@ namespace ESportsTeams.Core.Services
         }
 
 
-        public async Task<DetailsTeamViewModel?> GetTeamDetailsByIdAsync(int id)
+        public async Task<DetailsTeamViewModel?> GetTeamDetailsByIdAsync(int id, string loggedUserId)
         {
             var result = await _context.Teams
                 .Include(x => x.Owner)
@@ -131,9 +139,11 @@ namespace ESportsTeams.Core.Services
             {
                 throw new ArgumentException("Team not found!");
             }
-           
+
             var finalResult = new DetailsTeamViewModel()
             {
+                Id = result.Id,
+                loggedUserId = loggedUserId,
                 Name = result.Name,
                 Description = result.Description,
                 Category = result.Category,
@@ -155,16 +165,16 @@ namespace ESportsTeams.Core.Services
             return await _context.Teams
                 .Include(x => x.Address)
                 .FirstOrDefaultAsync(x => x.Id == id);
-         
+
         }
 
         public async Task EditTeamAsync(EditTeamViewModel model)
         {
-            
+
 
             var teamToChange = await _context.Teams
-                .Include(x=>x.Address)
-                .FirstOrDefaultAsync(x=>x.Id == model.Id);
+                .Include(x => x.Address)
+                .FirstOrDefaultAsync(x => x.Id == model.Id);
 
             if (teamToChange == null)
             {
@@ -172,7 +182,7 @@ namespace ESportsTeams.Core.Services
             }
 
             var photoResult = await _photoService.AddPhotoAsync(model.Image);
-         
+
             if (!string.IsNullOrEmpty(teamToChange.Image))
             {
                 _ = _photoService.DeletePhotoAsync(teamToChange.Image);
@@ -189,7 +199,7 @@ namespace ESportsTeams.Core.Services
 
         public async Task<bool> DeleteTeamAsync(int id)
         {
-            var team = await _context.Teams.FirstOrDefaultAsync(x=>x.Id==id);
+            var team = await _context.Teams.FirstOrDefaultAsync(x => x.Id == id);
             if (team == null)
             {
                 throw new ArgumentException("Team not found!");
