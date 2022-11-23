@@ -22,9 +22,8 @@ namespace ESportsTeams.Core.Interfaces
         Task<int> GetOwnedTeamCountAsync(string userId);
         Task<int> GetCountByCategoryAsync(Category category);     
         Task<int> GetCountByCategoryOfUserOwnedAsync(string userId,Category category);
-        //Task<Team?> GetByIdAsync(int id);
         Task<DetailsTeamViewModel?> GetTeamDetailsByIdAsync(int id);
-        Task<Team?> GetIdAsync(int id);
+        Task<Team?> GetTeamByIdAsync(int id);
         Task EditTeamAsync (EditTeamViewModel model);
         Task<bool> DeleteTeamAsync(int id);
 

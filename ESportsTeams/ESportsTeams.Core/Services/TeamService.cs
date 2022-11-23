@@ -126,6 +126,11 @@ namespace ESportsTeams.Core.Services
                 .Include(x => x.Owner)
                 .Include(x => x.Address)
                 .FirstOrDefaultAsync(x => x.Id == id);
+
+            if (result == null)
+            {
+                throw new ArgumentException("Team not found!");
+            }
            
             var finalResult = new DetailsTeamViewModel()
             {
@@ -145,13 +150,12 @@ namespace ESportsTeams.Core.Services
             return finalResult;
         }
 
-        public async Task<Team?> GetIdAsync(int id)
+        public async Task<Team?> GetTeamByIdAsync(int id)
         {
-            var result = await _context.Teams
+            return await _context.Teams
                 .Include(x => x.Address)
                 .FirstOrDefaultAsync(x => x.Id == id);
-
-            return result;
+         
         }
 
         public async Task EditTeamAsync(EditTeamViewModel model)
@@ -161,7 +165,12 @@ namespace ESportsTeams.Core.Services
             var teamToChange = await _context.Teams
                 .Include(x=>x.Address)
                 .FirstOrDefaultAsync(x=>x.Id == model.Id);
-          
+
+            if (teamToChange == null)
+            {
+                throw new ArgumentException("Team not found!");
+            }
+
             var photoResult = await _photoService.AddPhotoAsync(model.Image);
          
             if (!string.IsNullOrEmpty(teamToChange.Image))
@@ -181,6 +190,10 @@ namespace ESportsTeams.Core.Services
         public async Task<bool> DeleteTeamAsync(int id)
         {
             var team = await _context.Teams.FirstOrDefaultAsync(x=>x.Id==id);
+            if (team == null)
+            {
+                throw new ArgumentException("Team not found!");
+            }
             if (!string.IsNullOrEmpty(team.Image))
             {
                 _ = _photoService.DeletePhotoAsync(team.Image);
