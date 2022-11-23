@@ -1,0 +1,49 @@
+﻿@using ESportsTeams.Core.Models.ViewModels.TournamentViewModels;
+@using ESportsTeams.Infrastructure.Data.Entity;
+
+@model IEnumerable<TournamentViewModel>
+
+@{
+    ViewBag.Title = "Tournaments";
+}
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+
+<div class="text-center row">
+    @foreach (var tournamentView in Model)
+    {
+        <div class="card col-4" style="width: 20rem; ">
+            <img class="card-img-top" style="width: 18rem;"
+             src="@tournamentView.Image" alt="Tournament Image">
+            <div class="card-body">
+
+                <h5 class="card-title mt-1">@tournamentView.Title</h5>
+                <p class="mb-0">Description: @tournamentView.Description</p>
+                <p class="mb-0">Start date: @tournamentView.StartTime</p>
+                <p class="mb-0">Entry Fee: @tournamentView.EntryFee</p>
+                <a href="@tournamentView.Website" target="_blank">Website</a>
+                <a href="@tournamentView.Twitter" target="_blank">Twitter</a>
+                <a href="@tournamentView.Facebook" target="_blank">Facebook</a>
+                <a href="@tournamentView.Contact" target="_blank">Contact</a>              
+                <p class="mb-0">Prize: @tournamentView.PrizePool $</p>
+                <p class="mb-0">Country: @tournamentView.Address.Country</p>
+                @foreach (var tournamentVwiew in tournamentView.TeamTournaments)
+                {
+                    <div class="card row-20" style="width: 8rem;" @tournamentVwiew.Team.Name>
+                        <img class="card-img-top" style="width: 8rem;"
+                         src="@tournamentVwiew.Team.Image" alt="Team Image">
+                        <div class="card-body">
+                            <p class="fs-10 fw-bold">@tournamentVwiew.Team.Name</p>
+                        </div>                      
+                    </div>
+                }
+            </div>
+
+           <div class="form-group">
+                <div class="col-sm-push-2">
+                    <a asp-controller="Tournament" asp-action="Details" asp-route-Id="@tournamentView.Id" class="btn btn-success">Details</a>
+                </div>
+           </div>
+        </div>
+    }
+</div>

@@ -47,9 +47,12 @@ namespace ESportsTeams.Controllers
                 -1 => await _teamService.GetCountAsync(),
                 _ => await _teamService.GetCountByCategoryAsync((Category)category),
             };
+            var loggedUser = this.User;
+            var dbUserId = _userManager.GetUserId(loggedUser);
 
             var teamViewModel = new IndexTeamViewModel
             {
+                loggedUserId = dbUserId,
                 Teams = teams,
                 Page = page,
                 PageSize = pageSize,
@@ -138,7 +141,7 @@ namespace ESportsTeams.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
-            var team = await _teamService.GetIdAsync(id);
+            var team = await _teamService.GetTeamByIdAsync(id);
             if (team == null)
             {
                 return View("Error");
@@ -171,17 +174,31 @@ namespace ESportsTeams.Controllers
         [HttpGet]
         public async Task<IActionResult> Delete(int id)
         {
-            var teamDetails = await _teamService.GetIdAsync(id);
-            if (teamDetails == null) return View("Error");
+            var teamDetails = await _teamService.GetTeamByIdAsync(id);
+            if (teamDetails == null)
+            {
+                return View("Error");
+            }
             return View(teamDetails);
         }
 
         [HttpPost, ActionName("Delete")]
         public async Task<IActionResult> DeleteTeam(int id)
         {
+            var loggedUser = this.User;
+            var dbUserId = _userManager.GetUserId(loggedUser);
+
+            var team = await _teamService.GetTeamByIdAsync(id);
+            if (team == null || team.OwnerId != dbUserId)
+            {
+                return View("Error");
+            }
+            
+
             var teamDelete = await _teamService.DeleteTeamAsync(id);
 
-            if (teamDelete == null)
+
+            if (!teamDelete)
             {
                 return View("Error");
             }

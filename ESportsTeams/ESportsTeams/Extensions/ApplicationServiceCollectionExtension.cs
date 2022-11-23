@@ -10,6 +10,7 @@ namespace ESportsTeams.Extensions
             services.AddScoped<IPhotoService, PhotoService>();
             services.AddScoped<ITeamService, TeamService>();
             services.AddScoped<IEventService, EventService>();
+            services.AddScoped<ITournamentService, TournamentService>();
             services.AddScoped<IUserService, UserService>();
 
             return services;

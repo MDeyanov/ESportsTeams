@@ -1,4 +1,8 @@
-﻿@using ESportsTeams.Core.Models.ViewModels.TeamViewModels;
+﻿@using ESportsTeams.Infrastructure.Data.Entity;
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<AppUser> SignInManager
+
+@using ESportsTeams.Core.Models.ViewModels.TeamViewModels;
 @using ESportsTeams.Infrastructure.Data.Enums;
 @model IndexTeamViewModel
 
@@ -73,7 +77,7 @@
                             <div>
                                 <small>@team.Category</small>
                             </div>
-                            @if (isAuthenticated && User.IsInRole("admin"))
+                            @if (User.IsInRole("admin") || Model.loggedUserId == team.OwnerId)
                             {
                                 <div>
                                     <a type="button" class="btn btn-sm btn-outline-info" asp-controller="Team" asp-action="Edit" asp-route-id="@team.Id">
@@ -84,6 +88,17 @@
                                     </a>
                                 </div>
                             }
+                           @* @if (isAuthenticated && User.IsInRole("admin"))
+                            {
+                                <div>
+                                    <a type="button" class="btn btn-sm btn-outline-info" asp-controller="Team" asp-action="Edit" asp-route-id="@team.Id">
+                                        Edit
+                                    </a>
+                                    <a type="button" class="btn btn-sm btn-outline-danger"  asp-controller="Team" asp-action="Delete" asp-route-id="@team.Id">
+                                        Delete
+                                    </a>
+                                </div>
+                            }*@
                         </div>
                     </div>
                 </li>

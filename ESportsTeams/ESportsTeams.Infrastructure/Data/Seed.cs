@@ -32,7 +32,7 @@ namespace ESportsTeams.Infrastructure.Data
                             Description = "BTS Pro Series Season 12 is an online tournament organized by Beyond The Summit." +
                             " In this season, the tournament will be played in Southeast Asia and Americas region. " +
                             "The Group Stage where 9 teams of each region will be pariticpating in a single round robin format tournament.",
-                            Image = "https://liquipedia.net/commons/images/4/41/BTS_Pro_Series_Season_12_allmode.png",
+                            Image = "https://res.cloudinary.com/dzac3ggur/image/upload/v1669146442/BTS_Pro_Series_Season_12_q5gp5w.png",
                             StartTime = new DateTime(2023,01,10),
                             Website = "https://www.beyondthesummit.tv/",
                             Facebook = "https://www.facebook.com/BeyondTheSummitTV",
@@ -60,7 +60,7 @@ namespace ESportsTeams.Infrastructure.Data
                             Description = "The Intel Extreme Masters Season XVII – Rio Major 2022," +
                             " also known as IEM Rio Major 2022 or Rio 2022, is the ongoing eighteenth" +
                             " Counter-Strike: Global Offensive Major Championship.",
-                            Image = "https://eslpro.imgix.net/tour/csgo/rio/wp-content/uploads/2022/08/esl-event-preview-iem-rio2022.jpg?auto=format%2Ccompress",
+                            Image = "https://res.cloudinary.com/dzac3ggur/image/upload/v1669146443/ESL-CSGO_rvxbsm.jpg",
                             StartTime = new DateTime(2022,12,20),
                             Website = "https://pro.eslgaming.com/tour/csgo/rio/#?matchday=3",
                             Facebook = "https://www.facebook.com/iem",
@@ -86,10 +86,9 @@ namespace ESportsTeams.Infrastructure.Data
                          new Tournament()
                         {
                             Title = "LCK Spring 2023",
-                            Description = "The Intel Extreme Masters Season XVII – Rio Major 2023," +
-                            " also known as IEM Rio Major 2023 or Rio 2023, is the ongoing eighteenth" +
-                            " Counter-Strike: Global Offensive Major Championship.",
-                            Image = "https://liquipedia.net/commons/images/4/44/LCK_2021.png",
+                            Description = "The LCK 2022 Spring Season is the first split of the second year of Korea's professional League of Legends league under partnership." +
+                            " Ten teams compete in a round robin group stage.",
+                            Image = "https://res.cloudinary.com/dzac3ggur/image/upload/v1669146442/LCK_2021_woynoe.png",
                              StartTime = new DateTime(2023,02,10),
                             Website = "https://lolesports.com",
                             Facebook = "https://www.facebook.com/officiallck",
@@ -117,7 +116,7 @@ namespace ESportsTeams.Infrastructure.Data
                             Title = "Peacekeeper Elite League Summer 2023",
                             Description = "China's highest level professional league for Peacekeeper Elite," +
                             " a Chinese rebranded version of PUBG Mobile.",
-                            Image = "https://liquipedia.net/commons/images/4/44/LCK_2021.png",
+                            Image = "https://res.cloudinary.com/dzac3ggur/image/upload/v1669146442/Peacekeeper_Elite_League_2019_lightmode_erqypu.png",
                              StartTime = new DateTime(2023,02,10),
                             Website = "https://lolesports.com",
                             Facebook = "https://www.facebook.com/officiallck",
@@ -144,7 +143,7 @@ namespace ESportsTeams.Infrastructure.Data
                             Title = "VALORANT Champions Tour 2023: EMEA League",
                             Description = "China's highest level professional league for Peacekeeper Elite," +
                             " a Chinese rebranded version of PUBG Mobile.",
-                            Image = "https://liquipedia.net/commons/images/4/44/LCK_2021.png",
+                            Image = "https://res.cloudinary.com/dzac3ggur/image/upload/v1669146443/2022-valorant_mkrlz9.jpg",
                              StartTime = new DateTime(2023,03,26),
                             Website = "https://lolesports.com",
                             Facebook = "https://www.facebook.com/officiallck",
