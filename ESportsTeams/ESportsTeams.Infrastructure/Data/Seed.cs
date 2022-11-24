@@ -167,30 +167,7 @@ namespace ESportsTeams.Infrastructure.Data
                         }
                     });
                     context.SaveChanges();
-                }
-                if (!context.Teams.Any())
-                {
-                    context.Teams.AddRange(new List<Team>()
-                    {
-                        new Team()
-                        {
-                            Name = "NaPeshoTeama",
-                            Description = "Dota2 team for 5v5",
-                            Image = "https://upload.wikimedia.org/wikipedia/en/f/f1/Team_Liquid_logo.svg",
-                            Category = Category.Dota2,
-                            Address = new Address()
-                            {
-                              Street = "zora 1",
-                              City = "Kyustendil",
-                              Country = "Bulgaria",
-                              ZipCode = 2500
-                            },
-                            TournamentWin = 0,
-                            OwnerId = "1c2bfb08-9038-4cd1-b3de-49efb78f5cd7"                           
-                        }                       
-                    });
-                    context.SaveChanges();
-                }
+                }              
             }
         }
         public static async Task SeedUsersAndRolesAsync(IApplicationBuilder applicationBuilder)
@@ -238,6 +215,7 @@ namespace ESportsTeams.Infrastructure.Data
                 {
                     var newAppUser = new AppUser()
                     {
+                        Id = "1c2bfb08-9038-4cd1-b3de-49efb78f5cd7",
                         UserName = "app-user",
                         FirstName = "Pesho",
                         LastName = "Petrov",
@@ -249,6 +227,22 @@ namespace ESportsTeams.Infrastructure.Data
                             City = "Sofia",
                             Country = "Bulgaria",
                             ZipCode = 2500
+                        },
+                        Team = new Team()
+                        {
+                            Name = "NaPeshoTeama",
+                            Description = "Dota2 team for 5v5",
+                            Image = "https://upload.wikimedia.org/wikipedia/en/f/f1/Team_Liquid_logo.svg",
+                            Category = Category.Dota2,
+                            Address = new Address()
+                            {
+                                Street = "zora 1",
+                                City = "Kyustendil",
+                                Country = "Bulgaria",
+                                ZipCode = 2500
+                            },
+                            TournamentWin = 0,
+                            OwnerId = "1c2bfb08-9038-4cd1-b3de-49efb78f5cd7"
                         }
                     };
                     await userManager.CreateAsync(newAppUser, "Pesho1!");

@@ -24,8 +24,8 @@
                 <a href="@tournamentView.Website" target="_blank">Website</a>
                 <a href="@tournamentView.Twitter" target="_blank">Twitter</a>
                 <a href="@tournamentView.Facebook" target="_blank">Facebook</a>
-                <a href="@tournamentView.Contact" target="_blank">Contact</a>              
-                <p class="mb-0">Prize: @tournamentView.PrizePool $</p>
+                <a href="@tournamentView.Contact" target="_blank">Contact</a>
+                <p class="mb-0">Prize: @string.Format($"{tournamentView.PrizePool:f2}")$</p>
                 <p class="mb-0">Country: @tournamentView.Address.Country</p>
                 @foreach (var tournamentVwiew in tournamentView.TeamTournaments)
                 {

@@ -37,6 +37,7 @@ namespace ESportsTeams.Core.Services
             {
                 throw new ArgumentException("Invalid User!");
             }
+
             var result = await _photoService.AddPhotoAsync(model.Image);
             var team = new Team()
             {
@@ -197,21 +198,33 @@ namespace ESportsTeams.Core.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task<bool> DeleteTeamAsync(int id)
-        {
-            var team = await _context.Teams.FirstOrDefaultAsync(x => x.Id == id);
-            if (team == null)
-            {
-                throw new ArgumentException("Team not found!");
-            }
-            if (!string.IsNullOrEmpty(team.Image))
-            {
-                _ = _photoService.DeletePhotoAsync(team.Image);
-            }
-            _context.Teams.Remove(team);
+        //public async Task<bool> DeleteTeamAsync(int id)
+        //{
+        //    var team = await _context.Teams.FirstOrDefaultAsync(x => x.Id == id);
+        //    if (team == null)
+        //    {
+        //        throw new ArgumentException("Team not found!");
+        //    }
+        //    if (!string.IsNullOrEmpty(team.Image))
+        //    {
+        //        _ = _photoService.DeletePhotoAsync(team.Image);
+        //    }
+        //    _context.Teams.Remove(team);
 
-            await _context.SaveChangesAsync();
-            return true;
+        //    await _context.SaveChangesAsync();
+        //    return true;
+        //}
+
+        public async Task<bool> TeamExistsAsync(string name)
+        {
+            var teams = await _context.Teams.ToListAsync();
+
+            if (teams == null || teams.Count == 0)
+            {
+                return false;
+            }
+
+            return teams.Any(x => x.Name == name);
         }
     }
 }

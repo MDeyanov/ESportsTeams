@@ -7,6 +7,7 @@ using ESportsTeams.Infrastructure.Data.Enums;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 
 namespace ESportsTeams.Controllers
@@ -108,7 +109,12 @@ namespace ESportsTeams.Controllers
         [HttpPost]
         public async Task<IActionResult> Add(AddTeamViewModel model)
         {
-
+            var teamExists = _teamService.TeamExistsAsync(model.Name);
+            if (teamExists.Result)
+            {
+                ModelState.AddModelError("Name", "Name is already exist");
+                return View(model);
+            }
             if (!ModelState.IsValid)
             {
                 return View(model);
@@ -183,29 +189,29 @@ namespace ESportsTeams.Controllers
             return View(teamDetails);
         }
 
-        [HttpPost, ActionName("Delete")]
-        public async Task<IActionResult> DeleteTeam(int id)
-        {
-            var loggedUser = this.User;
-            var dbUserId = _userManager.GetUserId(loggedUser);
+        //[HttpPost, ActionName("Delete")]
+        //public async Task<IActionResult> DeleteTeam(int id)
+        //{
+        //    var loggedUser = this.User;
+        //    var dbUserId = _userManager.GetUserId(loggedUser);
 
-            var team = await _teamService.GetTeamByIdAsync(id);
-            if (team == null || team.OwnerId != dbUserId)
-            {
-                return View("Error");
-            }
+        //    var team = await _teamService.GetTeamByIdAsync(id);
+        //    if (team == null || team.OwnerId != dbUserId)
+        //    {
+        //        return View("Error");
+        //    }
             
 
-            var teamDelete = await _teamService.DeleteTeamAsync(id);
+        //    var teamDelete = await _teamService.DeleteTeamAsync(id);
 
 
-            if (!teamDelete)
-            {
-                return View("Error");
-            }
+        //    if (!teamDelete)
+        //    {
+        //        return View("Error");
+        //    }
 
-            return RedirectToAction("Index");
-        }
+        //    return RedirectToAction("Index");
+        //}
     }
 
 

@@ -2,6 +2,7 @@
 using ESportsTeams.Core.Models.ViewModels.TournamentViewModels;
 using ESportsTeams.Infrastructure.Data;
 using ESportsTeams.Infrastructure.Data.Entity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -24,17 +25,22 @@ namespace ESportsTeams.Core.Services
 
         public async Task AddTeamToTournamentAsync(string userId, int tournamentId)
         {
-            var user = await _userService.FindUserByIdAsync(userId);
-            var team = await _context.Teams.FirstOrDefaultAsync(x => x.OwnerId == user.Id);
             var tournament = await _context.Tournaments.FirstOrDefaultAsync(x => x.Id == tournamentId);
             if (tournament == null)
             {
                 throw new ArgumentException("Tournament not found!");
             }
+            var eventTitle = tournament.Event.Title;
+            var user = await _userService.FindUserByIdAsync(userId);
+            var team = await _context.Teams.
+                Where(x=>x.Category.ToString()==eventTitle)
+                .FirstOrDefaultAsync(x => x.OwnerId == user.Id);
+           
             if (team == null)
             {
                 throw new ArgumentException("Team not found!");
-            }
+            }          
+                               
             tournament.TeamTournaments.Add(new TeamTournament()
             {
                 TeamId= team.Id,

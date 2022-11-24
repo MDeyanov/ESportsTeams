@@ -34,7 +34,7 @@ namespace ESportsTeams.Infrastructure.Data.Entity
 
         [Column(TypeName = "money")]
         [Precision(18, 2)]
-        public decimal? PrizePool { get; set; }    
+        public decimal? PrizePool { get; set; }
 
         public int? AddressId { get; set; }
 
@@ -42,10 +42,11 @@ namespace ESportsTeams.Infrastructure.Data.Entity
         public Address? Address { get; set; }
 
         [Required]
-        public int? EventId { get; set; }
+        public int EventId { get; set; }
 
+        [Required]
         [ForeignKey(nameof(EventId))]
-        public Event? Event { get; set; } = null!;
+        public Event Event { get; set; } = null!;
         
         public IList<TeamTournament> TeamTournaments { get; set; } = new List<TeamTournament>();
 
