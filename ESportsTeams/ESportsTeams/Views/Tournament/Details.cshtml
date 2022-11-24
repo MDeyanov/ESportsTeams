@@ -141,8 +141,9 @@
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item">
                             <div class="d-flex justify-content-between">
-                                <div><i class="icon-thumbs-up mr-1"></i> PRIZE</div>
-                                <span>@Model.PrizePool $</span>
+                                <div><i class="icon-thumbs-up mr-1"></i>PRIZE</div>
+                                <span> @string.Format($"{Model.PrizePool:f2}")$</span>
+                                
                             </div>
                         </li>
                     </ul>

@@ -16,12 +16,14 @@ namespace ESportsTeams.Infrastructure.Data.Entity
         [Required]
         public string AppUserId { get; set; } = null!;
 
+        [Required]
         [ForeignKey(nameof(AppUserId))]
         public AppUser AppUser { get; set; } = null!;
 
         [Required]
-        public int? TournamentId { get; set; }
+        public int TournamentId { get; set; }
 
+        [Required]
         [ForeignKey(nameof(TournamentId))]
         public Tournament? Tournament { get; set; } = null!;
 

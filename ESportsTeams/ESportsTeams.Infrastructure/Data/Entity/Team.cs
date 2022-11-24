@@ -3,6 +3,8 @@ using System.ComponentModel.DataAnnotations;
 using static ESportsTeams.Infrastructure.Data.Common.ValidationConstants.TeamConstraints;
 using ESportsTeams.Infrastructure.Data.Enums;
 using System.Text.RegularExpressions;
+using Microsoft.EntityFrameworkCore;
+using System.ComponentModel;
 
 namespace ESportsTeams.Infrastructure.Data.Entity
 {
@@ -23,17 +25,16 @@ namespace ESportsTeams.Infrastructure.Data.Entity
         public Category Category { get; set; }
 
         public string? Image { get; set; }
-         
+
         public int AddressId { get; set; }
 
         [Required]
         [ForeignKey(nameof(AddressId))]
         public Address Address { get; set; } = null!;
-                  
+
         public IList<AppUser>? AppUsers { get; set; } = new List<AppUser>();
         public int TournamentWin { get; set; } = 0;
 
-        // adding a captain of a team
 
         [Required]
         public string OwnerId { get; set; } = null!;

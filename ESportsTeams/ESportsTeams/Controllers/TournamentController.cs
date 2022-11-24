@@ -1,4 +1,4 @@
-﻿using ESportsTeams.Core.Interfaces;
+﻿ using ESportsTeams.Core.Interfaces;
 using ESportsTeams.Infrastructure.Data.Entity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -26,5 +26,11 @@ namespace ESportsTeams.Controllers
             var tournament = await _tournamentService.GetTournamentDetailsByIdAsync(id);
             return tournament == null ? NotFound() : View(tournament);
         }
+
+        //[HttpPost]
+        //public async Task<IActionResult> Join()
+        //{
+
+        //}
     }
 }

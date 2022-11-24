@@ -14,7 +14,7 @@ namespace ESportsTeams.Core.Models.BindingModels.Team
     public class AddTeamViewModel
     {
         public int Id { get; set; }
-        [Required]
+        [Required]       
         [StringLength(TeamNameMaxLength, MinimumLength = TeamNameMinLength)]
         public string Name { get; set; } = null!;
 

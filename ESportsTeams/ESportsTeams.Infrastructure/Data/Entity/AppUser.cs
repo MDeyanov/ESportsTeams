@@ -28,7 +28,6 @@ namespace ESportsTeams.Infrastructure.Data.Entity
         [ForeignKey(nameof(TeamId))]
         public Team? Team { get; set; }
 
-        // when register must make a field
         // Games Match Making Rating
         public int? Dota2MMR { get; set; }
         public int? CSGOMMR { get; set; }
