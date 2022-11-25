@@ -19,5 +19,9 @@ namespace ESportsTeams.Infrastructure.Data.Common
 
         //Messages
         public const string NotFoundMessage = "Resouce not found.";
+
+        //Suffix
+        public const string AdminSuffix = "Administrator";
+        
     }
 }
