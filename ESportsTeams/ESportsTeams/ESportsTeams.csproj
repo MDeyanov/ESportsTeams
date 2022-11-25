@@ -22,8 +22,4 @@
     <ProjectReference Include="..\ESportsTeams.Core\ESportsTeams.Core.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Areas\Administrator\Views\" />
-  </ItemGroup>
-
 </Project>

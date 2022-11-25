@@ -8,7 +8,7 @@ using static ESportsTeams.Infrastructure.Data.Common.CommonConstants;
 
 namespace ESportsTeams.Areas.Administrator.Controllers
 {
-    public class UsersController : Controller
+    public class UsersController : AdminController
     {
         private readonly UserManager<AppUser> _userManager;
         private readonly IAdminService _adminService;
@@ -22,7 +22,7 @@ namespace ESportsTeams.Areas.Administrator.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            var currentUserId = _userManager.GetUserAsync(this.User).Result.Id;
+            var currentUserId = _userManager.GetUserAsync(User).Result.Id;
 
             var users = _adminService.GetAllUsers(currentUserId);
 
@@ -40,6 +40,19 @@ namespace ESportsTeams.Areas.Administrator.Controllers
                 return Index();
             }
 
+            return Redirect(string.Format(RedirectConstants.AdministratorAreaUserDetailsPage, resultId));
+        }
+
+        [HttpGet]
+        public IActionResult Unban(string Id) 
+        {
+            string resultId = _adminService.UnbanUser(Id);
+
+            if (resultId == ErrorUserId)
+            {
+                TempData[ErrorMessage] = NotFoundMessage;
+                return Index();
+            }
             return Redirect(string.Format(RedirectConstants.AdministratorAreaUserDetailsPage, resultId));
         }
     }
