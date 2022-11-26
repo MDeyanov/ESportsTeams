@@ -9,22 +9,24 @@
 <h2 class="text-center">@ViewBag.Title</h2>
 <hr />
 
-<div class="text-center row">
-    @foreach (var eventView in Model)
-    {
-        <div class="card col-4" style="width: 20rem; ">
-            <img class="card-img-top" style="width: 18rem;"
-             src="@eventView.ImageUrl" alt="Event Image">
-            <div class="card-body">
-
-                <h5 class="card-title mt-1">@eventView.Title</h5>
-                <p class="mb-0">Description: @eventView.Description</p>
-            </div>
-                <div class="form-group">
-                     <div class="col-sm-push-2">
-                        <a asp-controller="Tournament" asp-action="Game" asp-route-Id="@eventView.Id" class="btn btn-success">Open @eventView.Title</a>
-                     </div>
+<section>
+    <div class="text-center row">
+        @foreach (var eventView in Model)
+        {
+            <div class="card col-4" style="width: 20rem; ">
+                <img class="card-img-top" style="width: 18rem;"
+                 src="@eventView.ImageUrl" alt="Event Image">
+                <div class="card-body">
+    
+                    <h5 class="card-title mt-1">@eventView.Title</h5>
+                    <p class="mb-0">Description: @eventView.Description</p>
                 </div>
-        </div>
-    }
-</div>
+                    <div class="form-group">
+                         <div class="col-sm-push-2">
+                            <a asp-controller="Tournament" asp-action="Game" asp-route-Id="@eventView.Id" class="btn btn-success">Open @eventView.Title</a>
+                         </div>
+                    </div>
+            </div>
+        }
+    </div>
+</section>

@@ -3,6 +3,7 @@ using ESportsTeams.Core.Models.ViewModels.UserViewModel;
 using ESportsTeams.Infrastructure.Data;
 using ESportsTeams.Infrastructure.Data.Entity;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -44,13 +45,17 @@ namespace ESportsTeams.Core.Services
 
         public UserDetailsViewModel GetUser(string userId)
         {
-            var user = _userManager.Users.FirstOrDefault(x => x.Id == userId);
+            var user = _context.Users
+                .Include(x=>x.OwnedTeams)
+                .Include(x=>x.Address)
+                .FirstOrDefault(x => x.Id == userId);
             if (user == null)
             {
                 return null;
             }
             var result = new UserDetailsViewModel()
             {
+                UserId = userId,
                 Username = user.UserName,
                 FirstName = user.FirstName,
                 LastName = user.LastName,

@@ -1,0 +1,88 @@
+﻿@using ESportsTeams.Core.Models.ViewModels.UserViewModel;
+@model UserDetailsViewModel
+
+@*@{
+    ViewData["Title"] = "User Details";
+}*@
+<h2 class="text-center">User Details</h2>
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+
+<section>
+    <div class ="text-center row">
+        <h5 class="h2"><b>Username:</b> @Model.Username</h5>
+        <h6 class="h3"><b>Full Name:</b> @Model.FirstName @Model.LastName</h6>
+        <h7 class="h3"><b>Email:</b> @Model.Email</h7> 
+        @if (Model.Dota2MMR.HasValue)
+        {
+            <p>DOTA2 MMR: <span class="fs-10 fw-bold alert-info">@Model.Dota2MMR </span> </p>
+        }
+        @if (Model.CSGOMMR.HasValue)
+        {
+            <p>CSGO MMR: <span class="fs-10 fw-bold alert-info"> @Model.CSGOMMR  </span> </p>
+        }
+        @if (Model.PUBGMMR.HasValue)
+        {
+            <p>PUBG MMR: <span class="fs-10 fw-bold alert-info">@Model.PUBGMMR </span> </p>
+        }
+          @if (Model.LeagueOfLegendsMMR.HasValue)
+        {
+            <p>LeagueOfLegends MMR: <span class="fs-10 fw-bold alert-info">@Model.LeagueOfLegendsMMR </span> </p>
+        }
+          @if (Model.VALORANTMMR.HasValue)
+        {
+            <p>VALORANT MMR: <span class="fs-10 fw-bold alert-info">@Model.VALORANTMMR </span> </p>
+        }
+        <div class="alert alert-warning" role="alert">
+            @if (!Model.IsBanned)
+            {
+                <a asp-area="Administrator" asp-controller="Users" asp-action="Ban" asp-route-id="@Model.UserId"
+               class="btn btn-danger">
+                    Ban
+                </a>
+            }
+            else
+            {
+                <a asp-area="Administrator" asp-controller="Users" asp-action="Unban" asp-route-id="@Model.UserId"
+               class="btn btn-danger">
+                    Remove ban
+                </a>
+            }
+        </div>
+       
+    </div>
+</section>
+<h3 class="text-center">User Teams:</h3>
+<div class="container">
+    
+    <ul class="row feature-list feature-list-sm">
+        @if (Model.OwnedTeams == null)
+        {
+            <li>This user dont have any Teams that he ownes!</li>
+        }
+        else
+        {
+            
+            @foreach (var team in Model.OwnedTeams)
+            {
+                <li class="col-12 col-md-6 col-lg-4">
+                     <div class="card row-20" style="width: 8rem;" @team.Name>
+                         <img class="card-img-top" style="width: 8rem;"
+                      src="@team.Image" alt="Team Image">
+                         <div class="card-body">
+                            <p class="fs-10 fw-bold">Category:</p>
+                            <p class="fs-10">@team.Category.ToString()</p>
+                         </div>
+                     </div>
+                     <b>NAME:</b>
+                     <div>@team.Name</div>
+                     <a asp-area="Administrator" asp-controller="Team" asp-action="Details" asp-route-id="@team.Id" ;
+                          class="btn btn-danger">
+                              TeamDetails
+                     </a>
+                </li>
+            }
+        }
+    </ul>
+</div>
+
+
