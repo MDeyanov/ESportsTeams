@@ -67,7 +67,7 @@
                                     </a>
                                     <div class="dropdown-menu" aria-labelledby="pagesDropdown">
                                         @*to make user controller and action*@
-                                        <a class="dropdown-item" asp-controller="Team" asp-action="OwnedTeams" >
+                                        <a class="dropdown-item" asp-area="" asp-controller="Team" asp-action="OwnedTeams">
                                             <span class="h6 mb-0">View My Teams</span>
                                         </a>
 
@@ -80,10 +80,7 @@
                                         </a>                                      
                                         <a class="dropdown-item" asp-area="" asp-controller="Dashboard" asp-action="Index">
                                             <span class="h6 mb-0">Dashboard</span>
-                                        </a>
-                                       @* <a class="dropdown-item" asp-area="Identity" asp-page="/Account/Logout" asp-action="Logout">
-                                            <span su class="h6 mb-0">Logout</span>
-                                        </a>*@
+                                        </a>                                     
                                     </div>
                                 </li>
                                 <partial name="_LoginPartial" />
@@ -93,12 +90,7 @@
                         else
                         {
                             
-                            <ul class="navbar-nav">
-                               @* <li class="nav-item">
-                                    <a asp-area="" asp-controller="Account" asp-action="Register">Sign up</a>
-                                    <span>&nbsp;or&nbsp;</span>
-                                    <a asp-area="" asp-controller="Account" asp-action="Login">Sign in</a>
-                                </li>*@
+                            <ul class="navbar-nav">                           
                                 <partial name="_LoginPartial" />
                             </ul>
                         }
@@ -190,7 +182,7 @@
     <script src="~/js/jquery.min.js"></script>
     <script src="~/js/bootstrap.js"></script>
     <script src="~/js/theme.js"></script>
-    <script src="~/js/custom.js"></script>
+    @*<script src="~/js/custom.js"></script>*@
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 

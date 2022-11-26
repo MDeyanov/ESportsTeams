@@ -9,11 +9,12 @@ namespace ESportsTeams.Core.Models.ViewModels.UserViewModel
 {
     public class UserDetailsViewModel
     {
-        public string Username { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string Email { get; set; }
-        public string ProfileImageUrl { get; set; }
+        public string UserId { get; set; } = null!;
+        public string Username { get; set; } = null!;
+        public string FirstName { get; set; } = null!;
+        public string LastName { get; set; } = null!;
+        public string Email { get; set; } = null!;
+        public string ProfileImageUrl { get; set; } = null!;
         public bool IsBanned { get; set; }
         public int? Dota2MMR { get; set; }
         public int? CSGOMMR { get; set; }

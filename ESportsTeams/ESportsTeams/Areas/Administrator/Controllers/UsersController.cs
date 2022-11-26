@@ -1,4 +1,5 @@
 ﻿using ESportsTeams.Core.Interfaces;
+using ESportsTeams.Core.Services;
 using ESportsTeams.Infrastructure.Data.Common;
 using ESportsTeams.Infrastructure.Data.Entity;
 using Microsoft.AspNetCore.Identity;
@@ -27,6 +28,14 @@ namespace ESportsTeams.Areas.Administrator.Controllers
             var users = _adminService.GetAllUsers(currentUserId);
 
             return View(users);
+        }
+
+        [HttpGet]
+        public IActionResult Details(string id)
+        {
+            var user =  _adminService.GetUser(id);
+
+            return user == null ? NotFound() : View(user);
         }
 
         [HttpGet]
