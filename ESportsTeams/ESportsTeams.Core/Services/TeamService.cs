@@ -30,7 +30,7 @@ namespace ESportsTeams.Core.Services
         }
 
         //Adding TEAMS
-        public async Task AddTeamAsync(AddTeamViewModel model, string userId)
+        public async Task AddTeamAsync(AddTeamBindingModel model, string userId)
         {
             var user = await _context.Users.FirstOrDefaultAsync(x => x.Id == userId);
             if (user == null)
@@ -169,7 +169,7 @@ namespace ESportsTeams.Core.Services
 
         }
 
-        public async Task EditTeamAsync(EditTeamViewModel model)
+        public async Task EditTeamAsync(EditTeamBindingModel model)
         {
 
 

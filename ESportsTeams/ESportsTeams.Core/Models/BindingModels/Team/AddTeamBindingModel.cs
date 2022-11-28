@@ -11,7 +11,7 @@ using static ESportsTeams.Infrastructure.Data.Common.ValidationConstants.TeamCon
 
 namespace ESportsTeams.Core.Models.BindingModels.Team
 {
-    public class AddTeamViewModel
+    public class AddTeamBindingModel
     {
         public int Id { get; set; }
         [Required]       

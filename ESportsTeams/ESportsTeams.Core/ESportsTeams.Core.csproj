@@ -11,7 +11,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Models\BindingModels\EventBindingModels\" />
     <Folder Include="Models\BindingModels\Tournament\" />
     <Folder Include="Models\ViewModels\HomeViewModel\" />
   </ItemGroup>

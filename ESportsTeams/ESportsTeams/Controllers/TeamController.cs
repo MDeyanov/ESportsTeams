@@ -107,7 +107,7 @@ namespace ESportsTeams.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add(AddTeamViewModel model)
+        public async Task<IActionResult> Add(AddTeamBindingModel model)
         {
             var teamExists = _teamService.TeamExistsAsync(model.Name);
             if (teamExists.Result)
@@ -153,7 +153,7 @@ namespace ESportsTeams.Controllers
             {
                 return View("Error");
             }
-            var teamViewModel = new EditTeamViewModel()
+            var teamViewModel = new EditTeamBindingModel()
             {
                 Name = team.Name,
                 Description = team.Description,
@@ -166,7 +166,7 @@ namespace ESportsTeams.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(EditTeamViewModel model)
+        public async Task<IActionResult> Edit(EditTeamBindingModel model)
         {
             if (!ModelState.IsValid)
             {

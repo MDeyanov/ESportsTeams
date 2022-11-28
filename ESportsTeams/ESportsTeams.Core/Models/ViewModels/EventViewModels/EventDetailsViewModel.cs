@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ESportsTeams.Core.Models.ViewModels.EventViewModels
 {
-    public class IndexEventViewModel
+    public class EventDetailsViewModel
     {
         public int Id { get; set; }
         public string Title { get; set; } = null!;
@@ -15,5 +15,6 @@ namespace ESportsTeams.Core.Models.ViewModels.EventViewModels
         public string ImageUrl { get; set; } = null!;
         public string Description { get; set; } = null!;
 
+        public IList<Tournament>? Tournaments { get; set; }
     }
 }
