@@ -49,8 +49,10 @@ namespace ESportsTeams.Infrastructure.Data.Entity
         public Event Event { get; set; } = null!;
         
         public IList<TeamTournament> TeamTournaments { get; set; } = new List<TeamTournament>();
-
-        //set as nullable
+       
         public IList<Review>? Reviews { get; set; } = new List<Review>();
+
+        [Required]
+        public bool IsDeleted { get; set; } = false;
     }
 }

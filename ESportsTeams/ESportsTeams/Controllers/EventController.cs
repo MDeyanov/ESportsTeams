@@ -20,5 +20,6 @@ namespace ESportsTeams.Controllers
             var model = await _eventService.GetAllAsync();
             return View(model);
         }
+
     }
 }

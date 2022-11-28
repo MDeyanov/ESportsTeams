@@ -7,12 +7,13 @@ namespace ESportsTeams.Extensions
     {
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
         {
+            services.AddScoped<IAdminService, AdminService>();
+            services.AddScoped<IUserService, UserService>();
             services.AddScoped<IPhotoService, PhotoService>();
             services.AddScoped<ITeamService, TeamService>();
             services.AddScoped<IEventService, EventService>();
             services.AddScoped<ITournamentService, TournamentService>();
-            services.AddScoped<IAdminService, AdminService>();
-            services.AddScoped<IUserService, UserService>();
+            
 
             return services;
         }

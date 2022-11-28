@@ -12,7 +12,7 @@ namespace ESportsTeams.Core.Interfaces
 {
     public interface ITeamService
     {
-        Task AddTeamAsync(AddTeamViewModel model,string userId);
+        Task AddTeamAsync(AddTeamBindingModel model,string userId);
         Task<IEnumerable<Team>> GetSliceAsync(int offset, int size);
         Task<IEnumerable<Team>> GetSliceOfUserOwnedAsync(string userId, int offset, int size);
         Task<IEnumerable<Team>> GetTeamsByCategoryAndSliceAsync(Category category, int offset, int size);
@@ -24,7 +24,7 @@ namespace ESportsTeams.Core.Interfaces
         Task<int> GetCountByCategoryOfUserOwnedAsync(string userId,Category category);
         Task<DetailsTeamViewModel?> GetTeamDetailsByIdAsync(int id, string loggedUserId);
         Task<Team?> GetTeamByIdAsync(int id);
-        Task EditTeamAsync (EditTeamViewModel model);
+        Task EditTeamAsync (EditTeamBindingModel model);
         //Task<bool> DeleteTeamAsync(int id);
         Task<bool> TeamExistsAsync(string name);
 

@@ -1,0 +1,36 @@
+﻿@using ESportsTeams.Core.Models.ViewModels.EventViewModels;
+@model EventDetailsViewModel
+
+
+<h2 class="text-center">Event Details</h2>
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+
+<section>
+    <div class ="text-center row">
+        <h5 class="h2"><b>Title:</b> @Model.Title</h5>
+        <h6 class="h3"><b>Description:</b>@Model.Description</h6>      
+    </div>
+</section>
+<h3 class="text-center">Event Tournaments:</h3>
+<div class="container">
+    
+    <ul class="row feature-list feature-list-sm">          
+         @foreach (var tournament in Model.Tournaments)
+         {
+             <li class="col-12 col-md-6 col-lg-4">
+                <div class="card row-20" style="width: 8rem;" @tournament.Title>
+                      <img class="card-img-top" style="width: 8rem;"
+                     src="@tournament.Image" alt="Tournament Image">
+                      <div class="card-body">
+                         <p class="fs-10 fw-bold">Category:</p>
+                      </div>
+                  </div>
+                  <b>NAME:</b>
+                <div>@tournament.Title</div>               
+             </li>
+         }
+        
+    </ul>
+</div>
+
+

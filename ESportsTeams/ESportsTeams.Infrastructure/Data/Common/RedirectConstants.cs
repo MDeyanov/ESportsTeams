@@ -10,5 +10,7 @@ namespace ESportsTeams.Infrastructure.Data.Common
     {
         public const string AdminHomeRoute = "/Administrator/Home/AdminIndex";
         public const string AdministratorAreaUserDetailsPage = "/Administrator/Users/UserDetails?id={0}";
+
+        public const string AdministratorAreaEventIndexPage = "/Administrator/Event/Index";
     }
 }

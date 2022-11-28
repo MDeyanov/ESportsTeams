@@ -1,0 +1,49 @@
+﻿@using ESportsTeams.Core.Models.ViewModels.EventViewModels;
+@using ESportsTeams.Infrastructure.Data.Entity;
+
+@model IEnumerable<IndexEventAdminViewModel>
+
+@{
+    ViewBag.Title = "All Events";
+}
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+
+<section>
+    <div class="text-center row">
+        @foreach (var eventView in Model)
+        {
+            <div class="card col-4" style="width: 20rem; ">
+                <img class="card-img-top" style="width: 18rem;"
+                 src="@eventView.ImageUrl" alt="Event Image">
+                <div class="card-body">
+
+                    <h5 class="card-title mt-1">@eventView.Title</h5>
+                    <p class="mb-0">Description: @eventView.Description</p>
+                    <p class="mb-0">IsDeleted: @eventView.IsDeleted</p>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-push-2">
+                        <a asp-area="Administrator"  asp-controller="Event" asp-action="Details" asp-route-Id="@eventView.Id" class="btn btn-success">Open @eventView.Title</a>
+                    </div>
+                    <a type="button" class="btn btn-sm btn-outline-info" asp-area="Administrator" asp-controller="Event" asp-action="Edit" asp-route-id="@eventView.Id">
+                        Edit
+                    </a>
+                    @if (eventView.IsDeleted)
+                    {
+                        <a type="button" class="btn btn-sm btn-outline-danger" asp-area="Administrator" asp-controller="Event" asp-action="ReverseDeletion" asp-route-id="@eventView.Id">
+                            Reverse Delete
+                        </a>
+                    }
+                    else
+                    {
+                        <a type="button" class="btn btn-sm btn-outline-danger" asp-area="Administrator" asp-controller="Event" asp-action="DeleteCurEvent" asp-route-id="@eventView.Id">
+                            Delete
+                        </a>
+                    }
+
+                </div>
+            </div>
+        }
+    </div>
+</section>

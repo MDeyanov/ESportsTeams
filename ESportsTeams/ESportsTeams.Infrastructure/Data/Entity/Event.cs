@@ -13,11 +13,15 @@ namespace ESportsTeams.Infrastructure.Data.Entity
         [StringLength(EventTitleMaxLength)]
         public string Title { get; set; } = null!;
 
-        public string? Image { get; set; }
+        [Required]
+        public string Image { get; set; } = null!;
 
         [Required]
         [StringLength(EventDescriptionMaxLength)]
         public string Description { get; set; } = null!;
+
+        [Required]
+        public bool IsDeleted { get; set; } = false;
 
         public IList<Tournament>? Tournaments { get; set; } = new List<Tournament>();  
     }
