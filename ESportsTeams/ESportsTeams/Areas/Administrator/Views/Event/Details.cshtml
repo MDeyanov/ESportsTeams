@@ -14,21 +14,29 @@
 <h3 class="text-center">Event Tournaments:</h3>
 <div class="container">
     
-    <ul class="row feature-list feature-list-sm">          
-         @foreach (var tournament in Model.Tournaments)
-         {
-             <li class="col-12 col-md-6 col-lg-4">
-                <div class="card row-20" style="width: 8rem;" @tournament.Title>
-                      <img class="card-img-top" style="width: 8rem;"
+    <ul class="row feature-list feature-list-sm">
+        @if (Model.Tournaments == null)
+        {
+            <p class="fs-10 fw-bold">There is no tournaments for this event</p>
+        }
+        else
+        {
+            @foreach (var tournament in Model.Tournaments)
+            {
+                <li class="col-12 col-md-6 col-lg-4">
+                    <div class="card row-20" style="width: 8rem;" @tournament.Title>
+                        <img class="card-img-top" style="width: 8rem;"
                      src="@tournament.Image" alt="Tournament Image">
-                      <div class="card-body">
-                         <p class="fs-10 fw-bold">Category:</p>
-                      </div>
-                  </div>
-                  <b>NAME:</b>
-                <div>@tournament.Title</div>               
-             </li>
-         }
+                        <div class="card-body">
+                            <p class="fs-10 fw-bold">Category:</p>
+                        </div>
+                    </div>
+                    <b>NAME:</b>
+                    <div>@tournament.Title</div>
+                </li>
+            }
+        }
+         
         
     </ul>
 </div>

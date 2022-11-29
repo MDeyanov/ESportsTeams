@@ -5,13 +5,9 @@ using ESportsTeams.Infrastructure.Data;
 using ESportsTeams.Infrastructure.Data.Entity;
 using ESportsTeams.Infrastructure.Data.Enums;
 using Microsoft.EntityFrameworkCore;
+using static ESportsTeams.Infrastructure.Data.Common.CommonConstants;
 using Microsoft.EntityFrameworkCore.Storage;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace ESportsTeams.Core.Services
 {
@@ -35,7 +31,7 @@ namespace ESportsTeams.Core.Services
             var user = await _context.Users.FirstOrDefaultAsync(x => x.Id == userId);
             if (user == null)
             {
-                throw new ArgumentException("Invalid User!");
+                throw new ArgumentException(InvalidUser);
             }
 
             var result = await _photoService.AddPhotoAsync(model.Image);
@@ -138,7 +134,7 @@ namespace ESportsTeams.Core.Services
 
             if (result == null)
             {
-                throw new ArgumentException("Team not found!");
+                throw new ArgumentException(TeamNotFound);
             }
 
             var finalResult = new DetailsTeamViewModel()
@@ -179,7 +175,7 @@ namespace ESportsTeams.Core.Services
 
             if (teamToChange == null)
             {
-                throw new ArgumentException("Team not found!");
+                throw new ArgumentException(TeamNotFound);
             }
 
             var photoResult = await _photoService.AddPhotoAsync(model.Image);

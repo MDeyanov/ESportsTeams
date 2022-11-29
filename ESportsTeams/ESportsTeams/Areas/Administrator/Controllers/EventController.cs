@@ -1,5 +1,7 @@
 ﻿using ESportsTeams.Core.Interfaces;
 using ESportsTeams.Core.Models.BindingModels.Event;
+using ESportsTeams.Core.Models.BindingModels.Team;
+using ESportsTeams.Core.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ESportsTeams.Areas.Administrator.Controllers
@@ -60,17 +62,35 @@ namespace ESportsTeams.Areas.Administrator.Controllers
 
         }
 
-        //[HttpPost, ActionName("Delete")]
-        //public async Task<IActionResult> DeleteEvent(int id)
-        //{
-        //    var deleteEvent = await _eventService.DeleteEventAsync(id);
-        //    if (!deleteEvent)
-        //    {
-        //        return View("Error");
-        //    }
+        [HttpGet]
+        public async Task<IActionResult> Edit(int id)
+        {
+            var eventToEdit = await _eventService.GetEventByIdAsync(id);
+            if (eventToEdit == null)
+            {
+                return View("Error");
+            }
+            var eventModel = new EditEventBindingModel()
+            {
+                Title = eventToEdit.Title,
+                Description = eventToEdit.Description,
+                URL = eventToEdit.Image,
+            };
+            return View(eventModel);
+        }
 
-        //    return RedirectToAction("Index", "Event");
-        //}
+        [HttpPost]
+        public async Task<IActionResult> Edit(EditEventBindingModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                ModelState.AddModelError("", "Failed to edit this Event");
+                return View("Edit", model);
+            }
+
+            await _eventService.EditEventAsync(model);
+            return RedirectToAction("Index", "Home");
+        }
 
         [HttpGet]
         public IActionResult ReverseDeletion(int id)

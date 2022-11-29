@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using static ESportsTeams.Infrastructure.Data.Common.CommonConstants;
+using static System.Net.WebRequestMethods;
 
 namespace ESportsTeams.Core.Services
 {
@@ -53,6 +54,8 @@ namespace ESportsTeams.Core.Services
             {
                 return null;
             }
+
+            user.ProfileImageUrl ??= "https://res.cloudinary.com/dzac3ggur/image/upload/v1669675626/AnonymousProfileImage_ntgywz.png";
             var result = new UserDetailsViewModel()
             {
                 UserId = userId,
