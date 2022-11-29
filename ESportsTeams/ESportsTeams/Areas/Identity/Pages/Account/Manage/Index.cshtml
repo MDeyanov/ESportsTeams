@@ -9,7 +9,7 @@
 <partial name="_StatusMessage" for="StatusMessage" />
 <div class="row">
     <div class="col-md-6">
-        <form id="profile-form" method="post">
+        <form id="profile-form" method="post"enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-floating">
                 <input asp-for="Username" class="form-control" disabled />
@@ -44,6 +44,11 @@
                 <input asp-for="Input.VALORANTMMR" class="form-control" />
                 <label asp-for="Input.VALORANTMMR" class="form-label"></label>
                 <span asp-validation-for="Input.VALORANTMMR" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.Image">Profile Picture</label>
+                <input asp-for="Input.Image" type="file" class="form-control" placeholder="Image">
+                <span asp-validation-for="Input.Image" class="text-danger"></span>
             </div>
             <button id="update-profile-button" type="submit" class="w-100 btn btn-lg btn-primary">Save</button>
         </form>

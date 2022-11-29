@@ -6,6 +6,7 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
+using ESportsTeams.Core.Interfaces;
 using ESportsTeams.Infrastructure.Data;
 using ESportsTeams.Infrastructure.Data.Entity;
 using Microsoft.AspNetCore.Identity;
@@ -19,15 +20,18 @@ namespace ESportsTeams.Areas.Identity.Pages.Account.Manage
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
         private readonly ApplicationDbContext _context;
+        private readonly IPhotoService _photoService;
 
         public IndexModel(
             UserManager<AppUser> userManager,
             SignInManager<AppUser> signInManager,
-            ApplicationDbContext context)
+            ApplicationDbContext context,
+            IPhotoService photoService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _context = context;
+            _photoService = photoService;
         }
 
         /// <summary>
@@ -74,10 +78,15 @@ namespace ESportsTeams.Areas.Identity.Pages.Account.Manage
             [Phone]
             [Display(Name = "Phone number")]
             public string PhoneNumber { get; set; }
+           
+            public string ProfileImageUrl { get; set; }
+
+            [Display(Name = "Profile picture")]
+            public IFormFile Image { get; set; }
         }
 
         private async Task LoadAsync(AppUser user)
-        {
+        {          
             var userName = await _userManager.GetUserNameAsync(user);
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
             var dota2Mmr = user.Dota2MMR;
@@ -85,17 +94,20 @@ namespace ESportsTeams.Areas.Identity.Pages.Account.Manage
             var pubgMmr = user.PUBGMMR;
             var LeagueOfLegendsMmr = user.LeagueOfLegendsMMR;
             var valorantMmr = user.VALORANTMMR;
-
+            var profileImageUrl = user.ProfileImageUrl;
+           
             Username = userName;
+
 
             Input = new InputModel
             {
-                Dota2MMR= dota2Mmr,
-                CSGOMMR= csgoMmr,
-                PUBGMMR= pubgMmr,
+                Dota2MMR = dota2Mmr,
+                CSGOMMR = csgoMmr,
+                PUBGMMR = pubgMmr,
                 LeagueOfLegendsMMR = LeagueOfLegendsMmr,
                 VALORANTMMR = valorantMmr,
-                PhoneNumber = phoneNumber
+                PhoneNumber = phoneNumber,
+                ProfileImageUrl = profileImageUrl
             };
         }
 
@@ -146,6 +158,15 @@ namespace ESportsTeams.Areas.Identity.Pages.Account.Manage
             if (Input.PUBGMMR != user.PUBGMMR)
             {
                 user.PUBGMMR = Input.PUBGMMR;
+            }
+            if (Input.Image != null)
+            {
+                var photoResult = await _photoService.AddPhotoAsync(Input.Image);
+                if (!string.IsNullOrEmpty(user.ProfileImageUrl))
+                {
+                    _ = _photoService.DeletePhotoAsync(user.ProfileImageUrl);
+                }
+                user.ProfileImageUrl = photoResult.Url.ToString();
             }
 
 

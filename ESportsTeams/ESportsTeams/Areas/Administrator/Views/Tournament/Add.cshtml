@@ -1,0 +1,119 @@
+﻿@using ESportsTeams.Core.Models.BindingModels.Tournament;
+@model AddTournamentBindingModel
+@{
+}
+<div class="navbar-container">
+</div>
+<div class="main-container">
+    <section class="space-sm">
+        <div class="container">
+            <div class="row mb-5">
+            </div>
+            <div class="row flex-md-row card card-md">
+                <div class="card-body bg-secondary">
+                    <div class="text-center mb-5">
+                        <h1 class="h2 mb-2">Create ESports Tournament</h1>
+                    </div>
+                    <div class="row justify-content-center">
+                        <div class="col-6 col-lg-7">
+                            <form method="post" asp-action="Add" enctype="multipart/form-data">
+                                <div class="form-row form-group">
+                                    <div class="col">
+                                        <input asp-for="Title" class="form-control form-control-lg" placeholder="Title" />
+                                        <span asp-validation-for="Title" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="form-row form-group">
+                                    <div class="col">
+                                        <input asp-for="Description" class="form-control form-control-lg" placeholder="Description" />
+                                        <span asp-validation-for="Description" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="form-row form-group">
+                                    <div class="col">
+                                        <input asp-for="StartTime" class="form-control form-control-lg" placeholder="StartTime" />
+                                        <span asp-validation-for="StartTime" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="form-row form-group">
+                                    <div class="col">
+                                        <input asp-for="EntryFee" class="form-control form-control-lg" placeholder="EntryFee" />
+                                        <span asp-validation-for="EntryFee" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="form-row form-group">
+                                    <div class="col">
+                                        <input asp-for="Website" class="form-control form-control-lg" placeholder="Website" />
+                                        <span asp-validation-for="Website" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="form-row form-group">
+                                    <div class="col">
+                                        <input asp-for="Twitter" class="form-control form-control-lg" placeholder="Twitter" />
+                                        <span asp-validation-for="Twitter" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="form-row form-group">
+                                    <div class="col">
+                                        <input asp-for="Facebook" class="form-control form-control-lg" placeholder="Facebook" />
+                                        <span asp-validation-for="Facebook" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="form-row form-group">
+                                    <div class="col">
+                                        <input asp-for="Contact" class="form-control form-control-lg" placeholder="Contact" />
+                                        <span asp-validation-for="Contact" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="form-row form-group">
+                                    <div class="col">
+                                        <input asp-for="PrizePool" class="form-control form-control-lg" placeholder="PrizePool" />
+                                        <span asp-validation-for="PrizePool" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="form-row form-group">
+                                    <div class="col">
+                                        <input asp-for="Address.Street" class="form-control form-control-lg" placeholder="Street" />
+                                        <span asp-validation-for="Address.Street" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="form-row form-group">
+                                    <div class="col">
+                                        <input asp-for="Address.City" class="form-control form-control-lg" placeholder="City" />
+                                        <span asp-validation-for="Address.City" class="text-danger"></span>
+                                    </div>
+                                    <div class="col">
+                                        <input asp-for="Address.Country" class="form-control form-control-lg" placeholder="Country" />
+                                        <span asp-validation-for="Address.Country" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="form-row form-group">
+                                    <div class="col">
+                                        <input asp-for="EventTitle" class="form-control form-control-lg" placeholder="EventTitle" />
+                                        <span asp-validation-for="EventTitle" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="form-row form-group">
+                                    <div class="col">
+                                        <input asp-for="Image" type="file" class="form-control form-control-lg" placeholder="Image" />
+                                        <span asp-validation-for="Image" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="form-row form-group">
+                                    <div class="col">
+                                        <button class="btn btn-block btn-success btn-lg" type="submit">Create Tournament</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+
+
+
+
