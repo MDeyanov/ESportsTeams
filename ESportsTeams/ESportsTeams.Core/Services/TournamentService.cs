@@ -1,7 +1,9 @@
 ﻿using ESportsTeams.Core.Interfaces;
+using ESportsTeams.Core.Models.BindingModels.Tournament;
 using ESportsTeams.Core.Models.ViewModels.TournamentViewModels;
 using ESportsTeams.Infrastructure.Data;
 using ESportsTeams.Infrastructure.Data.Entity;
+using static ESportsTeams.Infrastructure.Data.Common.CommonConstants;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -17,10 +19,14 @@ namespace ESportsTeams.Core.Services
     {
         private readonly ApplicationDbContext _context;
         private readonly IUserService _userService;
-        public TournamentService(ApplicationDbContext context, IUserService userService)
+        private readonly IPhotoService _photoService;
+        private readonly IEventService _eventService;
+        public TournamentService(ApplicationDbContext context, IUserService userService, IPhotoService photoService, IEventService eventService)
         {
             _context = context;
             _userService = userService;
+            _photoService = photoService;
+            _eventService = eventService;
         }
 
         public async Task AddTeamToTournamentAsync(string userId, int tournamentId)
@@ -28,7 +34,7 @@ namespace ESportsTeams.Core.Services
             var tournament = await _context.Tournaments.FirstOrDefaultAsync(x => x.Id == tournamentId);
             if (tournament == null)
             {
-                throw new ArgumentException("Tournament not found!");
+                throw new ArgumentException(TournamentNotFound);
             }
             var eventTitle = tournament.Event.Title;
             var user = await _userService.FindUserByIdAsync(userId);
@@ -38,7 +44,7 @@ namespace ESportsTeams.Core.Services
            
             if (team == null)
             {
-                throw new ArgumentException("Team not found!");
+                throw new ArgumentException(TeamNotFound);
             }          
                                
             tournament.TeamTournaments.Add(new TeamTournament()
@@ -48,6 +54,38 @@ namespace ESportsTeams.Core.Services
                 TournamentId= tournament.Id,
                 Tournament = tournament
             });
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task AddTournamentAsync(AddTournamentBindingModel model)
+        {
+            var result = await _photoService.AddPhotoAsync(model.Image);
+            var eventByTitle = await _eventService.GetEventByTitleAsync(model.EventTitle);
+            if (eventByTitle == null)
+            {
+                throw new ArgumentException(EventNotFound);
+            }
+            var newTournament = new Tournament()
+            {
+                Title = model.Title,
+                Description= model.Description,
+                StartTime= model.StartTime,
+                EntryFee= model.EntryFee,
+                Website = model.Website,
+                Twitter= model.Twitter,
+                Facebook= model.Facebook,
+                Contact = model.Contact,
+                PrizePool   = model.PrizePool,
+                Image = result.Url.ToString(),
+                Address = new Address()
+                {
+                    Street = model.Address.Street,
+                    City = model.Address.City,
+                    Country = model.Address.Country,
+                },
+                Event = eventByTitle
+            };
+            await _context.Tournaments.AddAsync(newTournament); 
             await _context.SaveChangesAsync();
         }
 

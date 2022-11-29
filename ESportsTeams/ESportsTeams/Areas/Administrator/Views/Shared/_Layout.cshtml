@@ -27,10 +27,10 @@
 </head>
 <body>
     <div class="navbar-container">
-        <div class="bg-light navbar-light" data-sticky="top">
+        <div class="bg-danger navbar-light" data-sticky="top">
             <div class="container">
                 <nav class="navbar navbar-expand-lg">
-                    <a class="navbar-brand" asp-area="Administrator" asp-controller="Home" asp-action="Index" id="logo-text">ESportsTeams</a>
+                    <a class="navbar-brand" asp-area="Administrator" asp-controller="Home" asp-action="Index" id="logo-text">ESportsTeams ADMIN</a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                         <i class="icon-menu h4"></i>
                     </button>
@@ -96,10 +96,8 @@
                         }
 
                     </div>
-                    <!--end nav collapse-->
                 </nav>
             </div>
-            <!--end of container-->
         </div>
     </div>
     <div class="main-container">
@@ -118,51 +116,9 @@
                         <br />
                         <br />
                     </p>
-                </div>
-                <!--end of col-->
-                @if ((SignInManager.IsSignedIn(User)))
-                {
-                    <div class="col-12 col-md-9">
-                        @*<span class="h5">ESports Teams</span>*@
-                        <div class="row no-gutters">
-                            <div class="col-6 col-lg-3">
-                                <h6>Navigate</h6>
-                                <ul class="list-unstyled">
-                                    <li>
-                                        <a asp-area="Administrator" asp-controller="Home"
-                                       asp-action="Index">Home</a>
-                                    </li>
-                                    <li>
-                                        <a asp-area="Administrator" asp-controller="Teams"
-                                       asp-action="Index">Find Near You</a>
-                                    </li>
-                                </ul>
-                            </div>
-                            <!--end of col-->
-                            <div class="col-6 col-lg-3">
-                                <h6>Team Directory</h6>
-                                <ul class="list-unstyled">
-                                    <li>
-                                        <a asp-area="Administrator" asp-controller="Team"
-                                       asp-action=" ">Find Teams By Country</a>
-                                    </li>
-                                    <li>
-                                        <a asp-area="Administrator" asp-controller="Team"
-                                       asp-action=" ">Find Teams By City</a>
-                                    </li>
-                                </ul>
-                            </div>
-                            <!--end of col-->
-                        </div>
-                        <!--end of row-->
-                    </div>
-                }
-                
-                <!--end of col-->
+                </div>                            
             </div>
-            <!--end of row-->
         </div>
-        <!--end of container-->
     </footer>
     <script src="~/js/jquery.min.js"></script>
     <script src="~/js/bootstrap.js"></script>
@@ -170,5 +126,4 @@
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
-
 </html>

@@ -25,6 +25,7 @@ namespace ESportsTeams.Infrastructure.Data.Common
 
         //ArgumentExceptions
         public const string EventNotFound = "Event not found!";
+        public const string TournamentNotFound = "Tournament not found!";
         public const string TeamNotFound = "Team not found!";
         public const string InvalidUser = "Invalid User!";
 
