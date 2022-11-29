@@ -24,9 +24,10 @@ namespace ESportsTeams.Core.Models.BindingModels.Team
         public string Description { get; set; } = null!;
 
         public int AddressId { get; set; }
-        public Address? Address { get; set; }
+        [Required]
+        public Address Address { get; set; } = null!;
 
-        public IFormFile Image { get; set; }
+        public IFormFile Image { get; set; } = null!;
 
         public string? URL { get; set; }
 

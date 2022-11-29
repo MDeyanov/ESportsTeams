@@ -22,6 +22,12 @@ namespace ESportsTeams.Infrastructure.Data.Common
 
         //Suffix
         public const string AdminSuffix = "Administrator";
-        
+
+        //ArgumentExceptions
+        public const string EventNotFound = "Event not found!";
+        public const string TeamNotFound = "Team not found!";
+        public const string InvalidUser = "Invalid User!";
+
+
     }
 }

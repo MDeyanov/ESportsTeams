@@ -45,7 +45,7 @@ namespace ESportsTeams.Core.Services
              var eventToDelete = await _context.Events.FirstOrDefaultAsync(e => e.Id == id);
             if (eventToDelete == null)
             {
-                throw new ArgumentException("Event not found!");
+                throw new ArgumentException(EventNotFound);
             }
             eventToDelete.IsDeleted = true;
             await _context.SaveChangesAsync();
@@ -143,6 +143,32 @@ namespace ESportsTeams.Core.Services
             currentEvent.IsDeleted = true;
             _context.SaveChanges();
             return currentEvent.Id;
+        }
+
+        public async Task EditEventAsync(EditEventBindingModel model)
+        {
+            var eventToEdit = await _context.Events.FirstOrDefaultAsync(x => x.Id == model.Id);
+            if (eventToEdit == null)
+            {
+                throw new ArgumentException(EventNotFound);
+            }
+
+            var photoResult = await _photoService.AddPhotoAsync(model.Image);
+            if (!string.IsNullOrEmpty(eventToEdit.Image))
+            {
+                _ = _photoService.DeletePhotoAsync(eventToEdit.Image);
+            }
+
+            eventToEdit.Title = model.Title;
+            eventToEdit.Description = model.Description;
+            eventToEdit.Image = photoResult.Url.ToString();
+
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task<Event?> GetEventByIdAsync(int id)
+        {
+            return await _context.Events.FirstOrDefaultAsync(x=>x.Id== id);
         }
     }
 }
