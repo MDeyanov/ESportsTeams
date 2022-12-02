@@ -25,8 +25,9 @@ namespace ESportsTeams.Core.Interfaces
         Task<DetailsTeamViewModel?> GetTeamDetailsByIdAsync(int id, string loggedUserId);
         Task<Team?> GetTeamByIdAsync(int id);
         Task EditTeamAsync (EditTeamBindingModel model);
-        //Task<bool> DeleteTeamAsync(int id);
         Task<bool> TeamExistsAsync(string name);
+
+        Task<IEnumerable<GetTeamsViewModel>> GetAllTeamsAsync();
 
     }
 }

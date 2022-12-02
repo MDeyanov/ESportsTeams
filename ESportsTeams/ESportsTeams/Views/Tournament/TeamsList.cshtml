@@ -1,0 +1,28 @@
+﻿@using ESportsTeams.Core.Models.ViewModels.TeamViewModels;
+@model IEnumerable<GetTeamsViewModel>
+
+<h2 class="text-center">TEAMS!</h2>
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+
+<section>
+    <div class="text-center row">
+        @foreach (var team in Model)
+        {
+            <div class="card col-4" style="width: 10rem; ">
+                <img class="card-img-top" style="width: 10rem;"
+                 src="@team.Image" alt="Team Image">
+                <div class="card-body">
+                    <p class="mb-0 fw-bold alert-info">Team Id: @team.Id</p>
+                    <h5 class="card-name mt-1 alert-info">Team name: @team.Name</h5>
+                    <h6 class="card-name mt-1 alert-info">Team Owner: @team.Owner.UserName</h6>
+                    <h7 class="card-name mt-1 alert-info">Category: @team.Category.ToString()</h7>
+                </div>               
+                <div class="form-group">
+                    <div class="col-sm-push-2">
+                        <a  asp-controller="Team" asp-action="Details" asp-route-id="@team.Id" class="btn btn-success">Details</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</section>

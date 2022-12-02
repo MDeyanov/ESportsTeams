@@ -20,6 +20,10 @@ namespace ESportsTeams.Core.Interfaces
         Task AddTournamentAsync(AddTournamentBindingModel model);
         Task EditTournamentAsync(EditTournamentBindingModel model);
 
+        Task TeamJoinToTournaments(string userId,int tournamentId);
+
+        Task<IEnumerable<GetTeamsViewModel>> ListOfTeamsInTournamentAsync(int tournamentId);
+
         //Task<IEnumerable<IndexTournamentAdminViewModel>> GetAllTournamentsForAdminAsync();
 
     }

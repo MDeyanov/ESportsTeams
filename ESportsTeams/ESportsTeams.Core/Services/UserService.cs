@@ -3,13 +3,7 @@ using ESportsTeams.Infrastructure.Data;
 using ESportsTeams.Infrastructure.Data.Entity;
 using ESportsTeams.Infrastructure.Data.Enums;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml;
+using static ESportsTeams.Infrastructure.Data.Common.CommonConstants;
 
 namespace ESportsTeams.Core.Services
 {
@@ -27,7 +21,7 @@ namespace ESportsTeams.Core.Services
             var user = await _context.Users.FirstOrDefaultAsync(x=>x.Id== userId);
             if (user==null)
             {
-                throw new ArgumentException("User not found!");
+                throw new ArgumentException(UserNotFound);
             }
             return user;
         }

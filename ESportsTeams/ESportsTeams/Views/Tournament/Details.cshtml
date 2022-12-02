@@ -8,7 +8,26 @@
             <div class="row justify-content-center">
                 <div class="col">
                     <ol class="breadcrumb fw-bold fs-3">
-                        @Model.EventTitle
+                        @if (@Model.EventTitle == "Dota2")
+                        {
+                            <li>Dota 2</li>
+                        }
+                        else if (@Model.EventTitle == "CSGO")
+                        {
+                            <li>Counter-Strike: Global Offensive</li>
+                        }
+                        else if (@Model.EventTitle == "PUBG")
+                        {
+                            <li>PlayerUnknown's Battlegrounds</li>
+                        }
+                        else if (@Model.EventTitle == "LeagueOfLegends")
+                        {
+                            <li>League Of Legends</li>
+                        }
+                        else if (@Model.EventTitle == "VALORANT")
+                        {
+                            <li>Valorant</li>
+                        }
                     </ol>
                 </div>
             </div>
@@ -52,22 +71,13 @@
                         
                     </div>
                     <div class="col-sm-push-2">
-                        <a asp-controller="Tournament" asp-action="Details" asp-route-Id="@Model.Id" class="btn btn-success">List of Teams</a>
+                        <a asp-controller="Tournament" asp-action="TeamsList" asp-route-Id="@Model.Id" class="btn btn-success">List of Teams</a>
                     </div>
                 </div>
                 <div>
                     <div class="btn-group mb-2">
-                        <button type="button" class="btn btn-success btn-lg">Join Tournament</button>
-                        <button type="button" class="btn btn-success dropdown-toggle dropdown-toggle-split dropdown-toggle-no-arrow" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="icon-dots-three-horizontal"></i>
-                            <span class="sr-only">Toggle Dropdown</span>
-                        </button>
-                        <div class="dropdown-menu dropdown-menu-right dropdown-menu-sm">
-                            <a class="dropdown-item" href="#">Action</a>
-                            <a class="dropdown-item" href="#">Another action</a>
-                            <a class="dropdown-item" href="#">Something else here</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">Separated link</a>
+                        <div class="col-sm-push-2">
+                            <a asp-controller="Tournament" asp-action="Join" asp-route-Id="@Model.Id" class="btn btn-success">Join This Tournament</a>
                         </div>
                     </div>
                 </div>

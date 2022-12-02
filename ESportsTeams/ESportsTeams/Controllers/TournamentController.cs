@@ -1,6 +1,7 @@
 ﻿ using ESportsTeams.Core.Interfaces;
 using ESportsTeams.Infrastructure.Data.Entity;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace ESportsTeams.Controllers
 {
@@ -27,10 +28,27 @@ namespace ESportsTeams.Controllers
             return tournament == null ? NotFound() : View(tournament);
         }
 
-        //[HttpPost]
-        //public async Task<IActionResult> Join()
-        //{
+        public async Task<IActionResult> Join(int Id)
+        {
+            try
+            {
+                var userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
 
-        //}
+                await _tournamentService.TeamJoinToTournaments(userId, Id);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return RedirectToAction(nameof(Game));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> TeamsList(int id)
+        {
+            var teams = await _tournamentService.ListOfTeamsInTournamentAsync(id);
+            return View(teams);
+        }
     }
 }
