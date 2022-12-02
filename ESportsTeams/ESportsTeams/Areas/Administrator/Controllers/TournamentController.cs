@@ -18,6 +18,7 @@ namespace ESportsTeams.Areas.Administrator.Controllers
         {
             return View();
         }
+
         [HttpGet]
         public IActionResult Add()
         {
@@ -45,6 +46,51 @@ namespace ESportsTeams.Areas.Administrator.Controllers
 
                 return View(model);
             }
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(int id)
+        {
+            var tournamentToEdit = await _tournamentService.GetTournamentByIdAsync(id);
+            if (tournamentToEdit == null)
+            {
+                return View("Error");
+            }
+            var tournamentModel = new EditTournamentBindingModel()
+            {
+                Id = tournamentToEdit.Id,
+                Title = tournamentToEdit.Title,
+                Description = tournamentToEdit.Description,
+                StartTime = tournamentToEdit.StartTime,
+                EntryFee = tournamentToEdit.EntryFee,
+                Facebook = tournamentToEdit.Facebook,
+                Website = tournamentToEdit.Website,
+                Contact = tournamentToEdit.Contact,
+                Twitter = tournamentToEdit.Twitter,
+                PrizePool = tournamentToEdit.PrizePool,
+                Address = tournamentToEdit.Address,
+                EventTitle = tournamentToEdit.Event.Title
+            };
+            return View(tournamentModel);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Edit(EditTournamentBindingModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                ModelState.AddModelError("", "Failed to edit Tournament");
+                return View("Edit", model);
+            }
+
+            await _tournamentService.EditTournamentAsync(model);
+            return RedirectToAction("Index", "Home");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Details(int id)
+        {
+            var tournament = await _tournamentService.GetTournamentDetailsByIdAsync(id);
+            return tournament == null ? NotFound() : View(tournament);
         }
     }
 }

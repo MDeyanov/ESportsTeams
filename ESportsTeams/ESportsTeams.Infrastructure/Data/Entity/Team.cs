@@ -43,7 +43,7 @@ namespace ESportsTeams.Infrastructure.Data.Entity
         public AppUser Owner { get; set; } = null!;
 
         [Required]
-        public bool IsDeleted { get; set; } = false;
+        public bool IsBanned { get; set; } = false;
 
         public List<TeamTournament> TeamTournaments { get; set; } = new List<TeamTournament>();
 

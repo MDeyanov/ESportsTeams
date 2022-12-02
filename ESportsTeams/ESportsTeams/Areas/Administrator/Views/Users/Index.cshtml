@@ -7,7 +7,45 @@
 
 <h2 class="text-center">User management</h2>
 <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+@if (TempData["InfoMessage"] != null)
+{
+    <div class="aler alert-info">
+        <strong>Information! </strong> @TempData["InfoMessage"]
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span>&times;</span>
+        </button>
+    </div>
+}
+
 <section>
+    <div>
+        @using (Html.BeginForm("Index", "Users", FormMethod.Get))
+        {
+            <table>
+                <tr>
+                    <td>
+                        <span><b>Search By:</b></span>
+                        @Html.RadioButton("searchBy","Username",true)
+                        <text>User name</text>
+                        <span><b>Search By:</b></span>
+                        @Html.RadioButton("searchBy","Id",true)
+                        <text>User Id</text>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        @Html.TextBox("searchValue",null, new{Class = "form-control", placeholder="Enter Username or Id"})
+                    </td>
+                    <td>
+                       &nbsp;
+                    </td>
+                    <td>
+                        <input type="submit" value="Search" class="btn btn-success" />
+                    </td>
+                </tr>
+            </table>
+        }
+    </div>
     <div class="text-center row">
         @foreach (var user in Model)
         {
@@ -17,7 +55,7 @@
                 <div class="card-body">
                     <p class="mb-0 fw-bold alert-info">User Id: @user.Id</p>
                     <h5 class="card-name mt-1 alert-info">Username: @user.Username</h5>
-                    <h6 class="card-name mt-1 alert-info">Email: @user.Email</h6>                 
+                    <h6 class="card-name mt-1 alert-info">Email: @user.Email</h6>
                 </div>
                 @if (!user.IsBanned)
                 {

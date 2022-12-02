@@ -27,6 +27,9 @@ namespace ESportsTeams.Infrastructure.Data.Entity
         [ForeignKey(nameof(TournamentId))]
         public Tournament? Tournament { get; set; } = null!;
 
+        [Required]
+        public bool IsDeleted { get; set; } = false;
+
 
         public DateTime CreatedDate { get; set; } = DateTime.Now;
     }

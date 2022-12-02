@@ -27,6 +27,10 @@ namespace ESportsTeams.Core.Models.ViewModels.TournamentViewModels
 
         [DisplayFormat(DataFormatString = "{0:n2}")]
         public decimal? PrizePool { get; set; }
+
+        [Required]
+        public string EventTitle { get; set; } = null!;
+
         [Required]
         public Address Address { get; set; } = null!;
         public IList<TeamTournament>? TeamTournaments { get; set; }
