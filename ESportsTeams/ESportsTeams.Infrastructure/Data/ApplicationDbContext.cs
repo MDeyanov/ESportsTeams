@@ -27,12 +27,6 @@ namespace ESportsTeams.Infrastructure.Data
             builder.Entity<Team>()
                 .HasIndex(t => t.Name)
                 .IsUnique();
-           
-               
-               
-                
-                
-                
 
             builder.Entity<AppUser>()
                .HasMany(t => t.Requests)

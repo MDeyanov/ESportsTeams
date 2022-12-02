@@ -2,6 +2,7 @@
 @using ESportsTeams.Core.Models.ViewModels.TournamentViewModels;
 @model TournamentDetailsViewModel
 
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
 <div class="main-container">
     <nav aria-label="breadcrumb" role="navigation" class="bg-primary text-white">
         <div class="container">
@@ -21,16 +22,20 @@
             <div class="col-lg-7 mb-4 mb-sm-0">
                 <img alt="Image" src="@Model.Image" class="rounded img-fluid" />
             </div>
+            <!--end of col-->
             <div class="col-lg-4 d-flex flex-column justify-content-between mr-auto ml-auto">
                 <div>
-                    <h1 class="mb-2">@Model.Title</h1>
-                    <h2 class="lead mb-3">@Model.Address.City, @Model.Address.Country</h2>
+                    <h1 class="mb-2 fw-bold">@Model.Title</h1>
+                    <h2 class="lead mb-3 fw-bold alert alert-success"> Address: @Model.Address.City, @Model.Address.Country</h2>
                     <div>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar-event" viewBox="0 0 16 16">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-calendar-event" viewBox="0 0 20 20">
                             <path d="M11 6.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1z" />
                             <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z" />
                         </svg>
-                        <span class="badge badge-secondary mr-10">@Model.StartTime</span>
+                        <span class="badge badge-secondary mr-10 fs-2">@Model.StartTime</span>
+                    </div>
+                    <div>
+                       &nbsp;
                     </div>
                     <div>
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-diagram-3-fill" viewBox="0 0 16 16">
@@ -48,11 +53,19 @@
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-telephone-fill" viewBox="0 0 16 16">
                             <path fill-rule="evenodd" d="M1.885.511a1.745 1.745 0 0 1 2.61.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511z" />
                         </svg>
-                        <a href="@Model.Contact" target="_blank">Contact</a>
-                        
+                        <a href="@Model.Contact" target="_blank">Contact</a>                       
+                    </div>
+                    <div>
+                        &nbsp;
                     </div>
                     <div class="col-sm-push-2">
                         <a asp-controller="Tournament" asp-action="Details" asp-route-Id="@Model.Id" class="btn btn-success">List of Teams</a>
+                    </div>
+                    <div>
+                        &nbsp;
+                    </div>
+                    <div class="col-sm-push-2">
+                        <a asp-area="Administrator" asp-controller="Tournament" asp-action="Edit" asp-route-Id="@Model.Id" class="btn btn-danger">Edit</a>
                     </div>
                 </div>
                 <div>
@@ -79,7 +92,7 @@
     <div class="container">
         <div class="row justify-content-between">
             <div class="col-12 col-md-8 col-lg-7">
-                <h5 class="mb-4">Description</h5>
+                <h5 class="mb-4 fw-bold">Description</h5>
                 <article>
                     @Model.Description
                 </article>
@@ -126,8 +139,7 @@
                         <li class="list-group-item">
                             <div class="d-flex justify-content-between">
                                 <div><i class="icon-trophy mr-1"></i>PRIZE</div>
-                                <span> @string.Format($"{Model.PrizePool:f2}")$</span>
-                                
+                                <span> @string.Format($"{Model.PrizePool:f2}")$</span>                                
                             </div>
                         </li>
                     </ul>

@@ -16,8 +16,7 @@ namespace ESportsTeams.Core.Models.BindingModels.Event
         [Required]
         public string Title { get; set; } = null!;
 
-        [Required]
-        public IFormFile Image { get; set; } = null!;
+        public IFormFile? Image { get; set; }
 
         [Required]
         public string Description { get; set; } = null!;

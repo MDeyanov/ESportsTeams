@@ -72,20 +72,24 @@ namespace ESportsTeams.Core.Services
         //GETTING COUNT OF ALL TEAMS IN CATEGORY
         public async Task<int> GetCountByCategoryAsync(Category category)
         {
-            return await _context.Teams.CountAsync(t => t.Category == category);
+            return await _context.Teams
+                .Where(t => t.IsBanned == false)
+                .CountAsync(t => t.Category == category);
         }
 
 
         //SLICE TEAM FOR PAGES
         public async Task<IEnumerable<Team>> GetSliceAsync(int offset, int size)
         {
-            return await _context.Teams.Include(x => x.Address).Skip(offset).Take(size).ToListAsync();
+            return await _context.Teams
+                .Where(t => t.IsBanned == false)
+                .Include(x => x.Address).Skip(offset).Take(size).ToListAsync();
         }
 
         //GETTING TEAMS BY COUNTRY
         public async Task<IEnumerable<Team>> GetTeamByCountry(string country)
         {
-            return await _context.Teams.Where(t => t.Address.Country.Contains(country)).Distinct().ToListAsync();
+            return await _context.Teams.Where(t => t.Address.Country.Contains(country) && t.IsBanned == false).Distinct().ToListAsync();
         }
 
         //GETTING ALL TEAMS IN CATEGORY AND SLICE
@@ -93,7 +97,7 @@ namespace ESportsTeams.Core.Services
         {
             return await _context.Teams
                 .Include(x => x.Address)
-                .Where(x => x.Category == category)
+                .Where(x => x.Category == category && x.IsBanned == false)
                 .Skip(offset)
                 .Take(size)
                 .ToListAsync();
@@ -103,7 +107,7 @@ namespace ESportsTeams.Core.Services
         public async Task<IEnumerable<Team>> GetSliceOfUserOwnedAsync(string userId, int offset, int size)
         {
             return await _context.Teams
-                .Where(t => t.OwnerId == userId)
+                .Where(t => t.OwnerId == userId && t.IsBanned == false)
                 .Include(x => x.Address)
                 .Skip(offset)
                 .Take(size)
@@ -113,14 +117,14 @@ namespace ESportsTeams.Core.Services
         //GETTING THE COUNT OF OWNED TEAMS
         public async Task<int> GetOwnedTeamCountAsync(string userId)
         {
-            return await _context.Teams.Where(t => t.OwnerId == userId).CountAsync();
+            return await _context.Teams.Where(t => t.OwnerId == userId && t.IsBanned == false).CountAsync();
         }
 
         //GETTING THE COUNT BY CATEGORY OF USER THAT OWN THEM
         public async Task<int> GetCountByCategoryOfUserOwnedAsync(string userId, Category category)
         {
             return await _context.Teams
-                .Where(t => t.OwnerId == userId)
+                .Where(t => t.OwnerId == userId && t.IsBanned == false)
                 .CountAsync(t => t.Category == category);
         }
 
@@ -128,6 +132,7 @@ namespace ESportsTeams.Core.Services
         public async Task<DetailsTeamViewModel?> GetTeamDetailsByIdAsync(int id, string loggedUserId)
         {
             var result = await _context.Teams
+                .Where(t => t.IsBanned == false)
                 .Include(x => x.Owner)
                 .Include(x => x.Address)
                 .FirstOrDefaultAsync(x => x.Id == id);
@@ -160,6 +165,7 @@ namespace ESportsTeams.Core.Services
         public async Task<Team?> GetTeamByIdAsync(int id)
         {
             return await _context.Teams
+                .Where(t => t.IsBanned == false)
                 .Include(x => x.Address)
                 .FirstOrDefaultAsync(x => x.Id == id);
 
@@ -170,6 +176,7 @@ namespace ESportsTeams.Core.Services
 
 
             var teamToChange = await _context.Teams
+                .Where(t => t.IsBanned == false)
                 .Include(x => x.Address)
                 .FirstOrDefaultAsync(x => x.Id == model.Id);
 
@@ -194,26 +201,11 @@ namespace ESportsTeams.Core.Services
             await _context.SaveChangesAsync();
         }
 
-        //public async Task<bool> DeleteTeamAsync(int id)
-        //{
-        //    var team = await _context.Teams.FirstOrDefaultAsync(x => x.Id == id);
-        //    if (team == null)
-        //    {
-        //        throw new ArgumentException("Team not found!");
-        //    }
-        //    if (!string.IsNullOrEmpty(team.Image))
-        //    {
-        //        _ = _photoService.DeletePhotoAsync(team.Image);
-        //    }
-        //    _context.Teams.Remove(team);
-
-        //    await _context.SaveChangesAsync();
-        //    return true;
-        //}
-
         public async Task<bool> TeamExistsAsync(string name)
         {
-            var teams = await _context.Teams.ToListAsync();
+            var teams = await _context.Teams
+                .Where(t => t.IsBanned == false)
+                .ToListAsync();
 
             if (teams == null || teams.Count == 0)
             {

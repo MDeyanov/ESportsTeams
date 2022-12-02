@@ -89,6 +89,46 @@ namespace ESportsTeams.Core.Services
             await _context.SaveChangesAsync();
         }
 
+        public async Task EditTournamentAsync(EditTournamentBindingModel model)
+        {
+            var tournamentToEdit = await _context.Tournaments.FirstOrDefaultAsync(x => x.Id == model.Id);
+            if (tournamentToEdit == null)
+            {
+                throw new ArgumentException(TournamentNotFound);
+            }
+            if (model.Image != null)
+            {
+                var photoResult = await _photoService.AddPhotoAsync(model.Image);
+                if (!string.IsNullOrEmpty(tournamentToEdit.Image))
+                {
+                    _ = _photoService.DeletePhotoAsync(tournamentToEdit.Image);
+                }
+                tournamentToEdit.Image = photoResult.Url.ToString();
+            }
+            if (model.EventTitle != null)
+            {
+                var currentEvent = await _context.Events.FirstOrDefaultAsync(x => x.Title.ToLower() == model.EventTitle);
+                if (currentEvent != null)
+                {
+                    tournamentToEdit.Event = currentEvent;
+                    tournamentToEdit.EventId = currentEvent.Id;
+                }
+            }
+
+            tournamentToEdit.Title= model.Title;
+            tournamentToEdit.Description= model.Description;
+            tournamentToEdit.StartTime = model.StartTime;
+            tournamentToEdit.Website = model.Website;
+            tournamentToEdit.Twitter = model.Twitter;
+            tournamentToEdit.Facebook = model.Facebook;
+            tournamentToEdit.Contact = model.Contact;
+            tournamentToEdit.PrizePool = model.PrizePool;
+            tournamentToEdit.EntryFee = model.EntryFee;
+            tournamentToEdit.Address = model.Address;
+
+            await _context.SaveChangesAsync();
+        }
+
         public async Task<IEnumerable<TournamentViewModel>> GetTournamentByEventIdAsync(int id)
         {
             var tournaments = await _context.Tournaments
@@ -134,6 +174,7 @@ namespace ESportsTeams.Core.Services
         {
             var tournament = await _context.Tournaments
                 .Include(t => t.Address)
+                .Include(t=>t.Event)
                 .Include(t => t.TeamTournaments)
                 .ThenInclude(t => t.Team)
                 .FirstOrDefaultAsync(x => x.Id == id);
@@ -158,7 +199,7 @@ namespace ESportsTeams.Core.Services
                Address = tournament.Address,
                TeamTournaments = tournament.TeamTournaments,
                Reviews = tournament.Reviews,
-
+               EventTitle = tournament.Event.Title
            };
             return result;
         }

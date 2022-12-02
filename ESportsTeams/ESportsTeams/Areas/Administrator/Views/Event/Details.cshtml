@@ -12,12 +12,11 @@
     </div>
 </section>
 <h3 class="text-center">Event Tournaments:</h3>
-<div class="container">
-    
+<div class="container">   
     <ul class="row feature-list feature-list-sm">
         @if (Model.Tournaments == null)
         {
-            <p class="fs-10 fw-bold">There is no tournaments for this event</p>
+            <li class="fs-10 fw-bold">There is no tournaments for this event</li>
         }
         else
         {
@@ -28,16 +27,14 @@
                         <img class="card-img-top" style="width: 8rem;"
                      src="@tournament.Image" alt="Tournament Image">
                         <div class="card-body">
-                            <p class="fs-10 fw-bold">Category:</p>
+                            <a asp-area="Administrator" asp-controller="Tournament" asp-action="Details" asp-route-Id="@tournament.Id" class="btn btn-success">Details</a>
                         </div>
                     </div>
                     <b>NAME:</b>
                     <div>@tournament.Title</div>
                 </li>
             }
-        }
-         
-        
+        }            
     </ul>
 </div>
 

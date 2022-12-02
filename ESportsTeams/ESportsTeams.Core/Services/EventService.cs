@@ -153,15 +153,19 @@ namespace ESportsTeams.Core.Services
                 throw new ArgumentException(EventNotFound);
             }
 
-            var photoResult = await _photoService.AddPhotoAsync(model.Image);
-            if (!string.IsNullOrEmpty(eventToEdit.Image))
+            if (model.Image != null)
             {
-                _ = _photoService.DeletePhotoAsync(eventToEdit.Image);
+                var photoResult = await _photoService.AddPhotoAsync(model.Image);
+                if (!string.IsNullOrEmpty(eventToEdit.Image))
+                {
+                    _ = _photoService.DeletePhotoAsync(eventToEdit.Image);
+                }
+                eventToEdit.Image = photoResult.Url.ToString();
             }
+
 
             eventToEdit.Title = model.Title;
             eventToEdit.Description = model.Description;
-            eventToEdit.Image = photoResult.Url.ToString();
 
             await _context.SaveChangesAsync();
         }
