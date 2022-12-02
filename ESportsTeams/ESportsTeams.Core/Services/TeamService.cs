@@ -49,7 +49,7 @@ namespace ESportsTeams.Core.Services
                     Country = model.Address.Country,
                 }
             };
-
+           
             team.AppUsers.Add(user);
 
             user.TeamId = team.Id;
@@ -213,6 +213,30 @@ namespace ESportsTeams.Core.Services
             }
 
             return teams.Any(x => x.Name == name);
+        }
+
+        public async Task<IEnumerable<GetTeamsViewModel>> GetAllTeamsAsync()
+        {
+            var teams = await _context.Teams
+                .Include(x => x.TeamTournaments)
+                .Include(x=>x.Owner)
+                .ToListAsync();
+
+            return teams
+                .Select(t => new GetTeamsViewModel()
+                {
+                    Id= t.Id,
+                    Name = t.Name,
+                    Description = t.Description,
+                    Category = t.Category,
+                    Image = t.Image,
+                    Address = t.Address,
+                    TournamentWin = t.TournamentWin,
+                    Owner = t.Owner,
+                    TeamTournaments= t.TeamTournaments,
+                    AvarageMMR = t.AvarageMMR,
+                    IsBanned= t.IsBanned,
+                });
         }
     }
 }

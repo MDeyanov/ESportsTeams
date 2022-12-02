@@ -9,7 +9,27 @@
             <div class="row justify-content-center">
                 <div class="col">
                     <ol class="breadcrumb fw-bold fs-3">
-                        @Model.EventTitle
+                       
+                        @if (@Model.EventTitle == "Dota2")
+                        {
+                            <li>Dota 2</li>                           
+                        }
+                        else if (@Model.EventTitle == "CSGO")
+                        {
+                            <li>Counter-Strike: Global Offensive</li>
+                        }
+                        else if (@Model.EventTitle == "PUBG")
+                        {
+                            <li>PlayerUnknown's Battlegrounds</li>
+                        }
+                        else if (@Model.EventTitle == "LeagueOfLegends")
+                        {
+                            <li>League Of Legends</li>
+                        }
+                        else if (@Model.EventTitle == "VALORANT")
+                        {
+                            <li>Valorant</li>
+                        }
                     </ol>
                 </div>
             </div>
@@ -59,13 +79,16 @@
                         &nbsp;
                     </div>
                     <div class="col-sm-push-2">
-                        <a asp-controller="Tournament" asp-action="Details" asp-route-Id="@Model.Id" class="btn btn-success">List of Teams</a>
+                        <a asp-controller="Tournament" asp-action="TeamsList" asp-route-Id="@Model.Id" class="btn btn-success">List of Teams</a>
                     </div>
                     <div>
                         &nbsp;
                     </div>
                     <div class="col-sm-push-2">
                         <a asp-area="Administrator" asp-controller="Tournament" asp-action="Edit" asp-route-Id="@Model.Id" class="btn btn-danger">Edit</a>
+                    </div>
+                    <div>
+                        &nbsp;
                     </div>
                 </div>
                 <div>

@@ -1,0 +1,86 @@
+﻿@using ESportsTeams.Core.Models.ViewModels.TeamViewModels;
+
+@model IEnumerable<GetTeamsViewModel>
+@{
+    ViewData["Title"] = "Teams";
+}
+
+<h2 class="text-center">TEAMS!</h2>
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+@if (TempData["InfoMessage"] != null)
+{
+    <div class="aler alert-info">
+        <strong>Information! </strong> @TempData["InfoMessage"]
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span>&times;</span>
+        </button>
+    </div>
+}
+
+<section>
+    <div>
+        @using (Html.BeginForm("Index", "Team", FormMethod.Get))
+        {
+            <table>
+                <tr>
+                    <td>
+                        <span><b>Search By:</b></span>
+                        @Html.RadioButton("searchBy","OwnerUsername",true)
+                        <text>Owner Username</text>
+                        <span><b>Search By:</b></span>
+                        @Html.RadioButton("searchBy","Teamname",true)
+                        <text>Team name</text>
+                        <span><b>Search By:</b></span>
+                        @Html.RadioButton("searchBy","Banned",true)
+                        <text>Banned</text>
+                        <span><b>Search By:</b></span>
+                        @Html.RadioButton("searchBy","notBanned",true)
+                        <text>Not Banned</text>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        @Html.TextBox("searchValue",null, new{Class = "form-control", placeholder="Enter Owner username,team name,banned or notbanned!"})
+                    </td>
+                    <td>
+                       &nbsp;
+                    </td>
+                    <td>
+                        <input type="submit" value="Search" class="btn btn-success" />
+                    </td>
+                </tr>
+            </table>
+        }
+    </div>
+    <div class="text-center row">
+        @foreach (var team in Model)
+        {
+            <div class="card col-4" style="width: 10rem; ">
+                <img class="card-img-top" style="width: 10rem;"
+                 src="@team.Image" alt="Team Image">
+                <div class="card-body">
+                    <p class="mb-0 fw-bold alert-info">Team Id: @team.Id</p>
+                    <h5 class="card-name mt-1 alert-info">Team name: @team.Name</h5>
+                    <h6 class="card-name mt-1 alert-info">Team Owner: @team.Owner.UserName</h6>
+                    <h7 class="card-name mt-1 alert-info">Category: @team.Category.ToString()</h7>
+                </div>
+                @if (!team.IsBanned)
+                {
+                    <p class="fs-10 fw-bold alert-warning"> NOT BANNED</p>
+                }
+                else
+                {
+                    <p class="fs-10 fw-bold alert-warning">BANNED</p>
+                }
+                <div class="form-group">
+                    <div class="col-sm-push-2">
+                        <a asp-area="Administrator" asp-controller="Team" asp-action="Details" asp-route-id="@team.Id" class="btn btn-success">Details</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</section>
+
+
+

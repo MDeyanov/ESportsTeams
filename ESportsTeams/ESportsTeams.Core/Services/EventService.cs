@@ -5,12 +5,7 @@ using ESportsTeams.Infrastructure.Data;
 using ESportsTeams.Infrastructure.Data.Entity;
 using Microsoft.EntityFrameworkCore;
 using static ESportsTeams.Infrastructure.Data.Common.CommonConstants;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.Design;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace ESportsTeams.Core.Services
 {

@@ -6,12 +6,8 @@ using ESportsTeams.Infrastructure.Data.Entity;
 using static ESportsTeams.Infrastructure.Data.Common.CommonConstants;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml;
+using System.Security.Cryptography.X509Certificates;
+using ESportsTeams.Core.Models.ViewModels.TeamViewModels;
 
 namespace ESportsTeams.Core.Services
 {
@@ -39,19 +35,19 @@ namespace ESportsTeams.Core.Services
             var eventTitle = tournament.Event.Title;
             var user = await _userService.FindUserByIdAsync(userId);
             var team = await _context.Teams.
-                Where(x=>x.Category.ToString()==eventTitle)
+                Where(x => x.Category.ToString() == eventTitle)
                 .FirstOrDefaultAsync(x => x.OwnerId == user.Id);
-           
+
             if (team == null)
             {
                 throw new ArgumentException(TeamNotFound);
-            }          
-                               
+            }
+
             tournament.TeamTournaments.Add(new TeamTournament()
             {
-                TeamId= team.Id,
+                TeamId = team.Id,
                 Team = team,
-                TournamentId= tournament.Id,
+                TournamentId = tournament.Id,
                 Tournament = tournament
             });
             await _context.SaveChangesAsync();
@@ -65,27 +61,33 @@ namespace ESportsTeams.Core.Services
             {
                 throw new ArgumentException(EventNotFound);
             }
+            var address = new Address();
+            if (model.Address == null)
+            {
+                address.Street = "Online";
+                address.City = "Online";
+                address.Country = "Online";
+            }
+            else
+            {
+                address = model.Address;
+            }
             var newTournament = new Tournament()
             {
                 Title = model.Title,
-                Description= model.Description,
-                StartTime= model.StartTime,
-                EntryFee= model.EntryFee,
+                Description = model.Description,
+                StartTime = model.StartTime,
+                EntryFee = model.EntryFee,
                 Website = model.Website,
-                Twitter= model.Twitter,
-                Facebook= model.Facebook,
+                Twitter = model.Twitter,
+                Facebook = model.Facebook,
                 Contact = model.Contact,
-                PrizePool   = model.PrizePool,
+                PrizePool = model.PrizePool,
                 Image = result.Url.ToString(),
-                Address = new Address()
-                {
-                    Street = model.Address.Street,
-                    City = model.Address.City,
-                    Country = model.Address.Country,
-                },
+                Address = address,
                 Event = eventByTitle
             };
-            await _context.Tournaments.AddAsync(newTournament); 
+            await _context.Tournaments.AddAsync(newTournament);
             await _context.SaveChangesAsync();
         }
 
@@ -115,8 +117,8 @@ namespace ESportsTeams.Core.Services
                 }
             }
 
-            tournamentToEdit.Title= model.Title;
-            tournamentToEdit.Description= model.Description;
+            tournamentToEdit.Title = model.Title;
+            tournamentToEdit.Description = model.Description;
             tournamentToEdit.StartTime = model.StartTime;
             tournamentToEdit.Website = model.Website;
             tournamentToEdit.Twitter = model.Twitter;
@@ -132,31 +134,31 @@ namespace ESportsTeams.Core.Services
         public async Task<IEnumerable<TournamentViewModel>> GetTournamentByEventIdAsync(int id)
         {
             var tournaments = await _context.Tournaments
-                .Include(t=>t.Address)
-                .Include(t=>t.TeamTournaments)
-                .ThenInclude(t=>t.Team)
-                .Where(x=>x.EventId== id).ToListAsync();
+                .Include(t => t.Address)
+                .Include(t => t.TeamTournaments)
+                .ThenInclude(t => t.Team)
+                .Where(x => x.EventId == id).ToListAsync();
 
             if (tournaments == null)
             {
-                throw new ArgumentException("Invalid Event ID!");
+                throw new ArgumentException(EventNotFound);
             }
 
             return tournaments.Select(t => new TournamentViewModel()
             {
-                Id= t.Id,
-                Title= t.Title,
-                Description= t.Description,
+                Id = t.Id,
+                Title = t.Title,
+                Description = t.Description,
                 Image = t.Image,
-                StartTime= t.StartTime,
-                EntryFee= t.EntryFee,
-                Website= t.Website,
+                StartTime = t.StartTime,
+                EntryFee = t.EntryFee,
+                Website = t.Website,
                 Twitter = t.Twitter,
-                Facebook= t.Facebook,
-                Contact= t.Contact,
-                PrizePool= t.PrizePool,
+                Facebook = t.Facebook,
+                Contact = t.Contact,
+                PrizePool = t.PrizePool,
                 Address = t.Address,
-                TeamTournaments= t.TeamTournaments,
+                TeamTournaments = t.TeamTournaments,
                 Reviews = t.Reviews,
             });
         }
@@ -164,7 +166,7 @@ namespace ESportsTeams.Core.Services
         public async Task<Tournament?> GetTournamentByIdAsync(int id)
         {
             return await _context.Tournaments
-                .Include(x=>x.Event)
+                .Include(x => x.Event)
                 .Include(x => x.Address)
                 .FirstOrDefaultAsync(x => x.Id == id);
 
@@ -174,34 +176,126 @@ namespace ESportsTeams.Core.Services
         {
             var tournament = await _context.Tournaments
                 .Include(t => t.Address)
-                .Include(t=>t.Event)
+                .Include(t => t.Event)
                 .Include(t => t.TeamTournaments)
                 .ThenInclude(t => t.Team)
                 .FirstOrDefaultAsync(x => x.Id == id);
 
-            if (tournament==null)
+            if (tournament == null)
             {
-                throw new ArgumentException("Tournament not found!");
+                throw new ArgumentException(TournamentNotFound);
             }
-           var result = new TournamentDetailsViewModel()
-           {
-               Id = tournament.Id,
-               Title = tournament.Title,
-               Description = tournament.Description,
-               Image = tournament.Image,
-               StartTime = tournament.StartTime,
-               EntryFee = tournament.EntryFee,
-               Website = tournament.Website,
-               Twitter = tournament.Twitter,
-               Facebook = tournament.Facebook,
-               Contact = tournament.Contact,
-               PrizePool = tournament.PrizePool,
-               Address = tournament.Address,
-               TeamTournaments = tournament.TeamTournaments,
-               Reviews = tournament.Reviews,
-               EventTitle = tournament.Event.Title
-           };
+            var address = new Address();
+            if (tournament.Address == null)
+            {
+                address.Street = "Online";
+                address.City = "Online";
+                address.Country = "Online";
+            }
+            else
+            {
+                address = tournament.Address;
+            }
+            var result = new TournamentDetailsViewModel()
+            {
+                Id = tournament.Id,
+                Title = tournament.Title,
+                Description = tournament.Description,
+                Image = tournament.Image,
+                StartTime = tournament.StartTime,
+                EntryFee = tournament.EntryFee,
+                Website = tournament.Website,
+                Twitter = tournament.Twitter,
+                Facebook = tournament.Facebook,
+                Contact = tournament.Contact,
+                PrizePool = tournament.PrizePool,
+                Address = address,
+                TeamTournaments = tournament.TeamTournaments,
+                Reviews = tournament.Reviews,
+                EventTitle = tournament.Event.Title
+            };
             return result;
+        }
+
+        public async Task<IEnumerable<GetTeamsViewModel>> ListOfTeamsInTournamentAsync(int tournamentId)
+        {
+            var tournament = await _context.Tournaments
+                 .Where(t => t.Id == tournamentId)
+                 .Include(t => t.TeamTournaments)
+                 .ThenInclude(t => t.Team)
+                 .ThenInclude(t => t.Owner)
+                 .FirstOrDefaultAsync();
+
+            if (tournament == null)
+            {
+                throw new ArgumentException(InvalidTournamentId);
+            }
+
+            return tournament.TeamTournaments
+                .Select(tt => new GetTeamsViewModel()
+                {
+                    Id = tt.TeamId,
+                    Name = tt.Team.Name,
+                    Description = tt.Team.Description,
+                    Category = tt.Team.Category,
+                    Image= tt.Team.Image,
+                    Address= tt.Team.Address,
+                    TournamentWin = tt.Team.TournamentWin,
+                    Owner = tt.Team.Owner,
+                    AvarageMMR = tt.Team.AvarageMMR,
+                });
+        }
+
+        public async Task TeamJoinToTournaments(string userId, int tournamentId)
+        {
+
+            var tournament = await _context.Tournaments
+                .Where(x => x.Id == tournamentId)
+                .Include(x => x.TeamTournaments)
+                .Include(x=>x.Event)
+                .FirstOrDefaultAsync();
+
+            if (tournament == null)
+            {
+                throw new ArgumentException(InvalidTournamentId);
+            }
+
+            var user = await _context.Users
+               .Where(x => x.Id == userId)
+               .Include(x => x.OwnedTeams)
+               .FirstOrDefaultAsync();
+
+            if (user == null)
+            {
+                throw new ArgumentException(InvalidUser);
+            }
+
+            var teams = await _context.Teams
+                .Where(x => x.OwnerId == user.Id)
+                .ToListAsync();
+            if (teams == null)
+            {
+                throw new ArgumentException(DoNotOwnTeam);
+            }
+
+            string eventTitle = tournament.Event.Title.ToLower();
+
+            var team = teams.Where(t => t.Category.ToString().ToLower() == eventTitle).FirstOrDefault();
+
+            if (team == null)
+            {
+                throw new ArgumentException(InvalidTeamCategory);
+            }          
+
+            tournament.TeamTournaments.Add(new TeamTournament()
+            {
+                TeamId = team.Id,
+                Team = team,
+                TournamentId = tournament.Id,
+                Tournament = tournament
+            });
+            await _context.SaveChangesAsync();
+
         }
     }
 }
