@@ -2,6 +2,7 @@
 @using Microsoft.AspNetCore.Identity;
 @model DetailsTeamViewModel
 
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
 <div class="main-container">
     <nav aria-label="breadcrumb" role="navigation" class="bg-primary text-white">
         <div class="container">
@@ -30,11 +31,8 @@
                         }
                     </ol>
                 </div>
-                <!--end of col-->
             </div>
-            <!--end of row-->
         </div>
-        <!--end of container-->
     </nav>
 </div>
 <section class="bg-white space-sm">
@@ -43,11 +41,10 @@
             <div class="col-lg-7 mb-4 mb-sm-0">
                 <img alt="Image" src="@Model.Image" class="rounded img-fluid" />
             </div>
-            <!--end of col-->
             <div class="col-lg-4 d-flex flex-column justify-content-between mr-auto ml-auto">
                 <div>
                     <h1 class="mb-2 fw-bold">@Model.Name</h1>
-                    <h2 class="lead mb-3">@Model.Address.City, @Model.Address.Country</h2>
+                    <h2 class="lead mb-3 alert alert-success fw-bold">@Model.Address.City, @Model.Address.Country</h2>
                     @if (Model.loggedUserId == Model.OwnerId)
                     {
                         <h3 class="breadcrumb-item active" aria-current="page">TEAM ID:@Model.Id</h3>
@@ -81,13 +78,9 @@
                     </div>
                 </div>
             </div>
-            <!--end of col-->
         </div>
-        <!--end of row-->
     </div>
-    <!--end of container-->
 </section>
-    <!--end of section-->
 <section class="space-sm">
     <div class="container">
         <div class="row justify-content-between">
@@ -135,22 +128,18 @@
                 </div>
 
             </div>
-            <!--end of col-->
             <div class="col-12 col-md-4">
                 <div class="card">
                     <ul class="list-group list-group-flush">                      
                         <li class="list-group-item">
                             <div class="d-flex justify-content-between">
-                                <div><i class="icon-thumbs-up mr-1"></i> Owner</div>
+                                <div><i class="mt-1"></i> Owner</div>
                                 <span>@Model.Owner.UserName</span>
                             </div>
                         </li>                           
                     </ul>
                 </div>               
             </div>
-            <!--end of col-->
         </div>
-        <!--end of row-->
     </div>
-    <!--end of container-->
 </section>

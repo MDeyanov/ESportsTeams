@@ -33,6 +33,10 @@ namespace ESportsTeams.Core.Services
             {
                 throw new ArgumentException(InvalidUser);
             }
+            if (user.OwnedTeams.Any(t=>t.Category == model.Category))
+            {
+                throw new ArgumentException("You already have a Team with that category please choose another");
+            }
 
             var result = await _photoService.AddPhotoAsync(model.Image);
             var team = new Team()

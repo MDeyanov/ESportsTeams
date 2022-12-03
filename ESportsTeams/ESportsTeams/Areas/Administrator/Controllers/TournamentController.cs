@@ -92,5 +92,11 @@ namespace ESportsTeams.Areas.Administrator.Controllers
             var tournament = await _tournamentService.GetTournamentDetailsByIdAsync(id);
             return tournament == null ? NotFound() : View(tournament);
         }
+        [HttpGet]
+        public async Task<IActionResult> TeamsList(int id)
+        {
+            var teams = await _tournamentService.ListOfTeamsInTournamentAsync(id);
+            return View(teams);
+        }
     }
 }

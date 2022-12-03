@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
+using System.Linq;
 
 namespace ESportsTeams.Controllers
 {
@@ -18,15 +19,18 @@ namespace ESportsTeams.Controllers
         private readonly ITeamService _teamService;
         private readonly IPhotoService _photoService;
         private readonly UserManager<AppUser> _userManager;
+        private readonly IUserService _userService;
 
         public TeamController(
             UserManager<AppUser> userManager,
             ITeamService teamService,
-            IPhotoService photoService)
+            IPhotoService photoService,
+            IUserService userService)
         {
             _userManager = userManager;
             _teamService = teamService;
             _photoService = photoService;
+            _userService = userService;
         }
 
         [HttpGet]
@@ -110,26 +114,36 @@ namespace ESportsTeams.Controllers
         public async Task<IActionResult> Add(AddTeamBindingModel model)
         {
             var teamExists = _teamService.TeamExistsAsync(model.Name);
+            
             if (teamExists.Result)
             {
                 ModelState.AddModelError("Name", "Name is already exist");
                 return View(model);
             }
+            var loggedUser = this.User;
+            var dbUserId = _userManager.GetUserId(loggedUser);
+            var currentUserTeamsCategories = _userService.CurrentUserTeamsHaveCategory(dbUserId, model.Category);
+
+            if (!currentUserTeamsCategories.Result)
+            {
+                ModelState.AddModelError("Category", "You already have team with same category");
+                return View(model);
+            }
+            
+            // da napravq proverka dali toqzi user e owner na otbor ot syshtata kategoriq i ako e da ne mu pozvolq da napravi syshtiq team
             if (!ModelState.IsValid)
             {
                 return View(model);
             }
             try
-            {
-                var loggedUser = this.User;
-                var dbUserId = _userManager.GetUserId(loggedUser);
+            {              
                 await _teamService.AddTeamAsync(model, dbUserId);
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction(nameof(OwnedTeams)); 
             }
             catch (Exception)
             {
 
-                ModelState.AddModelError("", "Something went wrong!");
+                ModelState.AddModelError("Image", "Something went wrong!");
 
                 return View(model);
             }
@@ -176,43 +190,6 @@ namespace ESportsTeams.Controllers
 
             await _teamService.EditTeamAsync(model);
             return RedirectToAction("Index", "Home");
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> Delete(int id)
-        {
-            var teamDetails = await _teamService.GetTeamByIdAsync(id);
-            if (teamDetails == null)
-            {
-                return View("Error");
-            }
-            return View(teamDetails);
-        }
-
-        //[HttpPost, ActionName("Delete")]
-        //public async Task<IActionResult> DeleteTeam(int id)
-        //{
-        //    var loggedUser = this.User;
-        //    var dbUserId = _userManager.GetUserId(loggedUser);
-
-        //    var team = await _teamService.GetTeamByIdAsync(id);
-        //    if (team == null || team.OwnerId != dbUserId)
-        //    {
-        //        return View("Error");
-        //    }
-            
-
-        //    var teamDelete = await _teamService.DeleteTeamAsync(id);
-
-
-        //    if (!teamDelete)
-        //    {
-        //        return View("Error");
-        //    }
-
-        //    return RedirectToAction("Index");
-        //}
+        }    
     }
-
-
 }

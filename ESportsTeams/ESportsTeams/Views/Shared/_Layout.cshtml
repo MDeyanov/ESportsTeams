@@ -37,16 +37,13 @@
                         <i class="icon-menu h4"></i>
                     </button>
                     <div class="collapse navbar-collapse justify-content-between" id="navbarNav">
-                        <ul class="navbar-nav">
-                            <li class="nav-item">
-                                <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                            </li>
+                        <ul class="navbar-nav">                          
                             @if (SignInManager.IsSignedIn(User))
                             {
                                  @if (User.IsInRole(Admin))
                                  {                                
                                          <li class="nav-item">
-                                             <a class="nav-link" asp-area="Administrator" asp-controller="Event" asp-action="Index">Go to Admin area</a>
+                                             <a class="nav-link" asp-area="Administrator" asp-controller="Home" asp-action="Index">Go to Admin area</a>
                                          </li>
                                  }
                                 <li class="nav-item">
