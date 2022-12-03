@@ -41,7 +41,7 @@ namespace ESportsTeams.Controllers
 
                 throw;
             }
-            return RedirectToAction(nameof(Game));
+            return RedirectToAction(nameof(TeamsList));
         }
 
         [HttpGet]

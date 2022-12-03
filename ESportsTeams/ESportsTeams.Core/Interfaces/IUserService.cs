@@ -13,5 +13,7 @@ namespace ESportsTeams.Core.Interfaces
         Task<IEnumerable<Team>> GetUserOwnedTeamsAsync(string userId, Category category, int offset, int size);
         Task<AppUser> FindUserByIdAsync(string userId);
 
+        Task<bool> CurrentUserTeamsHaveCategory(string userId, Category category);
+
     }
 }

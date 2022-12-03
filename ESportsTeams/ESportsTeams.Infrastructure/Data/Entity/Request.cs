@@ -22,7 +22,7 @@ namespace ESportsTeams.Infrastructure.Data.Entity
         [ForeignKey(nameof(AppUserId))]
         public AppUser AppUser { get; set; } = null!;
 
-       public Category Category { get; set; }
+        public Category Category { get; set; }
 
     }
 }
