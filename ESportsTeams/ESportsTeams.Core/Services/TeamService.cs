@@ -242,5 +242,22 @@ namespace ESportsTeams.Core.Services
                     IsBanned= t.IsBanned,
                 });
         }
+
+        public async Task JoinTeam(string userId, int teamId)
+        {            
+            var team = await _context.Teams
+                .FirstOrDefaultAsync(x=>x.Id == teamId);
+            if (team!= null)
+            {
+                Request request = new Request()
+                {
+                    Status = RequestStatus.Pending,
+                    Team = team,
+                    RequesterId = userId,
+                };
+                team.Requests.Add(request);
+                await _context.SaveChangesAsync();
+            }
+        }
     }
 }

@@ -47,6 +47,8 @@ namespace ESportsTeams.Infrastructure.Data.Entity
 
         public List<TeamTournament> TeamTournaments { get; set; } = new List<TeamTournament>();
 
+        public List<Request> Requests { get; set; } = new List<Request> { };
+
         public int AvarageMMR { get; set; }
 
     }
