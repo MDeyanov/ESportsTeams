@@ -4,6 +4,7 @@ using ESportsTeams.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ESportsTeams.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221204124801_requesterId")]
+    partial class requesterId
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -194,6 +196,13 @@ namespace ESportsTeams.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<string>("AppUserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("Category")
+                        .HasColumnType("int");
+
                     b.Property<string>("RequesterId")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -201,12 +210,9 @@ namespace ESportsTeams.Infrastructure.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
-                    b.Property<int>("TeamId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("TeamId");
+                    b.HasIndex("AppUserId");
 
                     b.ToTable("Request");
                 });
@@ -529,13 +535,13 @@ namespace ESportsTeams.Infrastructure.Migrations
 
             modelBuilder.Entity("ESportsTeams.Infrastructure.Data.Entity.Request", b =>
                 {
-                    b.HasOne("ESportsTeams.Infrastructure.Data.Entity.Team", "Team")
+                    b.HasOne("ESportsTeams.Infrastructure.Data.Entity.AppUser", "AppUser")
                         .WithMany("Requests")
-                        .HasForeignKey("TeamId")
+                        .HasForeignKey("AppUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Team");
+                    b.Navigation("AppUser");
                 });
 
             modelBuilder.Entity("ESportsTeams.Infrastructure.Data.Entity.Review", b =>
@@ -667,6 +673,8 @@ namespace ESportsTeams.Infrastructure.Migrations
                 {
                     b.Navigation("OwnedTeams");
 
+                    b.Navigation("Requests");
+
                     b.Navigation("Reviews");
                 });
 
@@ -678,8 +686,6 @@ namespace ESportsTeams.Infrastructure.Migrations
             modelBuilder.Entity("ESportsTeams.Infrastructure.Data.Entity.Team", b =>
                 {
                     b.Navigation("AppUsers");
-
-                    b.Navigation("Requests");
 
                     b.Navigation("TeamTournaments");
                 });

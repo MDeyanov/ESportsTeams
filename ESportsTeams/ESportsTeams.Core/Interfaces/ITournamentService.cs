@@ -18,6 +18,7 @@ namespace ESportsTeams.Core.Interfaces
         Task AddTeamToTournamentAsync(string userId, int tournamentId);
 
         Task AddTournamentAsync(AddTournamentBindingModel model);
+        
         Task EditTournamentAsync(EditTournamentBindingModel model);
 
         Task TeamJoinToTournaments(string userId,int tournamentId);

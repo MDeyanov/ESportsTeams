@@ -190,6 +190,28 @@ namespace ESportsTeams.Controllers
 
             await _teamService.EditTeamAsync(model);
             return RedirectToAction("Index", "Home");
-        }    
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> JoinTeam(int Id)
+        {
+            try
+            {
+                var loggedUser = this.User;
+                var dbUserId = _userManager.GetUserId(loggedUser);
+
+                await _teamService.JoinTeam(dbUserId, Id);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return RedirectToAction(nameof(Index));
+
+        }
+        
+
+        
     }
 }

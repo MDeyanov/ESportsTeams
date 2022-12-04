@@ -28,10 +28,10 @@ namespace ESportsTeams.Infrastructure.Data
                 .HasIndex(t => t.Name)
                 .IsUnique();
 
-            builder.Entity<AppUser>()
+            builder.Entity<Team>()
                .HasMany(t => t.Requests)
-               .WithOne(t => t.AppUser)
-               .HasForeignKey(t => t.AppUserId)
+               .WithOne(t => t.Team)
+               .HasForeignKey(t => t.TeamId)
                .OnDelete(DeleteBehavior.Cascade);
 
             base.OnModelCreating(builder);
