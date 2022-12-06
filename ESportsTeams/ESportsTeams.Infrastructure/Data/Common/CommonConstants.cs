@@ -28,6 +28,7 @@
         public const string InvalidUser = "Invalid User!";
         public const string InvalidTournamentId = "Invalid tournament ID!";
         public const string DoNotOwnTeam = "You need to own a team to join this tournament!";
-        public const string InvalidTeamCategory = "Your team category is not for this tournament!";
+        public const string InvalidTeamCategoryForTournament = "Your team category is not for this tournament!";
+        public const string InvalidTeamCategory = "You already have a Team with that category please choose another";
     }
 }

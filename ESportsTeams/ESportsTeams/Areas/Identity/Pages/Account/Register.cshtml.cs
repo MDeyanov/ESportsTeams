@@ -12,6 +12,7 @@ using System.Text.Encodings.Web;
 using System.Threading;
 using System.Threading.Tasks;
 using CloudinaryDotNet.Actions;
+using ESportsTeams.Controllers;
 using ESportsTeams.Core.Interfaces;
 using ESportsTeams.Infrastructure.Data.Entity;
 using Microsoft.AspNetCore.Authentication;
@@ -26,6 +27,7 @@ using static ESportsTeams.Infrastructure.Data.Common.ValidationConstants.UserCon
 
 namespace ESportsTeams.Areas.Identity.Pages.Account
 {
+    [AllowAnonymous]
     public class RegisterModel : PageModel
     {
         private readonly SignInManager<AppUser> _signInManager;
@@ -54,10 +56,6 @@ namespace ESportsTeams.Areas.Identity.Pages.Account
 
 
         public string ReturnUrl { get; set; }
-
-
-        public IList<AuthenticationScheme> ExternalLogins { get; set; }
-
 
         public class InputModel
         {
@@ -120,17 +118,15 @@ namespace ESportsTeams.Areas.Identity.Pages.Account
         }
 
 
-        public async Task OnGetAsync(string returnUrl = null)
-        {
+        public void OnGet(string returnUrl = null)
+        {        
             ReturnUrl = returnUrl;
-            ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
         }
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
 
             returnUrl ??= Url.Content("~/");
-            ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
 
             if (ModelState.IsValid)
             {
@@ -169,19 +165,9 @@ namespace ESportsTeams.Areas.Identity.Pages.Account
                         values: new { area = "Identity", userId = user.Id, code = code, returnUrl = returnUrl },
                         protocol: Request.Scheme);
 
-                    //await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
-                    //    $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
-
-                    //if (_userManager.Options.SignIn.RequireConfirmedAccount)
-                    //{
-                    //    return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });
-                    //}
-                    //else
-                    //{
+                 
                     await _signInManager.SignInAsync(user, isPersistent: false);
-                    //return LocalRedirect(returnUrl);
-                    return RedirectToAction("Index", "Home");
-                    //}
+                    return Redirect("/Home/Index");
                 }
                 foreach (var error in result.Errors)
                 {

@@ -37,7 +37,7 @@ namespace ESportsTeams.Core.Services
             {
                 if (user.OwnedTeams.Any(t => t.Category == model.Category))
                 {
-                    throw new ArgumentException("You already have a Team with that category please choose another");
+                    throw new ArgumentException(InvalidTeamCategory);
                 }
             }
 
