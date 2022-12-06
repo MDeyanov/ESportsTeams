@@ -38,6 +38,10 @@ namespace ESportsTeams.Core.Models.ViewModels.TeamViewModels
 
         public List<TeamTournament> TeamTournaments { get; set; } = new List<TeamTournament>();
 
+        public List<Request> Requests { get; set; } = new List<Request> ();
+
         public int AvarageMMR { get; set; }
+
+        public Dictionary<string,string> RequestersNames { get; set; } = new Dictionary<string, string> ();
     }
 }

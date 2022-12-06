@@ -33,10 +33,14 @@ namespace ESportsTeams.Core.Services
             {
                 throw new ArgumentException(InvalidUser);
             }
-            if (user.OwnedTeams.Any(t=>t.Category == model.Category))
+            if (user.OwnedTeams != null)
             {
-                throw new ArgumentException("You already have a Team with that category please choose another");
+                if (user.OwnedTeams.Any(t => t.Category == model.Category))
+                {
+                    throw new ArgumentException("You already have a Team with that category please choose another");
+                }
             }
+
 
             var result = await _photoService.AddPhotoAsync(model.Image);
             var team = new Team()
@@ -53,7 +57,7 @@ namespace ESportsTeams.Core.Services
                     Country = model.Address.Country,
                 }
             };
-           
+
             team.AppUsers.Add(user);
 
             user.TeamId = team.Id;
@@ -137,6 +141,7 @@ namespace ESportsTeams.Core.Services
         {
             var result = await _context.Teams
                 .Where(t => t.IsBanned == false)
+                .Include(x => x.Requests)
                 .Include(x => x.Owner)
                 .Include(x => x.Address)
                 .FirstOrDefaultAsync(x => x.Id == id);
@@ -161,8 +166,14 @@ namespace ESportsTeams.Core.Services
                 Owner = result.Owner,
                 TeamTournaments = result.TeamTournaments,
                 AvarageMMR = result.AvarageMMR,
-            };
+                Requests = result.Requests,
 
+            };
+            foreach (var request in result.Requests)
+            {
+                var user = _userService.GetUserByID(request.RequesterId).Result;
+                finalResult.RequestersNames.Add(request.RequesterId, user.Username);
+            }
             return finalResult;
         }
 
@@ -223,13 +234,13 @@ namespace ESportsTeams.Core.Services
         {
             var teams = await _context.Teams
                 .Include(x => x.TeamTournaments)
-                .Include(x=>x.Owner)
+                .Include(x => x.Owner)
                 .ToListAsync();
 
             return teams
                 .Select(t => new GetTeamsViewModel()
                 {
-                    Id= t.Id,
+                    Id = t.Id,
                     Name = t.Name,
                     Description = t.Description,
                     Category = t.Category,
@@ -237,17 +248,17 @@ namespace ESportsTeams.Core.Services
                     Address = t.Address,
                     TournamentWin = t.TournamentWin,
                     Owner = t.Owner,
-                    TeamTournaments= t.TeamTournaments,
+                    TeamTournaments = t.TeamTournaments,
                     AvarageMMR = t.AvarageMMR,
-                    IsBanned= t.IsBanned,
+                    IsBanned = t.IsBanned,
                 });
         }
 
         public async Task JoinTeam(string userId, int teamId)
-        {            
+        {
             var team = await _context.Teams
-                .FirstOrDefaultAsync(x=>x.Id == teamId);
-            if (team!= null)
+                .FirstOrDefaultAsync(x => x.Id == teamId);
+            if (team != null)
             {
                 Request request = new Request()
                 {
@@ -258,6 +269,50 @@ namespace ESportsTeams.Core.Services
                 team.Requests.Add(request);
                 await _context.SaveChangesAsync();
             }
+        }
+
+        public async Task ApproveUser(int reqId)
+        {
+            var req = await _context.Requests
+                .Include(r => r.Team)
+                .FirstOrDefaultAsync(x => x.Id == reqId);
+
+            if (req == null)
+            {
+                throw new ArgumentException(RequestNotFound);
+            }
+            var user = await _userService.FindUserByIdAsync(req.RequesterId);
+
+            if (user == null)
+            {
+                throw new ArgumentException(UserNotFound);
+            }
+            var team = await _context.Teams.FirstOrDefaultAsync(x => x.Id == req.TeamId);
+
+            if (team == null)
+            {
+                throw new ArgumentException(TeamNotFound);
+            }
+            if (!team.AppUsers.Contains(user))
+            {
+                team.AppUsers.Add(user);
+            }
+            req.Status = RequestStatus.Accepted;
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task DeclineUser(int reqId)
+        {
+            var req = await _context.Requests
+                .Include(r => r.Team)
+                .FirstOrDefaultAsync(x => x.Id == reqId);
+
+            if (req == null)
+            {
+                throw new ArgumentException(RequestNotFound);
+            }
+            req.Status = RequestStatus.Declined;
+            await _context.SaveChangesAsync();
         }
     }
 }
