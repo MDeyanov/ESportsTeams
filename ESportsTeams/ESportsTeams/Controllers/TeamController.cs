@@ -210,8 +210,33 @@ namespace ESportsTeams.Controllers
             return RedirectToAction(nameof(Index));
 
         }
-        
+        [HttpGet]
+        public async Task<IActionResult> Approve(int id)
+        {
+            try
+            {
+                await _teamService.ApproveUser(id);
+            }
+            catch (Exception)
+            {
 
-        
+                throw;
+            }
+            return RedirectToAction(nameof(OwnedTeams));
+        }
+        [HttpGet]
+        public async Task<IActionResult> Decline(int id)
+        {
+            try
+            {
+                await _teamService.DeclineUser(id);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return RedirectToAction(nameof(OwnedTeams));
+        }
     }
 }

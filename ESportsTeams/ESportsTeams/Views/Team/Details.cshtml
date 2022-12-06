@@ -2,6 +2,8 @@
 @using Microsoft.AspNetCore.Identity;
 @model DetailsTeamViewModel
 
+
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
 <div class="main-container">
     <nav aria-label="breadcrumb" role="navigation" class="bg-primary text-white">
         <div class="container">
@@ -10,7 +12,7 @@
                     <ol class="breadcrumb fw-bold fs-3">
                         @if (@Model.Category.ToString() == "Dota2")
                         {
-                            <li>Dota 2</li>                           
+                            <li>Dota 2</li>
                         }
                         else if (@Model.Category.ToString() == "CSGO")
                         {
@@ -30,11 +32,8 @@
                         }
                     </ol>
                 </div>
-                <!--end of col-->
             </div>
-            <!--end of row-->
         </div>
-        <!--end of container-->
     </nav>
 </div>
 <section class="bg-white space-sm">
@@ -43,7 +42,6 @@
             <div class="col-lg-7 mb-4 mb-sm-0">
                 <img alt="Image" src="@Model.Image" class="rounded img-fluid" />
             </div>
-            <!--end of col-->
             <div class="col-lg-4 d-flex flex-column justify-content-between mr-auto ml-auto">
                 <div>
                     <h1 class="mb-2 fw-bold">@Model.Name</h1>
@@ -65,21 +63,51 @@
                     </div>
                 </div>
                 <div>
-                    @*da sloja ako lognatiq e ownera da se pokazva ili ne i v sluchaq ako sym vmesto tova da se pokazva list ot requestite*@
-                    <div class="btn-group mb-2">
-                        <div class="col-sm-push-2">
-                            <a asp-controller="Team" asp-action="JoinTeam" asp-route-Id="@Model.Id" class="btn btn-success">Request join this team</a>
+                    @if (Model.loggedUserId == Model.OwnerId)
+                    {
+                        @if (Model.Requests.Where(x => x.Status == ESportsTeams.Infrastructure.Data.Enums.RequestStatus.Pending).Count() > 0)
+                        {
+                            <div class="btn-group mb-2">
+                                <div class="col-sm-push-2">
+                                    @foreach (var request in Model.Requests.Where(x => x.Status == ESportsTeams.Infrastructure.Data.Enums.RequestStatus.Pending))
+                                    {
+                                        <span class="h6 mb-0">
+                                            @Model.RequestersNames[request.RequesterId]
+                                            <a type="button" class="btn btn-sm btn-outline-info" asp-controller="Team" asp-action="Approve" asp-route-Id="@request.Id">
+                                                Approve
+                                            </a>
+                                            <a type="button" class="btn btn-sm btn-outline-danger" asp-controller="Team" asp-action="Decline" asp-route-Id="@request.Id">
+                                                Decline
+                                            </a>
+                                        </span>
+                                        <br>                                       
+                                    }
+                                </div>
+
+                            </div>
+                        }
+                        else
+                        {
+                            <article>No Pending Requests!</article>
+                        }
+                    }
+                    else if (Model.Requests.Any(x => x.RequesterId == Model.loggedUserId))
+                    {
+                         <article>You already send request for this team!</article>
+                    }
+                    else
+                    {
+                        <div class="btn-group mb-2">
+                            <div class="col-sm-push-2">
+                                <a asp-controller="Team" asp-action="JoinTeam" asp-route-Id="@Model.Id" class="btn btn-success">Request join this team</a>
+                            </div>
                         </div>
-                    </div>
+                    }
                 </div>
             </div>
-            <!--end of col-->
         </div>
-        <!--end of row-->
     </div>
-    <!--end of container-->
 </section>
-    <!--end of section-->
 <section class="space-sm">
     <div class="container">
         <div class="row justify-content-between">
@@ -87,26 +115,22 @@
                 <h5 class="mb-4">Description</h5>
                 <article>
                     @Model.Description
-                </article>              
-             </div>
+                </article>
+            </div>
 
-            </div>
-            <!--end of col-->
-            <div class="col-12 col-md-4">
-                <div class="card">
-                    <ul class="list-group list-group-flush">                      
-                        <li class="list-group-item">
-                            <div class="d-flex justify-content-between">
-                                <div><i class="icon-thumbs-up mr-1"></i> Owner</div>
-                                <span>@Model.Owner.UserName</span>
-                            </div>
-                        </li>                           
-                    </ul>
-                </div>               
-            </div>
-            <!--end of col-->
         </div>
-        <!--end of row-->
+        <div class="col-12 col-md-4">
+            <div class="card">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <div class="d-flex justify-content-between">
+                            <div><i class="icon-thumbs-up mr-1"></i> Owner</div>
+                            <span>@Model.Owner.UserName</span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
     </div>
-    <!--end of container-->
 </section>
+

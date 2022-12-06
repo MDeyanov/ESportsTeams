@@ -21,6 +21,7 @@
 
         //ArgumentExceptions
         public const string EventNotFound = "Event not found!";
+        public const string RequestNotFound = "Request not found!";
         public const string UserNotFound = "User not found!";
         public const string TournamentNotFound = "Tournament not found!";
         public const string TeamNotFound = "Team not found!";

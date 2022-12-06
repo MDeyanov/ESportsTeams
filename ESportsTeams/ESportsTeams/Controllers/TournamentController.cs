@@ -1,10 +1,12 @@
 ﻿ using ESportsTeams.Core.Interfaces;
 using ESportsTeams.Infrastructure.Data.Entity;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
 namespace ESportsTeams.Controllers
 {
+    [Authorize]
     public class TournamentController : Controller
     {
         private readonly ITournamentService _tournamentService;

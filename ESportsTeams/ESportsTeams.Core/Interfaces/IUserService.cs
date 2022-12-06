@@ -1,4 +1,5 @@
-﻿using ESportsTeams.Infrastructure.Data.Entity;
+﻿using ESportsTeams.Core.Models.ViewModels.UserViewModel;
+using ESportsTeams.Infrastructure.Data.Entity;
 using ESportsTeams.Infrastructure.Data.Enums;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,9 @@ namespace ESportsTeams.Core.Interfaces
     {
         Task<IEnumerable<Team>> GetUserOwnedTeamsAsync(string userId, Category category, int offset, int size);
         Task<AppUser> FindUserByIdAsync(string userId);
+
+        ICollection<UserRequestViewModel> GetAllUsersRequestsForYourTeam(string currentUserId);
+        Task<UserRequestViewModel> GetUserByID(string userId);
 
         Task<bool> CurrentUserTeamsHaveCategory(string userId, Category category);
 
