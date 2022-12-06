@@ -69,9 +69,9 @@
                         {
                             <div class="btn-group mb-2">
                                 <div class="col-sm-push-2">
-                                    @foreach (var request in Model.Requests.Where(x => x.Status == ESportsTeams.Infrastructure.Data.Enums.RequestStatus.Pending))
+                                    @foreach (var request in Model.Requests.Where(x => x.Status == ESportsTeams.Infrastructure.Data.Enums.RequestStatus.Pending).Take(5))
                                     {
-                                        <span class="h6 mb-0">
+                                        <span class="h6 mb-0 badge badge-secondary">
                                             @Model.RequestersNames[request.RequesterId]
                                             <a type="button" class="btn btn-sm btn-outline-info" asp-controller="Team" asp-action="Approve" asp-route-Id="@request.Id">
                                                 Approve
@@ -80,7 +80,8 @@
                                                 Decline
                                             </a>
                                         </span>
-                                        <br>                                       
+                                        <br>
+                                        <br>
                                     }
                                 </div>
 
@@ -93,7 +94,7 @@
                     }
                     else if (Model.Requests.Any(x => x.RequesterId == Model.loggedUserId))
                     {
-                         <article>You already send request for this team!</article>
+                        <article>You already send request for this team!</article>
                     }
                     else
                     {

@@ -32,7 +32,7 @@
         <div class="bg-light navbar-light" data-sticky="top">
             <div class="container">
                 <nav class="navbar navbar-expand-lg">
-                    <a class="navbar-brand" asp-controller="Home" asp-action="Index" id="logo-text">ESportsTeams</a>
+                    <a class="navbar-brand" href="/Home/Index" id="logo-text">ESportsTeams</a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                         <i class="icon-menu h4"></i>
                     </button>
@@ -104,51 +104,17 @@
         </main>
     </div>
 
-    <footer class="bg-gray text-light footer-short fixed-bottom py-5 mt-5">
+    <footer class="bg-gray text-light footer-short fixed-bottom py-1 mt-1">
         <div class="container">
-            <div class="row">
-                <div class="col-12 col-md-3">
+            <div class="row justify-content-center">
+                <div class="col-12 col-md-3 ">
                     <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index" id="logo-text">ESportsTeams</a>
                     <p class="text-muted">
                         &copy; 2022 ESports TEAMS!
                         <br />
                         <br />
                     </p>
-                </div>
-                @if ((SignInManager.IsSignedIn(User)))
-                {
-                    <div class="col-12 col-md-9">
-                        @*<span class="h5">ESports Teams</span>*@
-                        <div class="row no-gutters">
-                            <div class="col-6 col-lg-3">
-                                <h6>Navigate</h6>
-                                <ul class="list-unstyled">
-                                    <li>
-                                        <a asp-area="" asp-controller="Home"
-                                       asp-action="Index">Home</a>
-                                    </li>
-                                    <li>
-                                        <a asp-area="" asp-controller="Teams"
-                                       asp-action="Index">Find Near You</a>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="col-6 col-lg-3">
-                                <h6>Team Directory</h6>
-                                <ul class="list-unstyled">
-                                    <li>
-                                        <a asp-area="" asp-controller="Team"
-                                       asp-action=" ">Find Teams By Country</a>
-                                    </li>
-                                    <li>
-                                        <a asp-area="" asp-controller="Team"
-                                       asp-action=" ">Find Teams By City</a>
-                                    </li>
-                                </ul>
-                            </div>                     
-                        </div>
-                    </div>
-                }                
+                </div>                     
             </div>
         </div>
     </footer>
