@@ -24,7 +24,6 @@ namespace ESportsTeams.Core.Models.ViewModels.UserViewModel
 
         public IList<Team>? OwnedTeams { get; set; }
 
-        public IList<Review>? Reviews { get; set; }
 
 
     }

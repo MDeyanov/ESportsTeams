@@ -9,23 +9,6 @@ namespace ESportsTeams.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-        private readonly ITeamService _teamService;
-        private readonly UserManager<AppUser> _userManager;
-        private readonly SignInManager<AppUser> _signInManager;
-
-        public HomeController(
-            ILogger<HomeController> logger,
-            UserManager<AppUser> userManager,
-            SignInManager<AppUser> signInManager,
-            ITeamService teamService)
-        {
-            _logger = logger;
-            _userManager = userManager;
-            _signInManager = signInManager;
-            _teamService = teamService;
-        }
-
         public IActionResult Index()
         {
             return View();

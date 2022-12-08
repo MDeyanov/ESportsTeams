@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ESportsTeams.Core.Interfaces
+namespace EsportsTeams.Tests.Services
 {
-    internal interface IReviewService
+    public class EventServiceTest : TestSetUp
     {
+
     }
 }

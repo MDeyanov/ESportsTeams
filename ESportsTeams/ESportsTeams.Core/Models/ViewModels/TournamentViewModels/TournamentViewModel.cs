@@ -30,7 +30,6 @@ namespace ESportsTeams.Core.Models.ViewModels.TournamentViewModels
         public decimal? PrizePool { get; set; }
         public Address? Address { get; set; }
         public IList<TeamTournament>? TeamTournaments { get; set; }
-        public IList<Review>? Reviews { get; set; }
 
     }
 }

@@ -34,6 +34,5 @@ namespace ESportsTeams.Core.Models.ViewModels.TournamentViewModels
         [Required]
         public Address Address { get; set; } = null!;
         public IList<TeamTournament>? TeamTournaments { get; set; }
-        public IList<Review>? Reviews { get; set; }
     }
 }

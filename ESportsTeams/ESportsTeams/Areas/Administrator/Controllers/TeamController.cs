@@ -36,7 +36,7 @@ namespace ESportsTeams.Areas.Administrator.Controllers
             }
             else
             {
-                if (string.IsNullOrEmpty(searchValue))
+                if (string.IsNullOrEmpty(searchValue) || string.IsNullOrEmpty(searchBy))
                 {
                     TempData[WarningMessage] = EnterSearchValue;
                     return View(teams);

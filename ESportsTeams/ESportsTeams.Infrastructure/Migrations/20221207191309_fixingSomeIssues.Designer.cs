@@ -4,6 +4,7 @@ using ESportsTeams.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ESportsTeams.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221207191309_fixingSomeIssues")]
+    partial class fixingSomeIssues
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -47,7 +49,7 @@ namespace ESportsTeams.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Addresses", (string)null);
+                    b.ToTable("Addresses");
                 });
 
             modelBuilder.Entity("ESportsTeams.Infrastructure.Data.Entity.AppUser", b =>
@@ -183,7 +185,7 @@ namespace ESportsTeams.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Events", (string)null);
+                    b.ToTable("Events");
                 });
 
             modelBuilder.Entity("ESportsTeams.Infrastructure.Data.Entity.Request", b =>
@@ -208,7 +210,7 @@ namespace ESportsTeams.Infrastructure.Migrations
 
                     b.HasIndex("TeamId");
 
-                    b.ToTable("Requests", (string)null);
+                    b.ToTable("Requests");
                 });
 
             modelBuilder.Entity("ESportsTeams.Infrastructure.Data.Entity.Team", b =>
@@ -260,7 +262,7 @@ namespace ESportsTeams.Infrastructure.Migrations
 
                     b.HasIndex("OwnerId");
 
-                    b.ToTable("Teams", (string)null);
+                    b.ToTable("Teams");
                 });
 
             modelBuilder.Entity("ESportsTeams.Infrastructure.Data.Entity.TeamTournament", b =>
@@ -275,7 +277,7 @@ namespace ESportsTeams.Infrastructure.Migrations
 
                     b.HasIndex("TournamentId");
 
-                    b.ToTable("TeamTournament", (string)null);
+                    b.ToTable("TeamTournament");
                 });
 
             modelBuilder.Entity("ESportsTeams.Infrastructure.Data.Entity.Tournament", b =>
@@ -337,7 +339,7 @@ namespace ESportsTeams.Infrastructure.Migrations
 
                     b.HasIndex("EventId");
 
-                    b.ToTable("Tournaments", (string)null);
+                    b.ToTable("Tournaments");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

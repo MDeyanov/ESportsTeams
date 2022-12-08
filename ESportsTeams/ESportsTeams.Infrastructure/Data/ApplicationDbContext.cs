@@ -43,6 +43,5 @@ namespace ESportsTeams.Infrastructure.Data
         public DbSet<Tournament> Tournaments { get; set; } = null!;
         public DbSet<Address> Addresses { get; set; } = null!;
         public DbSet<Event> Events { get; set; } = null!;
-        public DbSet<Review> Comments { get; set; } = null!;
     }
 }

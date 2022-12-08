@@ -191,7 +191,7 @@ namespace ESportsTeams.Infrastructure.Data
                 {
                     var newAdminUser = new AppUser()
                     {
-                        UserName = "admin",
+                        UserName = "Admin",
                         FirstName = "Martin",
                         LastName = "Deyanov",
                         Email = adminUserEmail,
@@ -215,9 +215,8 @@ namespace ESportsTeams.Infrastructure.Data
                 {
                     var newAppUser = new AppUser()
                     {
-                        Id = "1c2bfb08-9038-4cd1-b3de-49efb78f5cd7",
-                        UserName = "app-user",
-                        FirstName = "Pesho",
+                        UserName = "FirstUser",
+                        FirstName = "Petar",
                         LastName = "Petrov",
                         Email = appUserEmail,
                         EmailConfirmed = true,
@@ -227,25 +226,9 @@ namespace ESportsTeams.Infrastructure.Data
                             City = "Sofia",
                             Country = "Bulgaria",
                             ZipCode = 2500
-                        },
-                        Team = new Team()
-                        {
-                            Name = "NaPeshoTeama",
-                            Description = "Dota2 team for 5v5",
-                            Image = "https://upload.wikimedia.org/wikipedia/en/f/f1/Team_Liquid_logo.svg",
-                            Category = Category.Dota2,
-                            Address = new Address()
-                            {
-                                Street = "zora 1",
-                                City = "Kyustendil",
-                                Country = "Bulgaria",
-                                ZipCode = 2500
-                            },
-                            TournamentWin = 0,
-                            OwnerId = "1c2bfb08-9038-4cd1-b3de-49efb78f5cd7"
-                        }
+                        }                       
                     };
-                    await userManager.CreateAsync(newAppUser, "Pesho1!");
+                    await userManager.CreateAsync(newAppUser, "Parola1!");
                     await userManager.AddToRoleAsync(newAppUser, UserRoles.User);
                 }
             }
