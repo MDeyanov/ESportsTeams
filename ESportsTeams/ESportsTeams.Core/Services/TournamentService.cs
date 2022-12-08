@@ -159,7 +159,6 @@ namespace ESportsTeams.Core.Services
                 PrizePool = t.PrizePool,
                 Address = t.Address,
                 TeamTournaments = t.TeamTournaments,
-                Reviews = t.Reviews,
             });
         }
 
@@ -211,7 +210,6 @@ namespace ESportsTeams.Core.Services
                 PrizePool = tournament.PrizePool,
                 Address = address,
                 TeamTournaments = tournament.TeamTournaments,
-                Reviews = tournament.Reviews,
                 EventTitle = tournament.Event.Title
             };
             return result;

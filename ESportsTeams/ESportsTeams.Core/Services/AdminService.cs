@@ -65,7 +65,6 @@ namespace ESportsTeams.Core.Services
                 LeagueOfLegendsMMR = user.LeagueOfLegendsMMR,
                 VALORANTMMR = user.VALORANTMMR,
                 OwnedTeams = user.OwnedTeams,
-                Reviews = user.Reviews,
             };
             return result;
         }

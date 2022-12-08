@@ -59,9 +59,10 @@ app.MapRazorPages();
 
 
 //Test seed of users and roles
+//just uncoment for seeding
 //await Seed.SeedUsersAndRolesAsync(app);
 
-//Test seed of Tournaments,Events,Addresses and Teams
+//Test seed of Tournaments,Events
 //Seed.SeedData(app);
 app.Run();
 

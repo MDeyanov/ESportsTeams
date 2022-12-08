@@ -37,7 +37,7 @@ namespace ESportsTeams.Infrastructure.Data.Entity
         public decimal? PrizePool { get; set; }
 
         public int? AddressId { get; set; }
-
+  
         [ForeignKey(nameof(AddressId))]
         public Address? Address { get; set; }
 
@@ -50,7 +50,6 @@ namespace ESportsTeams.Infrastructure.Data.Entity
         
         public IList<TeamTournament> TeamTournaments { get; set; } = new List<TeamTournament>();
        
-        public IList<Review>? Reviews { get; set; } = new List<Review>();
 
         [Required]
         public bool IsDeleted { get; set; } = false;

@@ -142,6 +142,7 @@ namespace ESportsTeams.Core.Services
             var result = await _context.Teams
                 .Where(t => t.IsBanned == false)
                 .Include(x => x.Requests)
+                .Include(x => x.AppUsers)
                 .Include(x => x.Owner)
                 .Include(x => x.Address)
                 .FirstOrDefaultAsync(x => x.Id == id);
@@ -150,7 +151,29 @@ namespace ESportsTeams.Core.Services
             {
                 throw new ArgumentException(TeamNotFound);
             }
+            int avrMMR = 0;
+            var listOfUsers = result.AppUsers.ToList();
 
+            if (result.Category == Category.Dota2)
+            {
+                avrMMR = ((int)result.AppUsers.Average(x => x.Dota2MMR));
+            }
+            else if (result.Category == Category.CSGO)
+            {
+                avrMMR = (int)result.AppUsers.Average(x => x.CSGOMMR);
+            }
+            else if (result.Category == Category.PUBG)
+            {
+                avrMMR = (int)result.AppUsers.Average(x => x.PUBGMMR);
+            }
+            else if (result.Category == Category.LeagueOfLegends)
+            {
+                avrMMR = (int)result.AppUsers.Average(x => x.LeagueOfLegendsMMR);
+            }
+            else if (result.Category == Category.VALORANT)
+            {
+                avrMMR = (int)result.AppUsers.Average(x => x.VALORANTMMR);
+            }
             var finalResult = new DetailsTeamViewModel()
             {
                 Id = result.Id,
@@ -165,7 +188,7 @@ namespace ESportsTeams.Core.Services
                 OwnerId = result.OwnerId,
                 Owner = result.Owner,
                 TeamTournaments = result.TeamTournaments,
-                AvarageMMR = result.AvarageMMR,
+                AvarageMMR = avrMMR,
                 Requests = result.Requests,
 
             };
@@ -296,6 +319,7 @@ namespace ESportsTeams.Core.Services
             if (!team.AppUsers.Contains(user))
             {
                 team.AppUsers.Add(user);
+                user.TeamId = team.Id;
             }
             req.Status = RequestStatus.Accepted;
             await _context.SaveChangesAsync();

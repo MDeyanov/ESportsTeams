@@ -35,7 +35,6 @@ namespace ESportsTeams.Infrastructure.Data.Entity
         public int? LeagueOfLegendsMMR { get; set; }
         public int? VALORANTMMR { get; set; }
         
-        public IList<Review>? Reviews { get; set; } = new List<Review>();
         public IList<Team>? OwnedTeams { get; set; } = new List<Team>();
         public bool IsBanned { get; set; } = false;
     }

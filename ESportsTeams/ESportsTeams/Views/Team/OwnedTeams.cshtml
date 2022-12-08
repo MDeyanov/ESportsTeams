@@ -19,7 +19,7 @@
     <div class="container">
         <div class="row">
             <div class="col text-center">
-                <p>Team Categories</p>
+                <p class="fw-bold aler alert-info">My Teams Categories</p>
                 <div class="mb-3">
                     <a type="button" class="btn btn-secondary mb-1" asp-action="OwnedTeams" asp-route-page="1" asp-route-category="-1">All</a>
                     @foreach (var category in Html.GetEnumSelectList<Category>())

@@ -3,11 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33103.184
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ESportsTeams", "ESportsTeams\ESportsTeams.csproj", "{BB29B09B-38EE-4399-BF30-DB71F73FB953}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ESportsTeams", "ESportsTeams\ESportsTeams.csproj", "{BB29B09B-38EE-4399-BF30-DB71F73FB953}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ESportsTeams.Infrastructure", "ESportsTeams.Infrastructure\ESportsTeams.Infrastructure.csproj", "{A15A36FA-F562-454C-B3F3-738C06A574D6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ESportsTeams.Infrastructure", "ESportsTeams.Infrastructure\ESportsTeams.Infrastructure.csproj", "{A15A36FA-F562-454C-B3F3-738C06A574D6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ESportsTeams.Core", "ESportsTeams.Core\ESportsTeams.Core.csproj", "{4C769628-66EC-49B8-A769-D25CE152A5E0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ESportsTeams.Core", "ESportsTeams.Core\ESportsTeams.Core.csproj", "{4C769628-66EC-49B8-A769-D25CE152A5E0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EsportsTeams.Tests", "EsportsTeams.Tests\EsportsTeams.Tests.csproj", "{B7E7AF95-5951-4091-BB46-831015F917AA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{4C769628-66EC-49B8-A769-D25CE152A5E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4C769628-66EC-49B8-A769-D25CE152A5E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4C769628-66EC-49B8-A769-D25CE152A5E0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B7E7AF95-5951-4091-BB46-831015F917AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B7E7AF95-5951-4091-BB46-831015F917AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B7E7AF95-5951-4091-BB46-831015F917AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B7E7AF95-5951-4091-BB46-831015F917AA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

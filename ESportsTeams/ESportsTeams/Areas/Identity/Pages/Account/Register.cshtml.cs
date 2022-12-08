@@ -119,7 +119,11 @@ namespace ESportsTeams.Areas.Identity.Pages.Account
 
 
         public void OnGet(string returnUrl = null)
-        {        
+        {
+            if (User?.Identity?.IsAuthenticated ?? false)
+            {
+                Response.Redirect("/");
+            }
             ReturnUrl = returnUrl;
         }
 
