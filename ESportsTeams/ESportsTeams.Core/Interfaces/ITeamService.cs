@@ -17,7 +17,6 @@ namespace ESportsTeams.Core.Interfaces
         Task<IEnumerable<Team>> GetSliceOfUserOwnedAsync(string userId, int offset, int size);
         Task<IEnumerable<Team>> GetTeamsByCategoryAndSliceAsync(Category category, int offset, int size);
         Task<IEnumerable<Team>> GetOwnedTeams(string userId, Category category, int offset, int size);
-        Task<IEnumerable<Team>> GetTeamByCountry(string country);
         Task<int> GetCountAsync();
         Task<int> GetOwnedTeamCountAsync(string userId);
         Task<int> GetCountByCategoryAsync(Category category);     

@@ -39,7 +39,7 @@ namespace ESportsTeams.Core.Services
                 .FirstOrDefaultAsync(x => x.Id == userId);
             if (user == null)
             {
-                throw new ArgumentException(UserNotFound);
+                throw new ArgumentNullException(UserNotFound);
             }
 
             return user;
@@ -56,7 +56,7 @@ namespace ESportsTeams.Core.Services
                 .FirstOrDefaultAsync(x => x.Id == userId);
             if (user == null)
             {
-                throw new ArgumentException(UserNotFound);
+                throw new ArgumentNullException(UserNotFound);
             }
             user.ProfileImageUrl ??= "https://res.cloudinary.com/dzac3ggur/image/upload/v1669675626/AnonymousProfileImage_ntgywz.png";
             return new UserRequestViewModel()
