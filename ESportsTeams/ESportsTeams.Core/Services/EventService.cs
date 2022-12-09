@@ -40,7 +40,7 @@ namespace ESportsTeams.Core.Services
              var eventToDelete = await _context.Events.FirstOrDefaultAsync(e => e.Id == id);
             if (eventToDelete == null)
             {
-                throw new ArgumentException(EventNotFound);
+                throw new ArgumentNullException(EventNotFound);
             }
             eventToDelete.IsDeleted = true;
             await _context.SaveChangesAsync();
@@ -145,7 +145,7 @@ namespace ESportsTeams.Core.Services
             var eventToEdit = await _context.Events.FirstOrDefaultAsync(x => x.Id == model.Id);
             if (eventToEdit == null)
             {
-                throw new ArgumentException(EventNotFound);
+                throw new ArgumentNullException(EventNotFound);
             }
 
             if (model.Image != null)

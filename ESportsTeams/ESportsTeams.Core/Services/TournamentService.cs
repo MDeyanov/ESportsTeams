@@ -40,7 +40,7 @@ namespace ESportsTeams.Core.Services
 
             if (team == null)
             {
-                throw new ArgumentException(TeamNotFound);
+                throw new ArgumentNullException(TeamNotFound);
             }
 
             tournament.TeamTournaments.Add(new TeamTournament()
@@ -59,7 +59,7 @@ namespace ESportsTeams.Core.Services
             var eventByTitle = await _eventService.GetEventByTitleAsync(model.EventTitle);
             if (eventByTitle == null)
             {
-                throw new ArgumentException(EventNotFound);
+                throw new ArgumentNullException(EventNotFound);
             }
             var address = new Address();
             if (model.Address == null)
@@ -96,7 +96,7 @@ namespace ESportsTeams.Core.Services
             var tournamentToEdit = await _context.Tournaments.FirstOrDefaultAsync(x => x.Id == model.Id);
             if (tournamentToEdit == null)
             {
-                throw new ArgumentException(TournamentNotFound);
+                throw new ArgumentNullException(TournamentNotFound);
             }
             if (model.Image != null)
             {
@@ -141,7 +141,7 @@ namespace ESportsTeams.Core.Services
 
             if (tournaments == null)
             {
-                throw new ArgumentException(EventNotFound);
+                throw new ArgumentNullException(EventNotFound);
             }
 
             return tournaments.Select(t => new TournamentViewModel()
@@ -182,7 +182,7 @@ namespace ESportsTeams.Core.Services
 
             if (tournament == null)
             {
-                throw new ArgumentException(TournamentNotFound);
+                throw new ArgumentNullException(TournamentNotFound);
             }
             var address = new Address();
             if (tournament.Address == null)
@@ -226,7 +226,7 @@ namespace ESportsTeams.Core.Services
 
             if (tournament == null)
             {
-                throw new ArgumentException(InvalidTournamentId);
+                throw new ArgumentNullException(InvalidTournamentId);
             }
 
             return tournament.TeamTournaments
@@ -255,7 +255,7 @@ namespace ESportsTeams.Core.Services
 
             if (tournament == null)
             {
-                throw new ArgumentException(InvalidTournamentId);
+                throw new ArgumentNullException(InvalidTournamentId);
             }
 
             var user = await _context.Users
@@ -273,7 +273,7 @@ namespace ESportsTeams.Core.Services
                 .ToListAsync();
             if (teams == null)
             {
-                throw new ArgumentException(DoNotOwnTeam);
+                throw new ArgumentNullException(DoNotOwnTeam);
             }
 
             string eventTitle = tournament.Event.Title.ToLower();
@@ -282,7 +282,7 @@ namespace ESportsTeams.Core.Services
 
             if (team == null)
             {
-                throw new ArgumentException(InvalidTeamCategory);
+                throw new ArgumentNullException(InvalidTeamCategory);
             }          
 
             tournament.TeamTournaments.Add(new TeamTournament()

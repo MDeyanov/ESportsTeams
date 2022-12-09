@@ -250,9 +250,7 @@ namespace EsportsTeams.Tests
             //mgr.Setup(x => x.GetRolesAsync(It.IsAny<AppUser>()))
             //    .ReturnsAsync(roles.Select(x => x.Name).ToList());
             mgr.Setup(x => x.AddToRolesAsync(It.IsAny<AppUser>(), It.IsAny<List<string>>()))
-                .ReturnsAsync(IdentityResult.Success);
-            mgr.Setup(x => x.GenerateEmailConfirmationTokenAsync(It.IsAny<AppUser>()))
-                .ReturnsAsync("mockToken");
+                .ReturnsAsync(IdentityResult.Success);          
             mgr.Setup(x => x.FindByIdAsync(It.IsAny<string>()))
                 .ReturnsAsync(users[0]);
             mgr.Setup(x => x.AddToRoleAsync(It.IsAny<AppUser>(), It.IsAny<string>()))

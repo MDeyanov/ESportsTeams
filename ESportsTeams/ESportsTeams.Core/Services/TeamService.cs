@@ -31,13 +31,13 @@ namespace ESportsTeams.Core.Services
             var user = await _context.Users.FirstOrDefaultAsync(x => x.Id == userId);
             if (user == null)
             {
-                throw new ArgumentException(InvalidUser);
+                throw new ArgumentNullException(InvalidUser);
             }
             if (user.OwnedTeams != null)
             {
                 if (user.OwnedTeams.Any(t => t.Category == model.Category))
                 {
-                    throw new ArgumentException(InvalidTeamCategory);
+                    throw new ArgumentNullException(InvalidTeamCategory);
                 }
             }
 
@@ -95,10 +95,7 @@ namespace ESportsTeams.Core.Services
         }
 
         //GETTING TEAMS BY COUNTRY
-        public async Task<IEnumerable<Team>> GetTeamByCountry(string country)
-        {
-            return await _context.Teams.Where(t => t.Address.Country.Contains(country) && t.IsBanned == false).Distinct().ToListAsync();
-        }
+      
 
         //GETTING ALL TEAMS IN CATEGORY AND SLICE
         public async Task<IEnumerable<Team>> GetTeamsByCategoryAndSliceAsync(Category category, int offset, int size)
@@ -149,7 +146,7 @@ namespace ESportsTeams.Core.Services
 
             if (result == null)
             {
-                throw new ArgumentException(TeamNotFound);
+                throw new ArgumentNullException(TeamNotFound);
             }
             int avrMMR = 0;
             var listOfUsers = result.AppUsers.ToList();
@@ -220,7 +217,7 @@ namespace ESportsTeams.Core.Services
 
             if (teamToChange == null)
             {
-                throw new ArgumentException(TeamNotFound);
+                throw new ArgumentNullException(TeamNotFound);
             }
 
             var photoResult = await _photoService.AddPhotoAsync(model.Image);
@@ -302,19 +299,19 @@ namespace ESportsTeams.Core.Services
 
             if (req == null)
             {
-                throw new ArgumentException(RequestNotFound);
+                throw new ArgumentNullException(RequestNotFound);
             }
             var user = await _userService.FindUserByIdAsync(req.RequesterId);
 
             if (user == null)
             {
-                throw new ArgumentException(UserNotFound);
+                throw new ArgumentNullException(UserNotFound);
             }
             var team = await _context.Teams.FirstOrDefaultAsync(x => x.Id == req.TeamId);
 
             if (team == null)
             {
-                throw new ArgumentException(TeamNotFound);
+                throw new ArgumentNullException(TeamNotFound);
             }
             if (!team.AppUsers.Contains(user))
             {
@@ -333,7 +330,7 @@ namespace ESportsTeams.Core.Services
 
             if (req == null)
             {
-                throw new ArgumentException(RequestNotFound);
+                throw new ArgumentNullException(RequestNotFound);
             }
             req.Status = RequestStatus.Declined;
             await _context.SaveChangesAsync();
