@@ -25,8 +25,7 @@ namespace ESportsTeams.Core.Models.BindingModels.Team
         [Required]
         public Address Address { get; set; } = null!;
 
-        [Required]
-        public IFormFile Image { get; set; } = null!;
+        public IFormFile? Image { get; set; }
 
         [Required]
         public Category Category { get; set; }      

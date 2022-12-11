@@ -7,7 +7,8 @@ using ESportsTeams.Infrastructure.Data.Enums;
 using Microsoft.EntityFrameworkCore;
 using static ESportsTeams.Infrastructure.Data.Common.CommonConstants;
 using Microsoft.EntityFrameworkCore.Storage;
-
+using CloudinaryDotNet.Actions;
+using static System.Net.WebRequestMethods;
 
 namespace ESportsTeams.Core.Services
 {
@@ -41,13 +42,19 @@ namespace ESportsTeams.Core.Services
                 }
             }
 
+            ImageUploadResult photoResult = null;
+            if (model.Image != null)
+            {
+                photoResult = await _photoService.AddPhotoAsync(model.Image);
 
-            var result = await _photoService.AddPhotoAsync(model.Image);
+            }
+
+            //var result = await _photoService.AddPhotoAsync(model.Image);
             var team = new Team()
             {
                 Name = model.Name,
                 Description = model.Description,
-                Image = result.Url.ToString(),
+                Image = photoResult?.Url.ToString(),
                 Category = model.Category,
                 OwnerId = userId,
                 Address = new Address()
@@ -57,6 +64,10 @@ namespace ESportsTeams.Core.Services
                     Country = model.Address.Country,
                 }
             };
+            if (team.Image == null)
+            {
+                team.Image = "https://res.cloudinary.com/dzac3ggur/image/upload/v1670776928/Question_mark_lcqxho.png";
+            }
 
             team.AppUsers.Add(user);
 
@@ -153,7 +164,7 @@ namespace ESportsTeams.Core.Services
 
             if (result.Category == Category.Dota2)
             {
-                avrMMR = ((int)result.AppUsers.Average(x => x.Dota2MMR));
+                avrMMR = (int)result.AppUsers.Average(x => x.Dota2MMR);
             }
             else if (result.Category == Category.CSGO)
             {
