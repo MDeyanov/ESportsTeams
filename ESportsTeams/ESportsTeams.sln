@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ESportsTeams.Infrastructure
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ESportsTeams.Core", "ESportsTeams.Core\ESportsTeams.Core.csproj", "{4C769628-66EC-49B8-A769-D25CE152A5E0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EsportsTeams.Tests", "EsportsTeams.Tests\EsportsTeams.Tests.csproj", "{B7E7AF95-5951-4091-BB46-831015F917AA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ESportsTeams.Tests", "EsportsTeams.Tests\ESportsTeams.Tests.csproj", "{B7E7AF95-5951-4091-BB46-831015F917AA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

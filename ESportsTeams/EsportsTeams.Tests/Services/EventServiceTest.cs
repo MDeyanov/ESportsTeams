@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EsportsTeams.Tests.Services
+namespace ESportsTeams.Tests.Services
 {
-    public class EventServiceTest : TestSetUp
+    public class EventServiceTest
     {
 
     }

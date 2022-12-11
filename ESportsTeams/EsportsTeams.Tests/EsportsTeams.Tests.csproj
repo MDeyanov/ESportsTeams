@@ -19,6 +19,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ESportsTeams.Core\ESportsTeams.Core.csproj" />
+    <ProjectReference Include="..\ESportsTeams.Infrastructure\ESportsTeams.Infrastructure.csproj" />
     <ProjectReference Include="..\ESportsTeams\ESportsTeams.csproj" />
   </ItemGroup>
 
