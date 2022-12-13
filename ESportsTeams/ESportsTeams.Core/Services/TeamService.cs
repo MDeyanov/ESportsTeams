@@ -230,16 +230,20 @@ namespace ESportsTeams.Core.Services
             {
                 throw new ArgumentNullException(TeamNotFound);
             }
-
-            var photoResult = await _photoService.AddPhotoAsync(model.Image);
-
-            if (!string.IsNullOrEmpty(teamToChange.Image))
+            ImageUploadResult photoResult = null;
+            if (model.Image !=null)
             {
-                _ = _photoService.DeletePhotoAsync(teamToChange.Image);
+                 photoResult = await _photoService.AddPhotoAsync(model.Image);
+                if (!string.IsNullOrEmpty(teamToChange.Image))
+                {
+                    _ = _photoService.DeletePhotoAsync(teamToChange.Image);
+                }
             }
+
+           
             teamToChange.Name = model.Name;
             teamToChange.Description = model.Description;
-            teamToChange.Image = photoResult.Url.ToString();
+            teamToChange.Image = photoResult?.Url.ToString();
             teamToChange.Category = model.Category;
             teamToChange.AddressId = model.AddressId;
             teamToChange.Address = model.Address;
@@ -253,12 +257,14 @@ namespace ESportsTeams.Core.Services
                 .Where(t => t.IsBanned == false)
                 .ToListAsync();
 
-            if (teams == null || teams.Count == 0)
+            var result = teams.Any(x => x.Name == name);
+
+            if (!result)
             {
-                return false;
+                throw new ArgumentNullException(TeamNotFound);
             }
 
-            return teams.Any(x => x.Name == name);
+            return result;
         }
 
         public async Task<IEnumerable<GetTeamsViewModel>> GetAllTeamsAsync()

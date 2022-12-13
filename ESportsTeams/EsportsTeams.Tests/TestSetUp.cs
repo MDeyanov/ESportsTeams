@@ -1,18 +1,12 @@
-﻿//using CloudinaryDotNet.Actions;
-//using ESportsTeams.Infrastructure.Data;
-//using ESportsTeams.Infrastructure.Data.Entity;
-//using Microsoft.AspNetCore.Identity;
-//using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-//using Microsoft.EntityFrameworkCore;
-//using Microsoft.Extensions.Logging;
-//using System;
-//using System.Collections.Generic;
-//using System.Linq;
-//using System.Text;
-//using System.Threading.Tasks;
-//using static System.Formats.Asn1.AsnWriter;
-//using ESportsTeams.Infrastructure.Data.Enums;
-//using Moq;
+﻿
+//////using ESportsTeams.Infrastructure.Data.Entity;
+//////using Microsoft.AspNetCore.Identity;
+//////using Moq;
+
+//////var store = new Mock<IUserStore<AppUser>>();
+//////var mgr = new Mock<UserManager<AppUser>>(store.Object, null, null, null, null, null, null, null, null);
+//////mgr.Object.UserValidators.Add(new UserValidator<AppUser>());
+//////mgr.Object.PasswordValidators.Add(new PasswordValidator<AppUser>());
 
 //namespace ES  portsTeams.Tests
 //{
