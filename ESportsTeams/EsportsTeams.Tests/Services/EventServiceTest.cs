@@ -131,28 +131,28 @@ namespace ESportsTeams.Tests.Services
         public void GetEventByIdAsyncTest()
         {
             int eventId = 1;
-            var service = new EventService(context, null, null);
+            var service = new EventService(context, null!, null!);
 
             var result = service.GetEventByIdAsync(eventId).Result;
 
-            Assert.AreEqual(eventId, result.Id);
-            Assert.AreEqual("Dota2", result.Title);
+            Assert.AreEqual(eventId, result?.Id);
+            Assert.AreEqual("Dota2", result?.Title);
         }
         [Test]
         public void GetEventByTitleAsyncTest()
         {
             string eventTitle = "Dota2";
-            var service = new EventService(context, null, null);
+            var service = new EventService(context, null!, null!);
 
             var result = service.GetEventByTitleAsync(eventTitle).Result;
 
-            Assert.AreEqual("Dota2", result.Title);
+            Assert.AreEqual("Dota2", result?.Title);
         }
         [Test]
         public void GetEventByTitleAsyncIfNullTest()
         {
             string eventTitle = "WillBeNull";
-            var service = new EventService(context, null, null);
+            var service = new EventService(context, null!, null!);
 
             var result = service.GetEventByTitleAsync(eventTitle).Result;
 
@@ -162,7 +162,7 @@ namespace ESportsTeams.Tests.Services
         [Test]
         public void DeleteTest()
         {
-            var service = new EventService(context, null, null);
+            var service = new EventService(context, null!, null!);
             int eventId = 1;
             var result = service.Delete(eventId);
 
@@ -171,7 +171,7 @@ namespace ESportsTeams.Tests.Services
         [Test]
         public void DeleteIfNullTest()
         {
-            var service = new EventService(context, null, null);
+            var service = new EventService(context, null!, null!);
             int eventId = 100;
             var result = service.Delete(eventId);
             var expect = -1;
@@ -182,7 +182,7 @@ namespace ESportsTeams.Tests.Services
         [Test]
         public void ReverseIsDeletedTest()
         {
-            var service = new EventService(context, null, null);
+            var service = new EventService(context, null!, null!);
             int eventId = 1;
             var result = service.ReverseIsDeleted(eventId);
 
@@ -191,7 +191,7 @@ namespace ESportsTeams.Tests.Services
         [Test]
         public void ReverseIsDeletedIfNullTest()
         {
-            var service = new EventService(context, null, null);
+            var service = new EventService(context, null!, null!);
             int eventId = 100;
             var result = service.ReverseIsDeleted(eventId);
             var expect = -1;
@@ -202,7 +202,7 @@ namespace ESportsTeams.Tests.Services
         [Test]
         public void EditEventAsyncTest()
         {
-             var service = new EventService(context, null, null);
+             var service = new EventService(context, null!, null!);
              var title = "Dota2TitleEditTest";
              var model = new EditEventBindingModel()
              {
@@ -218,7 +218,7 @@ namespace ESportsTeams.Tests.Services
         [Test]
         public void EditEventAsyncInvalidModelIdTest()
         {
-             var service = new EventService(context, null, null);
+             var service = new EventService(context, null!, null!);
              var title = "Dota2";
              var model = new EditEventBindingModel()
              {
@@ -231,20 +231,20 @@ namespace ESportsTeams.Tests.Services
         [Test]
         public void GetEventDetailsByInvalidIdAsyncTest()
         {
-            var service = new EventService(context, null, null);
+            var service = new EventService(context, null!, null!);
             var invalidId = 100;
             Assert.ThrowsAsync<ArgumentNullException>(() => service.GetEventDetailsByIdAsync(invalidId));
         }
         [Test]
         public void GetEventDetailsByIdAsyncTest()
         {
-            var service = new EventService(context, null, null);
+            var service = new EventService(context, null!, null!);
             var eventId = 1;
             var result = service.GetEventDetailsByIdAsync(eventId).Result;
             var eventInContext = context.Events.FirstOrDefault(x=>x.Id== eventId);
 
             Assert.AreEqual(eventId, result.Id);
-            Assert.AreEqual(eventInContext.Title, result.Title);
+            Assert.AreEqual(eventInContext?.Title, result.Title);
         }
         //[Test]
         //public void AddEventAsyncTest()
@@ -262,7 +262,7 @@ namespace ESportsTeams.Tests.Services
         [Test]
         public void GetAllAsyncTest()
         {
-            var service = new EventService(context, null, null);
+            var service = new EventService(context, null!, null!);
             var result = service.GetAllAsync().Result;
 
             var countOfEvents = context.Events.Count();

@@ -139,7 +139,7 @@ namespace ESportsTeams.Core.Services
                 .ThenInclude(t => t.Team)
                 .Where(x => x.EventId == id).ToListAsync();
 
-            if (tournaments == null)
+            if (tournaments == null || tournaments.Count == 0)
             {
                 throw new ArgumentNullException(EventNotFound);
             }
@@ -236,8 +236,8 @@ namespace ESportsTeams.Core.Services
                     Name = tt.Team.Name,
                     Description = tt.Team.Description,
                     Category = tt.Team.Category,
-                    Image= tt.Team.Image,
-                    Address= tt.Team.Address,
+                    Image = tt.Team.Image,
+                    Address = tt.Team.Address,
                     TournamentWin = tt.Team.TournamentWin,
                     Owner = tt.Team.Owner,
                     AvarageMMR = tt.Team.AvarageMMR,
@@ -250,7 +250,7 @@ namespace ESportsTeams.Core.Services
             var tournament = await _context.Tournaments
                 .Where(x => x.Id == tournamentId)
                 .Include(x => x.TeamTournaments)
-                .Include(x=>x.Event)
+                .Include(x => x.Event)
                 .FirstOrDefaultAsync();
 
             if (tournament == null)
@@ -265,13 +265,13 @@ namespace ESportsTeams.Core.Services
 
             if (user == null)
             {
-                throw new ArgumentException(InvalidUser);
+                throw new ArgumentNullException(InvalidUser);
             }
 
             var teams = await _context.Teams
                 .Where(x => x.OwnerId == user.Id)
                 .ToListAsync();
-            if (teams == null)
+            if (teams == null || teams.Count == 0)
             {
                 throw new ArgumentNullException(DoNotOwnTeam);
             }
@@ -283,7 +283,7 @@ namespace ESportsTeams.Core.Services
             if (team == null)
             {
                 throw new ArgumentNullException(InvalidTeamCategory);
-            }          
+            }
 
             tournament.TeamTournaments.Add(new TeamTournament()
             {
