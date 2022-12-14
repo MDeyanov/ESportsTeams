@@ -8,6 +8,52 @@
 //////mgr.Object.UserValidators.Add(new UserValidator<AppUser>());
 //////mgr.Object.PasswordValidators.Add(new PasswordValidator<AppUser>());
 
+
+//using ESportsTeams.Infrastructure.Data.Entity;
+//using Microsoft.AspNetCore.Identity;
+//using Moq;
+
+//private RoleManager<IdentityRole> GetRoleManager()
+//{
+//    var store = new Mock<IRoleStore<IdentityRole>>();
+//    var mgr = new Mock<RoleManager<IdentityRole>>(
+//        store.Object, null, null, null, null);
+
+//    mgr.Setup(x => x.Roles).Returns(roles.AsQueryable());
+//    mgr.Setup(x => x.FindByIdAsync("1")).ReturnsAsync(roles.Where(r => r.Id.ToString() == "1").FirstOrDefault());
+
+//    return mgr.Object;
+//}
+
+//private UserManager<AppUser> GetUserManager()
+//{
+//    var store = new Mock<IUserStore<AppUser>>();
+//    var mgr = new Mock<UserManager<AppUser>>(store.Object, null, null, null, null, null, null, null, null);
+//    mgr.Object.UserValidators.Add(new UserValidator<AppUser>());
+//    mgr.Object.PasswordValidators.Add(new PasswordValidator<AppUser>());
+
+//    return mgr.Object;
+//}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //namespace ES  portsTeams.Tests
 //{
 //    public class TestSetUp

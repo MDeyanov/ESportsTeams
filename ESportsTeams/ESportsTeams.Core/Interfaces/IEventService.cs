@@ -14,7 +14,6 @@ namespace ESportsTeams.Core.Interfaces
         Task<IEnumerable<IndexEventAdminViewModel>> GetAllForAdminAsync();
         Task EditEventAsync(EditEventBindingModel model);
         Task<Event?> GetEventByIdAsync(int id);
-        Task<bool> DeleteEventAsync (int id);
         int ReverseIsDeleted(int Id);
         int Delete(int Id);
     }

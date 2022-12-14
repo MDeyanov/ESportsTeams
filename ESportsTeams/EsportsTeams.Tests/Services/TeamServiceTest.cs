@@ -120,14 +120,7 @@ namespace ESportsTeams.Tests.Services
                    IsBanned= false,
                }
             };
-            ////roles = new List<IdentityRole>
-            ////{
-            ////    new IdentityRole
-            ////    {
-
-            ////    }
-            ////};
-            //context.Roles.AddRangeAsync()
+          
             foreach (var team in teams)
             {
                 team.AppUsers.Add(users.FirstOrDefault(x => x.Id == "3"));
@@ -355,5 +348,7 @@ namespace ESportsTeams.Tests.Services
             var isDecline = context.Requests.FirstOrDefault(x=>x.Id== reqId).Status;
             Assert.AreEqual(RequestStatus.Declined, isDecline);
         }
+
+
     }
 }
