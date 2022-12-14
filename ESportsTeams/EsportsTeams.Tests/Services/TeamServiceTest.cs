@@ -134,7 +134,7 @@ namespace ESportsTeams.Tests.Services
         [Test]
         public async Task AddTeamAsyncWithValidTeam()
         {
-            var service = new TeamService(context, null, null);
+            var service = new TeamService(context, null!, null!);
             var team = new AddTeamBindingModel
             {
                 Id = 3,
@@ -161,7 +161,7 @@ namespace ESportsTeams.Tests.Services
         [Test]
         public void AddTeamAsyncWithInvalidUser()
         {
-            var service = new TeamService(context, null, null);
+            var service = new TeamService(context, null!, null!);
             var team = new AddTeamBindingModel
             {
                 Id = 1,
@@ -183,7 +183,7 @@ namespace ESportsTeams.Tests.Services
         [Test]
         public void AddTeamAsyncUserCategoryCheck()
         {
-            var service = new TeamService(context, null, null);
+            var service = new TeamService(context, null!, null!);
             var teamBindingModel = new AddTeamBindingModel
             {
                 Id = 5,
@@ -207,7 +207,7 @@ namespace ESportsTeams.Tests.Services
         public void GetCountAsync()
         {
             var areEqual = context.Teams.Count();
-            var service = new TeamService(context, null, null);
+            var service = new TeamService(context, null!, null!);
 
             var result = service.GetCountAsync().Result;
             Assert.AreEqual(result, areEqual);
@@ -217,7 +217,7 @@ namespace ESportsTeams.Tests.Services
         public void GetCountInCategoryAsync()
         {
             var areEqual = context.Teams.Where(x => x.Category == Category.Dota2).Count();
-            var service = new TeamService(context, null, null);
+            var service = new TeamService(context, null!, null!);
 
             var result = service.GetCountByCategoryAsync(Category.Dota2).Result;
             Assert.AreEqual(result, areEqual);
@@ -227,7 +227,7 @@ namespace ESportsTeams.Tests.Services
         public void GetCountOfUserOwnedTeamsAsync()
         {
             var areEqual = context.Teams.Where(x => x.OwnerId == "3").Count();
-            var service = new TeamService(context, null, null);
+            var service = new TeamService(context, null!, null!);
 
             var result = service.GetOwnedTeamCountAsync("3").Result;
             Assert.AreEqual(result, areEqual);
@@ -236,30 +236,30 @@ namespace ESportsTeams.Tests.Services
         [Test]
         public async Task GetTeamDetails()
         {
-            var service = new TeamService(context, null, null);
+            var service = new TeamService(context, null!, null!);
 
             var result = service.GetTeamDetailsByIdAsync(2, "1").Result;
             var contextdrbr = context.Teams.FirstOrDefault(x => x.Id == 1);
-            Assert.AreEqual(result.Id, 2);
+            Assert.AreEqual(result?.Id, 2);
         }
 
         [Test]
         public async Task GetTeamById()
         {
-            var service = new TeamService(context, null, null);
+            var service = new TeamService(context, null!, null!);
             var result = context.Teams.FirstOrDefault(x => x.Id == 1);
 
             var secRes = service.GetTeamByIdAsync(1);
 
             var areEqual = context.Teams.FirstOrDefault(x => x.Id == 1);
 
-            Assert.AreEqual(result.Id, areEqual.Id);
+            Assert.AreEqual(result?.Id, areEqual?.Id);
             Assert.AreEqual(result.Name, areEqual.Name);
         }
         [Test]
         public void GetAllTeams()
         {
-            var service = new TeamService(context, null, null);
+            var service = new TeamService(context, null!, null!);
             var result = service.GetAllTeamsAsync().Result;
             var toCheck = context.Teams.Count();
        
@@ -269,7 +269,7 @@ namespace ESportsTeams.Tests.Services
         [Test]
         public void TeamExistsTest()
         {
-            var service = new TeamService(context, null, null);
+            var service = new TeamService(context, null!, null!);
             var isExists = service.TeamExistsAsync("Dota2Team").Result;
 
             Assert.AreEqual(isExists, true);
@@ -277,14 +277,14 @@ namespace ESportsTeams.Tests.Services
         [Test]
         public void TeamExistsNullNameTest()
         {
-            var service = new TeamService(context, null, null);
+            var service = new TeamService(context, null!, null!);
 
             Assert.ThrowsAsync<ArgumentNullException>(() => service.TeamExistsAsync("Error"));
         }
         [Test]
         public void EditTeamAsync()
         {
-            var service = new TeamService(context, null, null);
+            var service = new TeamService(context, null!, null!);
             var model = new EditTeamBindingModel()
             {
                 Id = 1,
@@ -304,12 +304,12 @@ namespace ESportsTeams.Tests.Services
             var result = service.EditTeamAsync(model);
 
             var changedName = context.Teams.FirstOrDefault(x=>x.Id== 1);
-            Assert.AreEqual(changedName.Name, teamName);
+            Assert.AreEqual(changedName?.Name, teamName);
         }
         [Test]
         public void JoinTeamTest()
         {
-            var service = new TeamService(context, null, null);
+            var service = new TeamService(context, null!, null!);
             //user with id "1" join to team with id 1!
             var test = service.JoinTeam("1", 1);
             var result = context.Teams.FirstOrDefault(x=>x.Id==1);
@@ -324,7 +324,7 @@ namespace ESportsTeams.Tests.Services
             var userService = new Mock<IUserService>();
             userService.Setup(x => x.FindUserByIdAsync(It.IsAny<string>()))
                 .ReturnsAsync(users[0]);
-            var service = new TeamService(context, null, userService.Object);
+            var service = new TeamService(context, null!, userService.Object);
             var makeReq = service.JoinTeam("1", 1);
             var reqId = context.Requests.FirstOrDefault().Id;
             var test = service.ApproveUser(reqId);
@@ -335,13 +335,13 @@ namespace ESportsTeams.Tests.Services
         [Test]
         public void DeclineUserInvalidTest()
         {
-            var service = new TeamService(context, null, null);
+            var service = new TeamService(context, null!, null!);
             Assert.ThrowsAsync<ArgumentNullException>(() => service.DeclineUser(123));
         }
         [Test]
         public void DeclineUserTest()
         {
-            var service = new TeamService(context, null, null);
+            var service = new TeamService(context, null!, null!);
             var makeReq = service.JoinTeam("1", 1);
             var reqId = context.Requests.FirstOrDefault().Id;
             var test = service.DeclineUser(reqId);
