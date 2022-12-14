@@ -34,19 +34,7 @@ namespace ESportsTeams.Core.Services
             await _context.Events.AddAsync(newEvent);
             await _context.SaveChangesAsync();
         }       
-
-        public async Task<bool> DeleteEventAsync(int id)
-        {
-             var eventToDelete = await _context.Events.FirstOrDefaultAsync(e => e.Id == id);
-            if (eventToDelete == null)
-            {
-                throw new ArgumentNullException(EventNotFound);
-            }
-            eventToDelete.IsDeleted = true;
-            await _context.SaveChangesAsync();
-            return true;
-        }
-
+     
         public async Task<IEnumerable<IndexEventViewModel>> GetAllAsync()
         {
             var events = await _context.Events
@@ -90,7 +78,7 @@ namespace ESportsTeams.Core.Services
 
             if (eventById == null)
             {
-                return null;
+                throw new ArgumentNullException(EventNotFound);
             }
 
             var result = new EventDetailsViewModel()

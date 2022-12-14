@@ -11,6 +11,11 @@ using System.Text;
 using System.Threading.Tasks;
 using ESportsTeams.Core.Services;
 using Moq;
+using ESportsTeams.Core.Models.BindingModels.Event;
+using ESportsTeams.Core.Interfaces;
+using Microsoft.AspNetCore.Http;
+using CloudinaryDotNet.Actions;
+using static System.Net.WebRequestMethods;
 
 namespace ESportsTeams.Tests.Services
 {
@@ -194,27 +199,77 @@ namespace ESportsTeams.Tests.Services
             Assert.AreEqual(expect, result);
         }
 
-        private RoleManager<IdentityRole> GetRoleManager()
+        [Test]
+        public void EditEventAsyncTest()
         {
-            var store = new Mock<IRoleStore<IdentityRole>>();
-            var mgr = new Mock<RoleManager<IdentityRole>>(
-                store.Object, null, null, null, null);
-
-            mgr.Setup(x => x.Roles).Returns(roles.AsQueryable());
-            mgr.Setup(x => x.FindByIdAsync("1")).ReturnsAsync(roles.Where(r => r.Id.ToString() == "1").FirstOrDefault());
-
-            return mgr.Object;
+             var service = new EventService(context, null, null);
+             var title = "Dota2TitleEditTest";
+             var model = new EditEventBindingModel()
+             {
+                 Id = 1,
+                 Title = title,
+                 Description = "TestTestTestTestTestTest",
+             };
+             var result = service.EditEventAsync(model);
+       
+             var eventChangedTitle = context.Events.FirstOrDefault(x => x.Title == title);
+             Assert.AreEqual(title, eventChangedTitle.Title);
         }
-
-        private UserManager<AppUser> GetUserManager()
+        [Test]
+        public void EditEventAsyncInvalidModelIdTest()
         {
-            var store = new Mock<IUserStore<AppUser>>();
-            var mgr = new Mock<UserManager<AppUser>>(store.Object, null, null, null, null, null, null, null, null);
-            mgr.Object.UserValidators.Add(new UserValidator<AppUser>());
-            mgr.Object.PasswordValidators.Add(new PasswordValidator<AppUser>());
+             var service = new EventService(context, null, null);
+             var title = "Dota2";
+             var model = new EditEventBindingModel()
+             {
+                 Id = 100,
+                 Title = title,
+                 Description = "TestTestTestTestTestTest",
+             };
+             Assert.ThrowsAsync<ArgumentNullException>(() => service.EditEventAsync(model));
+        }
+        [Test]
+        public void GetEventDetailsByInvalidIdAsyncTest()
+        {
+            var service = new EventService(context, null, null);
+            var invalidId = 100;
+            Assert.ThrowsAsync<ArgumentNullException>(() => service.GetEventDetailsByIdAsync(invalidId));
+        }
+        [Test]
+        public void GetEventDetailsByIdAsyncTest()
+        {
+            var service = new EventService(context, null, null);
+            var eventId = 1;
+            var result = service.GetEventDetailsByIdAsync(eventId).Result;
+            var eventInContext = context.Events.FirstOrDefault(x=>x.Id== eventId);
 
-            return mgr.Object;
+            Assert.AreEqual(eventId, result.Id);
+            Assert.AreEqual(eventInContext.Title, result.Title);
+        }
+        //[Test]
+        //public void AddEventAsyncTest()
+        //{
+
+        //    var photoService = new Mock<IPhotoService>();
+        //    photoService.Setup(_=>_.AddPhotoAsync(It.IsAny<IFormFile>()))
+        //        .Returns(new ImageUploadResult { Url = new Uri("www.tralal.com") });
+        //    var service = new EventService(context, null, null);
+        //    var model = new AddEventBindingModel()
+        //    {
+        //        Id = 1,
+        //    };
+        //}
+        [Test]
+        public void GetAllAsyncTest()
+        {
+            var service = new EventService(context, null, null);
+            var result = service.GetAllAsync().Result;
+
+            var countOfEvents = context.Events.Count();
+
+            Assert.AreEqual(countOfEvents, result.Count());
         }
     }
 }
 
+ 
