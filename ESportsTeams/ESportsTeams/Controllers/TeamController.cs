@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 using System.Linq;
+using ESportsTeams.Infrastructure.Data.Helpers;
 
 namespace ESportsTeams.Controllers
 {
@@ -169,8 +170,8 @@ namespace ESportsTeams.Controllers
             }
             var teamViewModel = new EditTeamBindingModel()
             {
-                Name = team.Name,
-                Description = team.Description,
+                Name = Html_String_Utility.DecodeProperty(team.Name),
+                Description = Html_String_Utility.DecodeProperty(team.Description),
                 Address = team.Address,
                 URL = team.Image,
                 Category = team.Category,

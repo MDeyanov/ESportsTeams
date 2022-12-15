@@ -9,6 +9,7 @@ using static ESportsTeams.Infrastructure.Data.Common.CommonConstants;
 using Microsoft.EntityFrameworkCore.Storage;
 using CloudinaryDotNet.Actions;
 using static System.Net.WebRequestMethods;
+using ESportsTeams.Infrastructure.Data.Helpers;
 
 namespace ESportsTeams.Core.Services
 {
@@ -52,8 +53,8 @@ namespace ESportsTeams.Core.Services
             //var result = await _photoService.AddPhotoAsync(model.Image);
             var team = new Team()
             {
-                Name = model.Name,
-                Description = model.Description,
+                Name = Html_String_Utility.EncodeProperty(model.Name),
+                Description = Html_String_Utility.EncodeProperty(model.Description),
                 Image = photoResult?.Url.ToString(),
                 Category = model.Category,
                 OwnerId = userId,
@@ -186,8 +187,8 @@ namespace ESportsTeams.Core.Services
             {
                 Id = result.Id,
                 loggedUserId = loggedUserId,
-                Name = result.Name,
-                Description = result.Description,
+                Name = Html_String_Utility.DecodeProperty(result.Name),
+                Description = Html_String_Utility.DecodeProperty(result.Description),
                 Category = result.Category,
                 Image = result.Image,
                 AddressId = result.AddressId,
@@ -241,8 +242,8 @@ namespace ESportsTeams.Core.Services
             }
 
            
-            teamToChange.Name = model.Name;
-            teamToChange.Description = model.Description;
+            teamToChange.Name = Html_String_Utility.EncodeProperty(model.Name);
+            teamToChange.Description = Html_String_Utility.EncodeProperty(model.Description);
             teamToChange.Image = photoResult?.Url.ToString();
             teamToChange.Category = model.Category;
             teamToChange.AddressId = model.AddressId;
@@ -278,8 +279,8 @@ namespace ESportsTeams.Core.Services
                 .Select(t => new GetTeamsViewModel()
                 {
                     Id = t.Id,
-                    Name = t.Name,
-                    Description = t.Description,
+                    Name = Html_String_Utility.DecodeProperty(t.Name),
+                    Description = Html_String_Utility.DecodeProperty(t.Description),
                     Category = t.Category,
                     Image = t.Image,
                     Address = t.Address,

@@ -22,122 +22,15 @@ using static System.Formats.Asn1.AsnWriter;
 
 namespace ESportsTeams.Tests.Services
 {
-    public class TeamServiceTest
-    {
-        protected ApplicationDbContext context;
-        protected List<AppUser>? users;
-        protected List<Team>? teams;
-        protected List<IdentityRole>? roles;
-
-        [SetUp]
-        public void InitializeDb()
-        {
-            var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-                           .UseInMemoryDatabase("ApplicationInMemoryDB").Options;
-
-            context = new ApplicationDbContext(options);
-            users = new List<AppUser>
-            {
-                new AppUser
-                {
-                    Id = "1",
-                    UserName = "FirstUser",
-                    Email = "first@abv.bg",
-                    FirstName = "First1",
-                    LastName = "Last1",
-                    Dota2MMR = 2000,
-                    NormalizedEmail = "FIRST@ABV.BG",
-                    NormalizedUserName = "FIRSTUSER",
-                },
-                new AppUser
-                {
-                    Id = "2",
-                    UserName = "SecondUser",
-                    Email = "second@abv.bg",
-                    FirstName = "First2",
-                    LastName = "Last2",
-                    Dota2MMR = 1500,
-                    CSGOMMR=1500,
-                    PUBGMMR=1500,
-                    LeagueOfLegendsMMR=1500,
-                    VALORANTMMR=1500,
-                    NormalizedEmail = "SECOND@ABV.BG",
-                    NormalizedUserName = "SECONDUSER",
-                },
-                new AppUser
-                {
-                    Id = "3",
-                    UserName = "ThirdUser",
-                    Email = "third@abv.bg",
-                    FirstName = "First3",
-                    LastName = "Last3",
-                    Dota2MMR = 1700,
-                    CSGOMMR=1500,
-                    PUBGMMR=1500,
-                    LeagueOfLegendsMMR=1500,
-                    VALORANTMMR=1500,
-                    NormalizedEmail = "THIRD@ABV.BG",
-                    NormalizedUserName = "THIRDUSER",
-
-                }
-            };
-            teams = new List<Team>
-            {
-               new Team
-               {
-                   Id= 1,
-                   Name = "Dota2Team",
-                   Description = "Random mock test description Dota2",
-                   Category = Category.Dota2,
-                   AddressId= 1,
-                   Address = new Address
-                   {
-                       City = "Test",
-                       Street= "Test",
-                       Country= "Test",
-                       ZipCode=1,
-                   },
-                   TournamentWin =0,
-                   OwnerId = "3",
-                   IsBanned= false,
-               },
-               new Team
-               {
-                   Id= 2,
-                   Name = "CSGOTeam",
-                   Description = "Random mock test description CSGO",
-                   Category = Category.CSGO,
-                   AddressId= 2,                
-                   Address = new Address
-                   {
-                       City = "Test1",
-                       Street= "Test1",
-                       Country= "Test1",
-                       ZipCode=1,
-                   },
-                   TournamentWin =0,
-                   OwnerId = "3",
-                   IsBanned= false,
-               }
-            };
-          
-            foreach (var team in teams)
-            {
-                team.AppUsers.Add(users.FirstOrDefault(x => x.Id == "3"));
-            }
-            context.Users.AddRangeAsync(users);
-            context.Teams.AddRangeAsync(teams);
-            context.SaveChangesAsync();
-
-        }
-
+    public class TeamServiceTest : BaseTest
+    {      
         [Test]
         public async Task AddTeamAsyncWithValidTeam()
         {
             var service = new TeamService(context, null!, null!);
+            var expectedId = 3;
             var team = new AddTeamBindingModel
             {
-                Id = 3,
                 Name = "Test",
                 Description = "Test",
                 Address = new Address
@@ -151,11 +44,13 @@ namespace ESportsTeams.Tests.Services
                 Category = Category.Dota2
 
             };
-            await service.AddTeamAsync(team, "1");
+            var userId = context.Users.FirstOrDefault().Id;
+            await service.AddTeamAsync(team, userId);
 
-            var currnetTeam = context.Teams.FirstOrDefault(x => x.Id == team.Id);
-            Assert.AreEqual(team.Id, currnetTeam?.Id);
+            var currnetTeam = context.Teams.FirstOrDefault(x => x.Id == expectedId);
+            var teamsCount = context.Teams.Count();
             Assert.AreEqual(team.Name, currnetTeam?.Name);
+            Assert.AreEqual(3, teamsCount);
         }
 
         [Test]
@@ -237,9 +132,10 @@ namespace ESportsTeams.Tests.Services
         public async Task GetTeamDetails()
         {
             var service = new TeamService(context, null!, null!);
+            var userId = context.Users.FirstOrDefault().Id;
 
-            var result = service.GetTeamDetailsByIdAsync(2, "1").Result;
-            var contextdrbr = context.Teams.FirstOrDefault(x => x.Id == 1);
+            var result = service.GetTeamDetailsByIdAsync(2, userId).Result;
+            var contextdrbr = context.Teams.FirstOrDefault(x => x.Id == 2);
             Assert.AreEqual(result?.Id, 2);
         }
 
@@ -249,7 +145,7 @@ namespace ESportsTeams.Tests.Services
             var service = new TeamService(context, null!, null!);
             var result = context.Teams.FirstOrDefault(x => x.Id == 1);
 
-            var secRes = service.GetTeamByIdAsync(1);
+            var secRes = service.GetTeamByIdAsync(11);
 
             var areEqual = context.Teams.FirstOrDefault(x => x.Id == 1);
 
@@ -270,7 +166,7 @@ namespace ESportsTeams.Tests.Services
         public void TeamExistsTest()
         {
             var service = new TeamService(context, null!, null!);
-            var isExists = service.TeamExistsAsync("Dota2Team").Result;
+            var isExists = service.TeamExistsAsync("CSGOTeam").Result;
 
             Assert.AreEqual(isExists, true);
         }
@@ -287,7 +183,7 @@ namespace ESportsTeams.Tests.Services
             var service = new TeamService(context, null!, null!);
             var model = new EditTeamBindingModel()
             {
-                Id = 1,
+                Id= 1,
                 Name = "Dota2TeamTEST",
                 Description = "Random mock test description Dota2",
                 Category = Category.Dota2,
@@ -303,7 +199,7 @@ namespace ESportsTeams.Tests.Services
             var teamName = "Dota2TeamTEST";
             var result = service.EditTeamAsync(model);
 
-            var changedName = context.Teams.FirstOrDefault(x=>x.Id== 1);
+            var changedName = context.Teams.FirstOrDefault(x=>x.Id == 1);
             Assert.AreEqual(changedName?.Name, teamName);
         }
         [Test]
@@ -324,9 +220,10 @@ namespace ESportsTeams.Tests.Services
             var userService = new Mock<IUserService>();
             userService.Setup(x => x.FindUserByIdAsync(It.IsAny<string>()))
                 .ReturnsAsync(users[0]);
+
             var service = new TeamService(context, null!, userService.Object);
             var makeReq = service.JoinTeam("1", 1);
-            var reqId = context.Requests.FirstOrDefault().Id;
+            var reqId = context.Teams.FirstOrDefault(x => x.Id == 1).Requests[0].Id;
             var test = service.ApproveUser(reqId);
             var result = context.Teams.FirstOrDefault(x => x.Id == 1).AppUsers.Count();
 

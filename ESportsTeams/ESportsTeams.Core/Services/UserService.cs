@@ -43,12 +43,7 @@ namespace ESportsTeams.Core.Services
             }
 
             return user;
-        }
-
-        public ICollection<UserRequestViewModel> GetAllUsersRequestsForYourTeam(string currentUserId)
-        {
-            throw new NotImplementedException();
-        }
+        }    
 
         public async Task<UserRequestViewModel> GetUserByID(string userId)
         {

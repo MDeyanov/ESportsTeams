@@ -16,137 +16,33 @@ using ESportsTeams.Core.Interfaces;
 using Microsoft.AspNetCore.Http;
 using CloudinaryDotNet.Actions;
 using static System.Net.WebRequestMethods;
+using System.Security.Cryptography.X509Certificates;
+using Microsoft.Extensions.Logging;
 
 namespace ESportsTeams.Tests.Services
 {
-    public class EventServiceTest
-    {
-        protected ApplicationDbContext context;
-        protected List<AppUser>? users;
-        protected List<Event>? events;
-        protected List<IdentityRole>? roles;
-
-        [SetUp]
-        public void InitializeDb()
-        {
-            var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-                           .UseInMemoryDatabase("ApplicationInMemoryDB").Options;
-
-            context = new ApplicationDbContext(options);
-            users = new List<AppUser>
-            {
-                new AppUser
-                {
-                    Id = "1",
-                    UserName = "FirstUser",
-                    Email = "first@abv.bg",
-                    FirstName = "First1",
-                    LastName = "Last1",
-                    Dota2MMR = 2000,
-                    NormalizedEmail = "FIRST@ABV.BG",
-                    NormalizedUserName = "FIRSTUSER",
-                },
-                new AppUser
-                {
-                    Id = "2",
-                    UserName = "SecondUser",
-                    Email = "second@abv.bg",
-                    FirstName = "First2",
-                    LastName = "Last2",
-                    Dota2MMR = 1500,
-                    CSGOMMR=1500,
-                    PUBGMMR=1500,
-                    LeagueOfLegendsMMR=1500,
-                    VALORANTMMR=1500,
-                    NormalizedEmail = "SECOND@ABV.BG",
-                    NormalizedUserName = "SECONDUSER",
-                },
-                new AppUser
-                {
-                    Id = "3",
-                    UserName = "ThirdUser",
-                    Email = "third@abv.bg",
-                    FirstName = "First3",
-                    LastName = "Last3",
-                    Dota2MMR = 1700,
-                    CSGOMMR=1500,
-                    PUBGMMR=1500,
-                    LeagueOfLegendsMMR=1500,
-                    VALORANTMMR=1500,
-                    NormalizedEmail = "THIRD@ABV.BG",
-                    NormalizedUserName = "THIRDUSER",
-
-                }
-            };
-            events = new List<Event>
-            {
-                new Event
-                {
-                  Id = 1,
-                  Title = "Dota2",
-                  Image = "Test",
-                  Description = "TestTestTestTestTestTest",
-                  IsDeleted= false,
-                },
-                new Event
-                {
-                  Id = 2,
-                  Title = "CSGO",
-                  Image = "Test",
-                  Description = "TestTestTestTestTestTest",
-                  IsDeleted= false,
-                }
-            };
-            roles = new List<IdentityRole>
-            {
-                new IdentityRole
-                {
-                    Id="1",
-                    Name = UserRoles.Admin
-                },
-                new IdentityRole
-                {
-                    Id="2",
-                    Name = UserRoles.User
-                }
-            };
-            //var user = users.FirstOrDefault(x => x.Id == "1");
-            //var roleManager = GetRoleManager();
-            //var userManager = GetUserManager();
-
-           
-
-            //var result = userManager.AddToRoleAsync(user, UserRoles.Admin);
-
-            context.Roles.AddRangeAsync(roles);
-            context.Events.AddRangeAsync(events);
-            context.Users.AddRangeAsync(users);
-            context.SaveChangesAsync();
-            
-
-
-        }
-
+    public class EventServiceTest : BaseTest
+    {       
         [Test]
         public void GetEventByIdAsyncTest()
         {
-            int eventId = 1;
+            int eventId =2;
             var service = new EventService(context, null!, null!);
 
             var result = service.GetEventByIdAsync(eventId).Result;
 
             Assert.AreEqual(eventId, result?.Id);
-            Assert.AreEqual("Dota2", result?.Title);
+            Assert.AreEqual("CSGO", result?.Title);
         }
         [Test]
         public void GetEventByTitleAsyncTest()
         {
-            string eventTitle = "Dota2";
+            string eventTitle = "CSGO";
             var service = new EventService(context, null!, null!);
 
             var result = service.GetEventByTitleAsync(eventTitle).Result;
 
-            Assert.AreEqual("Dota2", result?.Title);
+            Assert.AreEqual("CSGO", result?.Title);
         }
         [Test]
         public void GetEventByTitleAsyncIfNullTest()
@@ -183,10 +79,11 @@ namespace ESportsTeams.Tests.Services
         public void ReverseIsDeletedTest()
         {
             var service = new EventService(context, null!, null!);
-            int eventId = 1;
-            var result = service.ReverseIsDeleted(eventId);
+            int expectedEventId = 1;
+            var result123 = service.ReverseIsDeleted(expectedEventId);
 
-            Assert.AreEqual(eventId, result);
+            Assert.AreEqual(expectedEventId, result123);
+
         }
         [Test]
         public void ReverseIsDeletedIfNullTest()
@@ -213,7 +110,7 @@ namespace ESportsTeams.Tests.Services
              var result = service.EditEventAsync(model);
        
              var eventChangedTitle = context.Events.FirstOrDefault(x => x.Title == title);
-             Assert.AreEqual(title, eventChangedTitle.Title);
+             Assert.AreEqual(title, eventChangedTitle?.Title);
         }
         [Test]
         public void EditEventAsyncInvalidModelIdTest()
@@ -265,7 +162,7 @@ namespace ESportsTeams.Tests.Services
             var service = new EventService(context, null!, null!);
             var result = service.GetAllAsync().Result;
 
-            var countOfEvents = context.Events.Count();
+            var countOfEvents = context.Events.Where(x=>!x.IsDeleted).Count();
 
             Assert.AreEqual(countOfEvents, result.Count());
         }
