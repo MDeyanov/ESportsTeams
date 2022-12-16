@@ -51,7 +51,9 @@
        
     </div>
 </section>
-<h3 class="text-center">User Teams:</h3>
+@if (!Model.IsBanned)
+{
+   <h3 class="text-center">User Teams:</h3>
 <div class="container">
     
     <ul class="row feature-list feature-list-sm">
@@ -83,6 +85,8 @@
             }
         }
     </ul>
-</div>
+</div> 
+}
+
 
 

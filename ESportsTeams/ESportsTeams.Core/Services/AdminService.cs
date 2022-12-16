@@ -70,7 +70,10 @@ namespace ESportsTeams.Core.Services
         }
         public string BanUser(string userId)
         {
-            var user = _context.Users.FirstOrDefault(x => x.Id == userId);
+            var user = _context.Users
+                .Include(x=>x.OwnedTeams)
+                .ThenInclude(x=>x.AppUsers)
+                .FirstOrDefault(x => x.Id == userId);
 
             if (user == null)
             {
@@ -85,13 +88,20 @@ namespace ESportsTeams.Core.Services
                 foreach (var team in user.OwnedTeams)
                 {
                     team.IsBanned = true;
-                    if (team.AppUsers != null && team.AppUsers.Count > 1)
+                    if (team.AppUsers != null || team.AppUsers.Count > 1)
                     {
                         foreach (var appuser in team.AppUsers)
                         {
                             if (team.OwnerId != appuser.Id)
                             {
                                 team.AppUsers.Remove(appuser);
+                                team.Requests = new List<Request>();
+                                var reqToRemove = _context.Requests.FirstOrDefault(x=>x.RequesterId== appuser.Id);
+                                _context.Requests.Remove(reqToRemove);
+                                if (team.AppUsers.Count()==1)
+                                {
+                                    break;
+                                }
                             }                           
                         }
                     }                  
@@ -103,7 +113,9 @@ namespace ESportsTeams.Core.Services
 
         public string UnbanUser(string userId)
         {
-            var user = _context.Users.FirstOrDefault(x => x.Id == userId);
+            var user = _context.Users
+                .Include(x => x.OwnedTeams)
+                .FirstOrDefault(x => x.Id == userId);
 
             if (user == null)
             {
@@ -113,7 +125,7 @@ namespace ESportsTeams.Core.Services
             var currentTime = DateTime.UtcNow;
             user.LockoutEnd = currentTime.AddDays(AccountUnLockInDays);
             user.IsBanned = false;
-            if (user.OwnedTeams != null)
+            if (user.OwnedTeams != null || user.OwnedTeams.Count() > 0)
             {
                 foreach (var team in user.OwnedTeams)
                 {

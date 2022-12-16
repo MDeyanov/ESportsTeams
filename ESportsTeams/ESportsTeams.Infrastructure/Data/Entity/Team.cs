@@ -32,7 +32,7 @@ namespace ESportsTeams.Infrastructure.Data.Entity
         [ForeignKey(nameof(AddressId))]
         public Address Address { get; set; } = null!;
 
-        public IList<AppUser>? AppUsers { get; set; } = new List<AppUser>();
+        public List<AppUser>? AppUsers { get; set; } = new List<AppUser>();
         public int TournamentWin { get; set; } = 0;
 
 
