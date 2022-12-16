@@ -11,6 +11,7 @@ namespace ESportsTeams.Core.Models.ViewModels.TournamentViewModels
     public class TournamentDetailsViewModel
     {
         public int Id { get; set; }
+        public string loggedUserId { get; set; }
         public string? Title { get; set; }
 
         public string? Description { get; set; }

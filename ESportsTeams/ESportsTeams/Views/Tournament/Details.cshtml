@@ -68,7 +68,6 @@
                             <path fill-rule="evenodd" d="M1.885.511a1.745 1.745 0 0 1 2.61.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511z" />
                         </svg>
                         <a href="@Model.Contact" target="_blank">Contact</a>
-                        
                     </div>
                     <div class="col-sm-push-2">
                         <a asp-controller="Tournament" asp-action="TeamsList" asp-route-Id="@Model.Id" class="btn btn-success">List of Teams</a>
@@ -94,54 +93,18 @@
                     @Model.Description
                 </article>
                 <hr>
-                <h5 class="mb-4">Discussion</h5>
-                <div class="card">
-                    <div class="card-header bg-secondary d-flex justify-content-between">
-                        <button class="btn btn-secondary" type="button" data-target="#comment-reply" data-toggle="collapse" aria-expanded="false" aria-controls="comment-reply">Post a reply</button>
-                        <form class="d-flex align-items-center">
-                            <span class="mr-2 text-muted text-small text-nowrap">Sort by:</span>
-                            <select class="custom-select">
-                                <option value="alpha">Alphabetical</option>
-                                <option value="old-new" selected>Newest</option>
-                                <option value="new-old">Popular</option>
-                                <option value="recent">Recently Updated</option>
-                            </select>
-                        </form>
-                    </div>
-                    <div class="collapse" id="comment-reply">
-                        <form class="card-body">
-                            <div class="form-group">
-                                <textarea class="form-control from-control-lg" id="comment-reply-text" name="comment-reply" rows="4" placeholder="Type your review here"></textarea>
-                            </div>
-                            <div class="mb-2">
-                                <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input" name="notify-reply" id="check-notify">
-                                    <label class="custom-control-label text-small" for="check-notify">Notify me when someone replies</label>
-                                </div>
-                            </div>
-                            <div class="d-flex align-items-center">
-                                <button type="submit" class="btn btn-success mr-3">Submit reply</button>
-                                <a href="#comment-reply" class="text-small text-muted" data-toggle="collapse" aria-expanded="true" aria-controls="comment-reply">Cancel</a>
-                            </div>
-                        </form>
-                    </div>
-                    <ul class="list-group list-group-flush list-group-comments">
-                    </ul>
-                </div>
-
             </div>
-            <div class="col-12 col-md-4">
-                <div class="card">
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item">
-                            <div class="d-flex justify-content-between">
-                                <div><i class="icon-trophy mr-1"></i>PRIZE</div>
-                                <span> @string.Format($"{Model.PrizePool:f2}")$</span>
-                                
-                            </div>
-                        </li>
-                    </ul>
-                </div>
+        </div>
+        <div class="col-12 col-md-4">
+            <div class="card">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <div class="d-flex justify-content-between">
+                            <div><i class="icon-trophy mr-1"></i>PRIZE</div>
+                            <span> @string.Format($"{Model.PrizePool:f2}")$</span>
+                        </div>
+                    </li>
+                </ul>
             </div>
         </div>
     </div>

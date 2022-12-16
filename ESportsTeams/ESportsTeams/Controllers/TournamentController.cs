@@ -35,15 +35,18 @@ namespace ESportsTeams.Controllers
             try
             {
                 var userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
-
-                await _tournamentService.TeamJoinToTournaments(userId, Id);
+                var result = await _tournamentService.TeamJoinToTournaments(userId, Id);
+                if (result)
+                {
+                    return RedirectToAction(nameof(TeamsList), new { id = Id });
+                }
             }
             catch (Exception)
             {
 
                 throw;
             }
-            return RedirectToAction(nameof(TeamsList));
+            return RedirectToAction(nameof(TeamsList), new { id = Id });
         }
 
         [HttpGet]

@@ -172,8 +172,8 @@ namespace ESportsTeams.Tests.Services
         public void TeamExistsNullNameTest()
         {
             var service = new TeamService(context, null!, null!);
-
-            Assert.ThrowsAsync<ArgumentNullException>(() => service.TeamExistsAsync("Error"));
+            var result = service.TeamExistsAsync("expect false").Result;
+            Assert.IsFalse(result);
         }
         [Test]
         public void EditTeamAsync()
