@@ -143,19 +143,7 @@ namespace ESportsTeams.Tests.Services
             Assert.AreEqual(eventId, result.Id);
             Assert.AreEqual(eventInContext?.Title, result.Title);
         }
-        //[Test]
-        //public void AddEventAsyncTest()
-        //{
-
-        //    var photoService = new Mock<IPhotoService>();
-        //    photoService.Setup(_=>_.AddPhotoAsync(It.IsAny<IFormFile>()))
-        //        .Returns(new ImageUploadResult { Url = new Uri("www.tralal.com") });
-        //    var service = new EventService(context, null, null);
-        //    var model = new AddEventBindingModel()
-        //    {
-        //        Id = 1,
-        //    };
-        //}
+     
         [Test]
         public void GetAllAsyncTest()
         {

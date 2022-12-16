@@ -71,7 +71,6 @@ namespace ESportsTeams.Tests.Services
                 },
                 Image = null,
                 Category = Category.Dota2
-
             };
             Assert.ThrowsAsync<ArgumentNullException>(() => service.AddTeamAsync(team, "ewapoiueyhwa"));
         }
@@ -93,7 +92,6 @@ namespace ESportsTeams.Tests.Services
                 },
                 Image = null,
                 Category = Category.Dota2
-
             };
             Assert.ThrowsAsync<ArgumentNullException>(() => service.AddTeamAsync(teamBindingModel, "3"));
         }
@@ -212,8 +210,7 @@ namespace ESportsTeams.Tests.Services
             var reqCount = result.Requests.Count();
 
             Assert.AreEqual(1, reqCount);
-        }
-        
+        }        
         [Test]
         public void ApproveUserTest()
         {
@@ -245,7 +242,5 @@ namespace ESportsTeams.Tests.Services
             var isDecline = context.Requests.FirstOrDefault(x=>x.Id== reqId).Status;
             Assert.AreEqual(RequestStatus.Declined, isDecline);
         }
-
-
     }
 }
