@@ -199,6 +199,7 @@ namespace ESportsTeams.Core.Services
                 TeamTournaments = result.TeamTournaments,
                 AvarageMMR = avrMMR,
                 Requests = result.Requests,
+                Players = result.AppUsers
 
             };
             foreach (var request in result.Requests)

@@ -273,7 +273,7 @@ namespace ESportsTeams.Core.Services
                 .ToListAsync();
             if (teams == null || teams.Count == 0)
             {
-                throw new ArgumentNullException(DoNotOwnTeam);
+                return true;
             }
 
             string eventTitle = tournament.Event.Title.ToLower();

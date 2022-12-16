@@ -43,7 +43,7 @@
                         @Html.TextBox("searchValue",null, new{Class = "form-control", placeholder="Enter Owner username,team name,banned or notbanned!"})
                     </td>
                     <td>
-                       &nbsp;
+                        &nbsp;
                     </td>
                     <td>
                         <input type="submit" value="Search" class="btn btn-success" />
@@ -67,16 +67,17 @@
                 @if (!team.IsBanned)
                 {
                     <p class="fs-10 fw-bold alert-warning"> NOT BANNED</p>
+                    <div class="form-group">
+                        <div class="col-sm-push-2">
+                            <a asp-area="Administrator" asp-controller="Team" asp-action="Details" asp-route-id="@team.Id" class="btn btn-success">Details</a>
+                        </div>
+                    </div>
                 }
                 else
                 {
                     <p class="fs-10 fw-bold alert-warning">BANNED</p>
                 }
-                <div class="form-group">
-                    <div class="col-sm-push-2">
-                        <a asp-area="Administrator" asp-controller="Team" asp-action="Details" asp-route-id="@team.Id" class="btn btn-success">Details</a>
-                    </div>
-                </div>
+
             </div>
         }
     </div>

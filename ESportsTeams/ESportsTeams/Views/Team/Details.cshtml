@@ -1,4 +1,4 @@
-﻿@using ESportsTeams.Core.Models.ViewModels.TeamViewModels;
+﻿  @using ESportsTeams.Core.Models.ViewModels.TeamViewModels;
 @using Microsoft.AspNetCore.Identity;
 @model DetailsTeamViewModel
 
@@ -90,7 +90,18 @@
                     }
                     else if (Model.Requests.Any(x => x.RequesterId == Model.loggedUserId))
                     {
-                        <article>You already send request for this team!</article>
+                        if (Model.Requests.FirstOrDefault(x => x.RequesterId == Model.loggedUserId).Status == ESportsTeams.Infrastructure.Data.Enums.RequestStatus.Accepted)
+                        {
+                            <article class="alert-success">Congrats! You got accepted to this team!</article>
+                        }
+                        else if (Model.Requests.FirstOrDefault(x => x.RequesterId == Model.loggedUserId).Status == ESportsTeams.Infrastructure.Data.Enums.RequestStatus.Declined)
+                        {
+                            <article class="alert-danger">You have been declined!</article>
+                        }
+                        else
+                        {
+                            <article class="alert-warning">You already send request for this team!</article>
+                        }
                     }
                     else
                     {
