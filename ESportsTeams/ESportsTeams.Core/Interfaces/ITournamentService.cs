@@ -21,7 +21,7 @@ namespace ESportsTeams.Core.Interfaces
         
         Task EditTournamentAsync(EditTournamentBindingModel model);
 
-        Task TeamJoinToTournaments(string userId,int tournamentId);
+        Task<bool> TeamJoinToTournaments(string userId,int tournamentId);
 
         Task<IEnumerable<GetTeamsViewModel>> ListOfTeamsInTournamentAsync(int tournamentId);
 

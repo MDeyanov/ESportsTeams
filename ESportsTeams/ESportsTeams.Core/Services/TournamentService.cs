@@ -244,7 +244,7 @@ namespace ESportsTeams.Core.Services
                 });
         }
 
-        public async Task TeamJoinToTournaments(string userId, int tournamentId)
+        public async Task<bool> TeamJoinToTournaments(string userId, int tournamentId)
         {
 
             var tournament = await _context.Tournaments
@@ -282,7 +282,12 @@ namespace ESportsTeams.Core.Services
 
             if (team == null)
             {
-                throw new ArgumentNullException(InvalidTeamCategory);
+                return true;
+            }
+
+            if (tournament.TeamTournaments.Any(x => x.Team == team))
+            {
+                return true;
             }
 
             tournament.TeamTournaments.Add(new TeamTournament()
@@ -293,6 +298,8 @@ namespace ESportsTeams.Core.Services
                 Tournament = tournament
             });
             await _context.SaveChangesAsync();
+            return false;
+            
 
         }
     }

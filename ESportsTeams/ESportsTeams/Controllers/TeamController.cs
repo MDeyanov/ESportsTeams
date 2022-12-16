@@ -131,7 +131,6 @@ namespace ESportsTeams.Controllers
                 return View(model);
             }
             
-            // da napravq proverka dali toqzi user e owner na otbor ot syshtata kategoriq i ako e da ne mu pozvolq da napravi syshtiq team
             if (!ModelState.IsValid)
             {
                 return View(model);
@@ -190,7 +189,7 @@ namespace ESportsTeams.Controllers
             }
 
             await _teamService.EditTeamAsync(model);
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction(nameof(Index));
         }
 
         [HttpGet]

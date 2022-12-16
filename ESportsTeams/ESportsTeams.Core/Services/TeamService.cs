@@ -165,23 +165,23 @@ namespace ESportsTeams.Core.Services
 
             if (result.Category == Category.Dota2)
             {
-                avrMMR = (int)result.AppUsers.Average(x => x.Dota2MMR);
+                avrMMR = (int)result.AppUsers.Average(x => x.Dota2MMR ?? 0);
             }
             else if (result.Category == Category.CSGO)
             {
-                avrMMR = (int)result.AppUsers.Average(x => x.CSGOMMR);
+                avrMMR = (int)result.AppUsers.Average(x => x.CSGOMMR ?? 0);
             }
             else if (result.Category == Category.PUBG)
             {
-                avrMMR = (int)result.AppUsers.Average(x => x.PUBGMMR);
+                avrMMR = (int)result.AppUsers.Average(x => x.PUBGMMR ?? 0);
             }
             else if (result.Category == Category.LeagueOfLegends)
             {
-                avrMMR = (int)result.AppUsers.Average(x => x.LeagueOfLegendsMMR);
+                avrMMR = (int)result.AppUsers.Average(x => x.LeagueOfLegendsMMR ?? 0);
             }
             else if (result.Category == Category.VALORANT)
             {
-                avrMMR = (int)result.AppUsers.Average(x => x.VALORANTMMR);
+                avrMMR = (int)result.AppUsers.Average(x => x.VALORANTMMR ?? 0);
             }
             var finalResult = new DetailsTeamViewModel()
             {
@@ -244,7 +244,10 @@ namespace ESportsTeams.Core.Services
            
             teamToChange.Name = Html_String_Utility.EncodeProperty(model.Name);
             teamToChange.Description = Html_String_Utility.EncodeProperty(model.Description);
-            teamToChange.Image = photoResult?.Url.ToString();
+            if (photoResult != null)
+            {
+                teamToChange.Image = photoResult.Url.ToString();
+            }
             teamToChange.Category = model.Category;
             teamToChange.AddressId = model.AddressId;
             teamToChange.Address = model.Address;
@@ -260,9 +263,9 @@ namespace ESportsTeams.Core.Services
 
             var result = teams.Any(x => x.Name == name);
 
-            if (!result)
+            if (result)
             {
-                throw new ArgumentNullException(TeamNotFound);
+                return result;
             }
 
             return result;
