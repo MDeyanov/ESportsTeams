@@ -94,8 +94,7 @@ namespace ESportsTeams.Core.Services
                                 team.AppUsers.Remove(appuser);
                             }                           
                         }
-                    }
-                    
+                    }                  
                 }
             }
             _context.SaveChanges();
